@@ -24,10 +24,6 @@ export default function ContactPage() {
           <p className="mt-2 text-sm text-muted-foreground">For business partnerships and integration enquiries.</p>
         </Card>
       </div>
-      <p className="mt-6 text-sm text-muted-foreground">
-        WhatsApp is available on the official business account once connected. Verified email,
-        hours, and address will be published here.
-      </p>
       <div className="mt-10">
         <LeadForm kind="contact" />
       </div>

@@ -37,12 +37,6 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
           </li>
         ))}
       </ul>
-      <h2 className="mt-10 text-xl font-semibold text-navy">How it works</h2>
-      <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-        Configure the module for your outlet or branch, capture the day’s activity as it happens,
-        then review and export reports. Role-based access keeps each employee on the screens they
-        need.
-      </p>
       <h2 className="mt-10 text-xl font-semibold text-navy">Related features</h2>
       <div className="mt-4 grid gap-4 md:grid-cols-3">
         {related.map((r) => (

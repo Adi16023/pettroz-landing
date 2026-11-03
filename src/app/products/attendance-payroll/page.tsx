@@ -8,7 +8,8 @@ export const metadata: Metadata = { title: products.attendance.name };
 export default function AttendanceProductPage() {
   return (
     <>
-      <Section className="pt-20">
+      <Section className="grid items-center gap-10 pt-16 lg:grid-cols-2 lg:gap-16">
+        <div>
         <Kicker>{products.attendance.heroKicker}</Kicker>
         <H1>{products.attendance.hero}</H1>
         <Lead>{products.attendance.description}</Lead>
@@ -18,11 +19,12 @@ export default function AttendanceProductPage() {
             Explore Features
           </ButtonLink>
         </div>
-        <div className="mt-10">
-          <AttendancePreview />
+        </div>
+        <div id="showcase" className="min-w-0 rounded-3xl bg-[#edf0e9] p-4 sm:p-6">
+          <AttendancePreview animated />
         </div>
       </Section>
-      <Section className="pt-0">
+      <Section>
         <Card className="bg-navy text-white">
           <h2 className="text-2xl font-semibold">Powerful HR & Payroll Software. No Petrol Pump Software Required.</h2>
           <p className="mt-3 text-white/75">

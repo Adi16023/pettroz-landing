@@ -26,8 +26,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} ${inter.className}`}>
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
+        <a href="#main-content" className="fixed top-3 left-3 z-50 -translate-y-24 rounded-full bg-navy px-5 py-3 text-sm text-white focus:translate-y-0">
+          Skip to content
+        </a>
         <SiteHeader />
-        <main>{children}</main>
+        <main id="main-content" tabIndex={-1}>{children}</main>
         <SiteFooter />
       </body>
     </html>

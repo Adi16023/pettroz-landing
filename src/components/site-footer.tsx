@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { products } from "@/lib/content";
+import { ArrowUpRight } from "lucide-react";
 
 const cols = [
   {
@@ -42,21 +43,20 @@ const cols = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border bg-navy text-white">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-5">
-        <div>
+    <footer className="mt-8 border-t border-border bg-background text-navy">
+      <div className="site-container grid grid-cols-2 gap-x-6 gap-y-10 py-14 md:grid-cols-4 lg:grid-cols-6 lg:gap-10 lg:py-20">
+        <div className="col-span-2 md:col-span-4 lg:col-span-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/pettroz-fw.svg" alt="Pettroz" className="h-8 w-auto" />
-          <p className="mt-4 text-sm text-white/70">Smarter Business. Simpler Management.</p>
-          <p className="mt-3 text-sm text-white/60">One trusted brand. Two powerful solutions.</p>
+          <img src="/pettroz-bl.svg" alt="Pettroz" className="h-8 w-auto" />
+          <Link href="/contact" className="mt-5 flex min-h-11 w-fit items-center gap-3 text-xs font-semibold hover:text-primary">Contact us <ArrowUpRight className="size-3.5" /></Link>
         </div>
         {cols.map((col) => (
           <div key={col.title}>
-            <p className="text-sm font-semibold">{col.title}</p>
-            <ul className="mt-3 space-y-2">
+            <p className="text-[10px] font-semibold tracking-widest text-muted-foreground uppercase">{col.title}</p>
+            <ul className="mt-5 space-y-1">
               {col.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="cursor-pointer text-sm text-white/70 hover:text-white">
+                  <Link href={l.href} className="inline-flex min-h-11 items-center text-xs leading-relaxed text-navy/75 transition-colors hover:text-primary">
                     {l.label}
                   </Link>
                 </li>
@@ -64,6 +64,9 @@ export function SiteFooter() {
             </ul>
           </div>
         ))}
+      </div>
+      <div className="site-container border-t border-border py-6 text-xs text-muted-foreground">
+        <p>© {new Date().getFullYear()} Pettroz. All rights reserved.</p>
       </div>
     </footer>
   );

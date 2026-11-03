@@ -1,126 +1,97 @@
-import { AttendancePreview, PumpPreview } from "@/components/product-preview";
-import { ButtonLink, Card, CtaBand, H1, Kicker, Lead, Section } from "@/components/ui";
-import { products, why } from "@/lib/content";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, BarChart3, BookOpen, Building2, CalendarDays, Droplets, Fuel, MapPin, Plus, Users, Wallet } from "lucide-react";
+import { ProductShowcase } from "@/components/product-showcase";
+import { ButtonLink, CtaBand, Section } from "@/components/ui";
+import { products } from "@/lib/content";
+
+const pumpFeatures = [
+  { title: "Sales to daily closing", description: "Bill fuel sales across cash, UPI, card and credit. Reconcile collections and close each shift with a clear DSR.", Icon: Fuel },
+  { title: "Stock, from delivery to sale", description: "Track purchases, tank levels, dip readings and stock variation, alongside lubricants and shop inventory.", Icon: Droplets },
+  { title: "Customers, credit & loyalty", description: "Manage credit limits, outstanding balances and collections. Reward repeat customers with points and redemptions.", Icon: BookOpen },
+  { title: "A clear view of your business", description: "Follow investments, expenses and profit, then compare sales, stock and financial reports across outlets.", Icon: BarChart3 },
+];
+
+const attendanceFeatures = [
+  { title: "Know who’s at work", description: "Mobile check-ins with GPS, geofencing and selfie or face verification. Connect supported biometric devices too.", Icon: MapPin },
+  { title: "Keep every shift covered", description: "Plan rosters, manage leave and holidays, and track overtime without separate registers.", Icon: CalendarDays },
+  { title: "Turn hours into accurate pay", description: "Calculate salaries from attendance, leave and overtime. Give employees access to payslips, records and leave requests.", Icon: Wallet },
+  { title: "Bring every branch together", description: "Manage teams across locations and review attendance patterns, working hours and payroll reports in one workspace.", Icon: Building2 },
+];
+
+const faqs = [
+  { q: "Which Pettroz product is right for my business?", a: "Choose Petrol Pump Management for fuel sales, tank stock, billing and station operations. Choose Attendance & Payroll for managing employees, shifts, leave and salaries in any type of business." },
+  { q: "Can I use Attendance & Payroll without the petrol pump software?", a: "Yes. Attendance & Payroll is a standalone product for offices, shops, factories, restaurants, warehouses and other teams. No Petrol Pump Management subscription is required." },
+  { q: "Is attendance and payroll included with petrol pump management?", a: "Integrated Attendance & Payroll is available with eligible Petrol Pump Management subscriptions. Our team will confirm the included modules and entitlements for your plan." },
+  { q: "Can Pettroz support multiple outlets or branches?", a: "Pettroz offers multi-outlet fuel station management and multi-branch workforce management. The appropriate configuration and access controls depend on your selected product and subscription." },
+  { q: "How do I find out about pricing?", a: "Visit our pricing page to explore the available configurations. Final pricing, employee or outlet limits, integrations and support are confirmed with sales before you subscribe." },
+];
 
 export default function HomePage() {
   return (
     <>
-      <Section className="pb-8 pt-20">
-        <Kicker>TWO POWERFUL PRODUCTS. ONE SMART PLATFORM.</Kicker>
-        <H1>Smarter Software for Petrol Pumps & Growing Businesses.</H1>
-        <Lead>
-          From managing your entire petrol pump to tracking employee attendance and payroll, Pettroz
-          brings powerful business management tools into one simple platform. Whether you operate a
-          fuel station or manage a growing workforce, Pettroz helps you save time, reduce manual
-          work, and stay in control.
-        </Lead>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <ButtonLink href="/products">Explore Our Products</ButtonLink>
-          <ButtonLink href="/book-demo" variant="navy">
-            Book Free Demo
-          </ButtonLink>
-        </div>
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          <PumpPreview />
-          <AttendancePreview />
-        </div>
-      </Section>
-
-      <Section className="pt-8">
-        <h2 className="text-3xl font-semibold text-navy">Choose the Right Pettroz Software for Your Business.</h2>
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <Card>
-            <p className="text-xs font-semibold tracking-widest text-primary uppercase">Product 1</p>
-            <h3 className="mt-2 text-2xl font-semibold text-navy">{products.pump.name}</h3>
-            <p className="mt-2 font-medium">{products.pump.title}</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Manage fuel sales, billing, stock, purchases, daily closing, expenses, credit customers,
-              capital, profitability, staff attendance, and payroll from one connected system.
-            </p>
-            <ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
-              {products.pump.highlights.map((h) => (
-                <li key={h} className="border-l-2 border-primary pl-3">
-                  {h}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <ButtonLink href={products.pump.href}>Explore Petrol Pump Software</ButtonLink>
-              <ButtonLink href="/book-demo" variant="navy">
-                Book Demo
-              </ButtonLink>
+      <section>
+        <div className="site-container grid items-center gap-12 pt-12 pb-16 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-[4vw] lg:pt-20 lg:pb-24">
+          <div className="reveal-in min-w-0">
+            <h1 className="max-w-3xl text-[clamp(2.6rem,4.4vw,5.5rem)] leading-[1.08] font-semibold tracking-[-0.05em] text-navy">
+              Run your business.<br /><span className="text-primary">Not the paperwork.</span>
+            </h1>
+            <p className="mt-7 max-w-lg text-base leading-[1.85] text-muted-foreground">Manage your petrol pump’s sales, stock and accounts, or your team’s attendance and payroll. Choose the Pettroz product that fits your business.</p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <ButtonLink href="/book-demo">Book a free demo <ArrowUpRight className="size-4" /></ButtonLink>
+              <ButtonLink href="#products" variant="ghost">Find your product <ArrowRight className="size-4" /></ButtonLink>
             </div>
-          </Card>
-          <Card>
-            <p className="text-xs font-semibold tracking-widest text-primary uppercase">Product 2</p>
-            <h3 className="mt-2 text-2xl font-semibold text-navy">{products.attendance.name}</h3>
-            <p className="mt-2 font-medium">{products.attendance.title}</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{products.attendance.description}</p>
-            <ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
-              {products.attendance.highlights.map((h) => (
-                <li key={h} className="border-l-2 border-navy pl-3">
-                  {h}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <ButtonLink href={products.attendance.href}>Explore Attendance Software</ButtonLink>
-              <ButtonLink href="/book-demo" variant="navy">
-                Book Demo
-              </ButtonLink>
-            </div>
-          </Card>
+          </div>
+          <ProductShowcase />
         </div>
-        <p className="mt-6 text-sm text-muted-foreground">
-          Use each Pettroz product independently. Petrol Pump Management customers also receive
-          integrated Attendance & Payroll functionality according to their subscription.
-        </p>
-      </Section>
+      </section>
 
-      <Section>
-        <h2 className="text-3xl font-semibold text-navy">Powerful Features. Simple Experience.</h2>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {why.map((w) => (
-            <Card key={w.title} className="p-5">
-              <h3 className="font-semibold text-navy">{w.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{w.text}</p>
-            </Card>
+      <Section id="products">
+        <h2 className="section-title">Choose your software</h2>
+        <div className="mt-10 border-t border-navy/15 sm:mt-14">
+          {([
+            { product: products.attendance, title: "Attendance & Payroll", description: "Your people, their time and their pay. For any business with a team.", color: "bg-[#e6ede3] text-[#35604b]", features: attendanceFeatures, Icon: Users, includesAttendance: false },
+            { product: products.pump, title: "Petrol Pump Management", description: "Your team and your entire station, managed together.", color: "bg-[#f6e5dc] text-[#a6412b]", features: pumpFeatures, Icon: Fuel, includesAttendance: true },
+          ]).map(({ product, title, description, color, features, Icon, includesAttendance }) => (
+            <article key={product.slug} className="grid gap-10 border-b border-navy/15 py-10 sm:py-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:gap-[6vw]">
+              <div>
+                <div className={`mb-6 inline-flex size-14 items-center justify-center rounded-2xl ${color}`}>
+                  <Icon aria-hidden="true" className="size-7" strokeWidth={1.5} />
+                </div>
+                <h3 className="max-w-sm text-3xl leading-tight font-semibold tracking-[-0.04em] text-navy sm:text-4xl">{title}</h3>
+                <p className="mt-4 max-w-sm text-sm leading-7 text-muted-foreground">{description}</p>
+                {includesAttendance ? (
+                  <div className="mt-6 border-l-2 border-[#a6412b]/40 pl-4">
+                    <p className="text-sm font-semibold text-navy">Attendance & Payroll included, plus station operations.</p>
+                    <p className="mt-2 text-xs leading-6 text-muted-foreground">On eligible plans. Our team will confirm the included modules.</p>
+                  </div>
+                ) : <p className="mt-4 text-sm text-muted-foreground">No petrol pump software required.</p>}
+                <Link href={`${product.href}#showcase`} className="mt-6 inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-navy transition-colors hover:text-primary">
+                  Explore {title}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" />
+                </Link>
+              </div>
+              <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:pt-1">
+                {features.map(({ title: feature, description, Icon: FeatureIcon }) => (
+                  <li key={feature}>
+                    <FeatureIcon aria-hidden="true" className={`mb-4 size-6 ${includesAttendance ? "text-[#a6412b]" : "text-[#35604b]"}`} strokeWidth={1.5} />
+                    <h4 className="text-base font-semibold tracking-tight text-navy">{feature}</h4>
+                    <p className="mt-2 max-w-md text-sm leading-7 text-muted-foreground">{description}</p>
+                  </li>
+                ))}
+              </ul>
+            </article>
           ))}
         </div>
       </Section>
 
       <Section>
-        <h2 className="text-3xl font-semibold text-navy">How Pettroz Works</h2>
-        <ol className="mt-8 grid gap-4 md:grid-cols-5">
-          {[
-            "Choose Your Product.",
-            "Set Up Your Business.",
-            "Add Employees, Products, or Fuel Station Details.",
-            "Start Managing Your Operations.",
-            "Track Performance Through Reports.",
-          ].map((step, i) => (
-            <li key={step} className="rounded-2xl border border-border bg-card p-5">
-              <span className="text-sm font-semibold text-primary">{i + 1}</span>
-              <p className="mt-2 text-sm font-medium text-navy">{step}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+          <div><h2 className="section-title">Common questions</h2><Link href="/help" className="mt-6 inline-flex min-h-11 items-center gap-3 text-xs font-semibold text-navy hover:text-primary">Visit the help center <ArrowUpRight className="size-4" /></Link></div>
+          <div className="border-t border-border">
+            {faqs.map((faq) => <details key={faq.q} className="group border-b border-border"><summary className="flex min-h-20 items-center justify-between gap-6 py-5 text-sm leading-relaxed font-medium text-navy">{faq.q}<Plus className="faq-plus size-4 shrink-0 text-muted-foreground transition-transform duration-200" /></summary><p className="max-w-xl pb-6 pr-6 text-sm leading-7 text-muted-foreground">{faq.a}</p></details>)}
+          </div>
+        </div>
       </Section>
-
-      <Section>
-        <h2 className="text-3xl font-semibold text-navy">Built for the People Running Businesses Every Day.</h2>
-        <p className="mt-3 max-w-2xl text-muted-foreground">
-          Customer stories will appear here once we have permissioned, authentic feedback. We do not
-          publish invented reviews, ratings, customer counts, or performance statistics.
-        </p>
-      </Section>
-
-      <CtaBand
-        title="Ready to Run Your Business the Smarter Way?"
-        text="Discover how Pettroz can simplify your daily operations."
-        primary={{ href: "/book-demo", label: "Book Free Demo" }}
-        secondary={{ href: "/contact", label: "Contact Sales" }}
-      />
+      <CtaBand title="See Pettroz in action." text="Get a walkthrough of the product that fits your business." primary={{ href: "/book-demo", label: "Book a free demo" }} secondary={{ href: "/features", label: "View features" }} />
     </>
   );
 }

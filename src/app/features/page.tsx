@@ -13,9 +13,10 @@ export default function FeaturesPage() {
       <Kicker>Features</Kicker>
       <H1>Explore Everything Pettroz Can Do.</H1>
       <Lead>Discover the tools designed to simplify business operations and employee management.</Lead>
-      <div className="mt-8 flex gap-2">
+      <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Choose product features">
         <button
           type="button"
+          aria-pressed={product === "pump"}
           onClick={() => setProduct("pump")}
           className={`h-11 cursor-pointer rounded-lg px-4 text-sm font-medium ${product === "pump" ? "bg-primary text-white" : "bg-navy text-white"}`}
         >
@@ -23,6 +24,7 @@ export default function FeaturesPage() {
         </button>
         <button
           type="button"
+          aria-pressed={product === "attendance"}
           onClick={() => setProduct("attendance")}
           className={`h-11 cursor-pointer rounded-lg px-4 text-sm font-medium ${product === "attendance" ? "bg-primary text-white" : "bg-navy text-white"}`}
         >

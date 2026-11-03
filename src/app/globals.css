@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../";
 
 @theme inline {
   --color-background: var(--background);
@@ -16,16 +17,16 @@
 }
 
 :root {
-  --background: #f4f1ee;
-  --foreground: #333333;
+  --background: #faf9f6;
+  --foreground: #343640;
   --card: #ffffff;
-  --primary: #e63425;
+  --primary: #d93022;
   --primary-foreground: #ffffff;
   --navy: #1a1c29;
   --navy-foreground: #ffffff;
-  --muted: #eeeeee;
-  --muted-foreground: #6b6b6b;
-  --border: #e5e5e5;
+  --muted: #f0efeb;
+  --muted-foreground: #656773;
+  --border: #e6e5e1;
   --ring: #e63425;
 }
 
@@ -34,14 +35,30 @@
     border-color: var(--border);
   }
   html {
-    overflow-x: hidden;
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
   }
   body {
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: #f9ccc5;
+    color: #1a1c29;
+  }
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 4px;
+  }
+  button,
+  a,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:disabled {
+    cursor: not-allowed;
   }
   button,
   a,
@@ -56,6 +73,158 @@
   i {
     font-style: normal;
   }
+}
+
+.site-container {
+  width: 100%;
+  padding-inline: max(1.25rem, 4vw);
+}
+
+.hero-wash {
+  background: radial-gradient(ellipse at 75% 35%, #f8ddd0 0%, #f4ece2 40%, #f0eee8 75%);
+}
+
+.dashboard-shadow {
+  box-shadow: 0 24px 70px -24px #1a1c2938, 0 2px 6px #1a1c2905;
+}
+
+.petroz-product-ui {
+  --background: #f4f1ee;
+  --foreground: #333333;
+  --primary: #e63425;
+  --muted: #eeeeee;
+  --muted-foreground: #6b6b6b;
+  --card: #ffffff;
+  --border: #e5e5e5;
+  --text-xs: 14px;
+  --text-sm: 16px;
+  --text-base: 18px;
+  --text-lg: 20px;
+  color: var(--foreground);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.petroz-product-ui .desk-surface {
+  background: var(--card);
+  border-radius: 1rem;
+  box-shadow: 0 1px 0 #3333330a, 0 12px 32px #33333312;
+}
+
+.petroz-product-ui .meter {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.preview-focus {
+  outline: 3px solid transparent;
+  outline-offset: 4px;
+  transition: outline-color 450ms ease, box-shadow 450ms ease;
+}
+
+.preview-tank-fill {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: grow-y 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-play-state: var(--tank-play-state, paused);
+}
+
+.preview-tank-wave {
+  animation: preview-tank-wave 3.2s linear infinite;
+  animation-play-state: var(--tank-play-state, paused);
+}
+
+@keyframes preview-tank-wave {
+  from { transform: translateX(0); }
+  to { transform: translateX(-1105px); }
+}
+
+.preview-focus-active {
+  outline-color: #e6342580;
+  box-shadow: 0 0 0 8px #e634250a !important;
+}
+
+.preview-cursor {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: transform 850ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease;
+}
+
+.preview-click {
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e63425;
+  border-radius: 50%;
+  animation: preview-click 750ms ease-out both;
+  animation-delay: 850ms;
+}
+
+.preview-new-punch,
+.preview-notification,
+.preview-screen {
+  animation: fade-up 450ms ease-out both;
+}
+
+@keyframes preview-click {
+  from { opacity: 1; transform: scale(0.3); }
+  to { opacity: 0; transform: scale(1.8); }
+}
+
+.section-title {
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  color: var(--navy);
+  text-wrap: balance;
+}
+
+.reveal-in {
+  animation: fade-up 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pettroz-pill-surface {
+  background: var(--navy);
+  box-shadow: inset 0 0 0 1px #ffffff0f, inset 0 1px 0 #ffffff12,
+    0 12px 24px -16px #1a1c2966;
+}
+
+.pettroz-nav-glide {
+  transition: transform 450ms cubic-bezier(0.22, 1.15, 0.36, 1),
+    width 450ms cubic-bezier(0.22, 1.15, 0.36, 1), opacity 150ms ease;
+}
+
+.pettroz-nav-panel {
+  transform-origin: top right;
+  animation: nav-panel-in 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes nav-panel-in {
+  from {
+    clip-path: inset(0 0 calc(100% - 52px) calc(100% - 52px) round 26px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 26px);
+  }
+}
+
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] .faq-plus {
+  transform: rotate(45deg);
 }
 
 @keyframes grow-y {
@@ -88,6 +257,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
   .chart-grow-y,
   .chart-fade {
     animation: none;
