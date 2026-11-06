@@ -18,13 +18,22 @@ demo data.
 The homepage hero shows only Petrol Pump Management, with a guided app demo:
 a cursor edits and saves a fuel rate, then navigates through Sales (including
 records), Dip stock and DSR daily closing before returning to the dashboard.
-The next section uses open product rows instead of enclosing cards. Each has a
+Immediately after the hero, an automatically moving fuel-brand carousel uses
+logos from the sibling `Petroz/public/brands` directory.
+The carousel retains the independent-software and non-affiliation disclaimer.
+The homepage follows with an operational overview and reasons to choose Pettroz,
+then open product rows instead of enclosing cards. Each has a
 product introduction beside four non-clickable, icon-led capability groups,
 combining related features into short explanations without repeating screenshots.
 Each product has one link to its product page's `#showcase` walkthrough.
 Attendance & Payroll appears first as a standalone product. Petrol Pump Management
 then shows Attendance & Payroll inclusion (on eligible plans) followed by its
 additional station features, rather than repeating workforce features.
+Further homepage sections cover supported fuel-station brands, automation,
+financial control, workforce, customers, reports, multi-outlet management, a
+five-step business value summary and the supplied petrol-pump FAQs. The feature
+catalogue presents 24 pump modules and the attendance modules, with detailed
+capability pages and the supplied feature FAQs.
 Below the petrol-pump hero, an interactive Sales / Stock / Closing explorer uses
 the source-based app screens as static, user-selected views. Business capabilities
 are grouped into customers, finances and multi-outlet operations, followed by the

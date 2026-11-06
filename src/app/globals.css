@@ -80,6 +80,16 @@
   padding-inline: max(1.25rem, 4vw);
 }
 
+.fuel-brand-track {
+  animation: fuel-brand-marquee 36s linear infinite;
+}
+
+@keyframes fuel-brand-marquee {
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
 .hero-wash {
   background: radial-gradient(ellipse at 75% 35%, #f8ddd0 0%, #f4ece2 40%, #f0eee8 75%);
 }
@@ -186,6 +196,59 @@
   text-wrap: balance;
 }
 
+.home-faq-item {
+  border-bottom: 1px solid rgb(26 28 41 / 10%);
+}
+
+.home-faq-item:last-child {
+  border-bottom: 0;
+}
+
+.home-faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+
+.home-faq-item > summary::marker {
+  content: "";
+}
+
+.home-faq-chevron {
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-faq-item[open] .home-faq-chevron {
+  transform: rotate(180deg);
+}
+
+.home-faq-answer {
+  color: var(--muted-foreground);
+}
+
+.home-faq-item::details-content {
+  height: 0;
+  overflow: clip;
+  transition:
+    height 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    content-visibility 280ms allow-discrete;
+}
+
+.home-faq-item[open]::details-content {
+  height: auto;
+}
+
+@supports (interpolate-size: allow-keywords) {
+  .home-faq-item {
+    interpolate-size: allow-keywords;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-faq-item::details-content,
+  .home-faq-chevron {
+    transition-duration: 0.01ms;
+  }
+}
+
 .reveal-in {
   animation: fade-up 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -270,5 +333,16 @@ details[open] .faq-plus {
   .chart-grow-y,
   .chart-fade {
     animation: none;
+  }
+  .fuel-brand-track {
+    animation: none;
+  }
+  .fuel-brand-track > .fuel-brand-set[aria-hidden="true"] {
+    display: none;
+  }
+  .fuel-brand-track > .fuel-brand-set:first-child {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
   }
 }

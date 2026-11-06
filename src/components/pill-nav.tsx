@@ -17,29 +17,13 @@ export function PillNav({
 }) {
   const panelId = useId();
   const root = useRef<HTMLElement>(null);
-  const measure = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLUListElement>(null);
   const highlight = useRef<HTMLSpanElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
-  const [collapsed, setCollapsed] = useState(true);
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [focused, setFocused] = useState<string | null>(null);
   const highlightedHref = focused ?? hovered ?? activeHref;
-
-  useLayoutEffect(() => {
-    const parent = root.current?.parentElement;
-    const measurement = measure.current;
-    if (!parent || !measurement) return;
-    const observer = new ResizeObserver(() => {
-      const needsCollapse = measurement.scrollWidth > parent.clientWidth;
-      setCollapsed(needsCollapse);
-      if (!needsCollapse) setOpen(false);
-    });
-    observer.observe(parent);
-    observer.observe(measurement);
-    return () => observer.disconnect();
-  }, []);
 
   useLayoutEffect(() => {
     const list = track.current;
@@ -61,7 +45,7 @@ export function PillNav({
     const observer = new ResizeObserver(update);
     observer.observe(list);
     return () => observer.disconnect();
-  }, [collapsed, highlightedHref, items]);
+  }, [highlightedHref, items]);
 
   useEffect(() => {
     if (!open) return;
@@ -94,7 +78,7 @@ export function PillNav({
     <nav
       ref={root}
       aria-label="Main navigation"
-      className={cn("relative flex max-w-full items-center", collapsed ? "w-full justify-end" : "w-fit")}
+      className="relative flex max-w-full items-center justify-center"
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) {
           setOpen(false);
@@ -102,11 +86,7 @@ export function PillNav({
         }
       }}
     >
-      <div ref={measure} aria-hidden="true" className="pointer-events-none invisible absolute top-0 left-0 flex w-max max-w-full gap-0.5 overflow-hidden p-1">
-        {items.map((item) => <span key={item.href} className={itemClass}>{item.label}</span>)}
-      </div>
-      {!collapsed ? (
-        <div className="pettroz-pill-surface relative rounded-full p-1">
+      <div className="pettroz-pill-surface relative hidden rounded-full p-1 xl:block">
           <div className="relative">
             <span ref={highlight} aria-hidden="true" className="pettroz-nav-glide pointer-events-none absolute inset-y-0 left-0 rounded-full bg-primary opacity-0 shadow-[inset_0_1px_0_#ffffff30,0_4px_12px_-4px_#00000040]" />
             <ul
@@ -123,16 +103,15 @@ export function PillNav({
               ))}
             </ul>
           </div>
-        </div>
-      ) : (
-        <>
-          <button ref={toggle} type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(!open)} className="pettroz-pill-surface relative z-10 grid size-[52px] shrink-0 place-items-center rounded-full text-white focus-visible:outline-navy">
+      </div>
+      <div className="xl:hidden">
+        <button ref={toggle} type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(!open)} className="pettroz-pill-surface relative z-10 grid size-[52px] shrink-0 place-items-center rounded-full text-white focus-visible:outline-navy">
             <span className="relative h-3 w-[18px]" aria-hidden="true">
               <span className={cn("absolute left-0 h-0.5 w-full rounded-full bg-current transition-[top,rotate] duration-300", open ? "top-[5px] rotate-45" : "top-[2px]")} />
               <span className={cn("absolute left-0 h-0.5 w-full rounded-full bg-current transition-[top,rotate] duration-300", open ? "top-[5px] -rotate-45" : "top-[10px]")} />
             </span>
-          </button>
-          {open && (
+        </button>
+        {open && (
             <div id={panelId} className="pettroz-pill-surface pettroz-nav-panel absolute top-0 right-0 w-[min(320px,calc(100vw-2.5rem))] overflow-hidden rounded-[26px] px-2 pt-16 pb-2 text-white">
               <div className="max-h-[calc(100dvh-8rem)] overflow-y-auto overscroll-contain">
                 <ul className="space-y-0.5">
@@ -148,9 +127,8 @@ export function PillNav({
                 </div>
               </div>
             </div>
-          )}
-        </>
-      )}
+        )}
+      </div>
     </nav>
   );
 }

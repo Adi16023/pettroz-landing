@@ -47,20 +47,20 @@ export function Section({
 
 export function Kicker({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-sm font-medium text-muted-foreground">{children}</p>
+    <span className="sr-only">{children}</span>
   );
 }
 
 export function H1({ children }: { children: React.ReactNode }) {
   return (
-    <h1 className="mt-5 max-w-4xl text-4xl leading-[1.08] font-semibold tracking-[-0.05em] text-balance text-navy sm:text-5xl lg:text-6xl">
+    <h1 className="mt-0 max-w-4xl text-4xl leading-[1.08] font-semibold tracking-[-0.05em] text-balance text-navy sm:text-5xl lg:text-6xl">
       {children}
     </h1>
   );
 }
 
-export function Lead({ children }: { children: React.ReactNode }) {
-  return <p className="mt-6 max-w-2xl text-base leading-[1.8] text-pretty text-muted-foreground sm:text-lg">{children}</p>;
+export function Lead({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <p className={cn("mt-6 max-w-2xl text-base leading-[1.8] text-pretty text-muted-foreground sm:text-lg", className)}>{children}</p>;
 }
 
 export function Card({ children, className }: { children: React.ReactNode; className?: string }) {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BlogThumbnail } from "@/components/blog-thumbnail";
 import { ButtonLink, H1, Kicker, Lead, Section } from "@/components/ui";
 import { blogPosts } from "@/lib/content";
 
@@ -23,6 +24,7 @@ export default async function BlogArticlePage({ params }: PageProps<"/blog/[slug
       <Kicker>{post.category}</Kicker>
       <H1>{post.title}</H1>
       <Lead>{post.excerpt}</Lead>
+      <BlogThumbnail category={post.category} title={post.title} className="mt-8 max-w-4xl" />
       <article className="mt-8 max-w-2xl space-y-4 text-sm leading-relaxed text-muted-foreground">
         <p>
           Pettroz is built so this kind of work lives in the product instead of a side register.

@@ -1,8 +1,59 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BarChart3, BookOpen, Building2, CalendarDays, Droplets, Fuel, MapPin, Plus, Users, Wallet } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Banknote,
+  BarChart3,
+  Bell,
+  BookOpen,
+  Building2,
+  CalendarDays,
+  CarFront,
+  ChartNoAxesCombined,
+  Clock3,
+  Contact,
+  CreditCard,
+  Droplets,
+  Fuel,
+  GitCompareArrows,
+  HandCoins,
+  Landmark,
+  LayoutDashboard,
+  Map,
+  MapPin,
+  MessageCircle,
+  PieChart,
+  Receipt,
+  ScanLine,
+  ShieldCheck,
+  ShoppingBag,
+  TrendingUp,
+  Truck,
+  Users,
+  Wallet,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
 import { ProductShowcase } from "@/components/product-showcase";
+import { FuelBrandCarousel } from "@/components/fuel-brand-carousel";
+import { HomeFaq } from "@/components/home-faq";
 import { ButtonLink, CtaBand, Section } from "@/components/ui";
-import { products } from "@/lib/content";
+import {
+  homeIntroduction,
+  homeJourney,
+  homeReasons,
+  homeSections,
+  products,
+} from "@/lib/content";
+
+const homeSectionIcons: Record<string, LucideIcon[]> = {
+  automation: [ScanLine, CreditCard, MessageCircle, Bell, ChartNoAxesCombined],
+  "financial-control": [TrendingUp, PieChart, Banknote, CreditCard, HandCoins, Receipt],
+  "staff-management": [MapPin, CalendarDays, ShieldCheck, Users, Wallet, ChartNoAxesCombined],
+  "customer-management": [Contact, CreditCard, CarFront, ShoppingBag, Bell, Wrench, MessageCircle],
+  "reports-analytics": [ChartNoAxesCombined, Fuel, Clock3, Landmark, PieChart, Users, Truck, Users, CreditCard, GitCompareArrows],
+  "multi-outlet-management": [MapPin, Map, LayoutDashboard, Wallet, Users, ChartNoAxesCombined, GitCompareArrows],
+};
 
 const pumpFeatures = [
   { title: "Sales to daily closing", description: "Bill fuel sales across cash, UPI, card and credit. Reconcile collections and close each shift with a clear DSR.", Icon: Fuel },
@@ -16,14 +67,6 @@ const attendanceFeatures = [
   { title: "Keep every shift covered", description: "Plan rosters, manage leave and holidays, and track overtime without separate registers.", Icon: CalendarDays },
   { title: "Turn hours into accurate pay", description: "Calculate salaries from attendance, leave and overtime. Give employees access to payslips, records and leave requests.", Icon: Wallet },
   { title: "Bring every branch together", description: "Manage teams across locations and review attendance patterns, working hours and payroll reports in one workspace.", Icon: Building2 },
-];
-
-const faqs = [
-  { q: "Which Pettroz product is right for my business?", a: "Choose Petrol Pump Management for fuel sales, tank stock, billing and station operations. Choose Attendance & Payroll for managing employees, shifts, leave and salaries in any type of business." },
-  { q: "Can I use Attendance & Payroll without the petrol pump software?", a: "Yes. Attendance & Payroll is a standalone product for offices, shops, factories, restaurants, warehouses and other teams. No Petrol Pump Management subscription is required." },
-  { q: "Is attendance and payroll included with petrol pump management?", a: "Integrated Attendance & Payroll is available with eligible Petrol Pump Management subscriptions. Our team will confirm the included modules and entitlements for your plan." },
-  { q: "Can Pettroz support multiple outlets or branches?", a: "Pettroz offers multi-outlet fuel station management and multi-branch workforce management. The appropriate configuration and access controls depend on your selected product and subscription." },
-  { q: "How do I find out about pricing?", a: "Visit our pricing page to explore the available configurations. Final pricing, employee or outlet limits, integrations and support are confirmed with sales before you subscribe." },
 ];
 
 export default function HomePage() {
@@ -44,6 +87,43 @@ export default function HomePage() {
           <ProductShowcase />
         </div>
       </section>
+
+      <FuelBrandCarousel />
+
+      <Section>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-[6vw]">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">One connected platform</p>
+            <h2 className="section-title mt-3">Everything your petrol pump needs. All in one place.</h2>
+            <p className="mt-5 max-w-lg text-sm leading-7 text-muted-foreground">
+              Fuel sales, nozzle readings, stock reconciliation, cash collections, credit customers,
+              employee shifts and financial records all need attention. Pettroz brings these
+              activities together to help simplify daily work and improve business visibility.
+            </p>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+              {homeIntroduction.map((item) => (
+                <li key={item} className="flex gap-3 text-sm leading-6 text-navy">
+                  <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <ButtonLink href="/solutions" variant="navy" className="mt-7">Discover Pettroz solutions</ButtonLink>
+          </div>
+          <div className="rounded-3xl bg-[#f4f3ef] p-6 sm:p-9">
+            <p className="text-sm font-semibold text-navy">More control. Less manual work.</p>
+            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-navy">Designed around everyday station work.</h3>
+            <ul className="mt-7 grid gap-6 sm:grid-cols-2">
+              {homeReasons.map((reason) => (
+                <li key={reason.title}>
+                  <h4 className="text-sm font-semibold text-navy">{reason.title}</h4>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{reason.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
 
       <Section id="products">
         <h2 className="section-title">Choose your software</h2>
@@ -83,15 +163,104 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section>
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-          <div><h2 className="section-title">Common questions</h2><Link href="/help" className="mt-6 inline-flex min-h-11 items-center gap-3 text-xs font-semibold text-navy hover:text-primary">Visit the help center <ArrowUpRight className="size-4" /></Link></div>
-          <div className="border-t border-border">
-            {faqs.map((faq) => <details key={faq.q} className="group border-b border-border"><summary className="flex min-h-20 items-center justify-between gap-6 py-5 text-sm leading-relaxed font-medium text-navy">{faq.q}<Plus className="faq-plus size-4 shrink-0 text-muted-foreground transition-transform duration-200" /></summary><p className="max-w-xl pb-6 pr-6 text-sm leading-7 text-muted-foreground">{faq.a}</p></details>)}
+      {/*
+      <Section className="bg-[#f4f3ef]">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Built for every fuel station</p>
+            <h2 className="section-title mt-3 max-w-2xl">Management tools for stations across India.</h2>
           </div>
+          <Link href="/solutions" className="inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-navy hover:text-primary">
+            Explore brand-specific solutions<ArrowUpRight aria-hidden="true" className="size-4" />
+          </Link>
+        </div>
+        <p className="mt-5 max-w-3xl text-sm leading-7 text-muted-foreground">
+          Organise everyday station activities for major fuel brands or independent operators.
+          Brand references describe operational use cases and do not imply affiliation, endorsement
+          or integration with proprietary oil-company systems.
+        </p>
+        <ul className="mt-8 grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
+          {fuelStationBrands.map((station) => (
+            <li key={station.name} className="border-t border-navy/15 pt-5">
+              <h3 className="text-base font-semibold text-navy">{station.name}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{station.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+      */}
+
+      {homeSections.map((section, sectionIndex) => (
+        <Section
+          key={section.id}
+          id={section.id}
+          className={sectionIndex % 2 === 0 ? "bg-[#f4f3ef]" : ""}
+        >
+          <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-10">
+            <div className="max-w-3xl">
+              <p className="inline-flex items-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold tracking-wide text-navy">
+                {section.title}
+              </p>
+              <h2 className="section-title mt-4">{section.heading}</h2>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">{section.description}</p>
+            </div>
+            <Link href={section.href} className="inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-navy transition-colors hover:text-primary">
+              {section.link}<ArrowUpRight aria-hidden="true" className="size-4" />
+            </Link>
+          </div>
+          <ul className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {section.items.map((item, itemIndex) => {
+              const Icon = homeSectionIcons[section.id]?.[itemIndex] ?? Fuel;
+
+              return (
+                <li
+                  key={item.title}
+                  className={`group rounded-2xl border border-navy/10 p-5 transition duration-200 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-navy/5 sm:p-6 ${sectionIndex % 2 === 0 ? "bg-white" : "bg-[#f4f3ef]"}`}
+                >
+                  <span className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.7} />
+                  </span>
+                  <h3 className="text-base font-semibold tracking-tight text-navy">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.text}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
+      ))}
+
+      <Section className="bg-[#f4f3ef]">
+        <p className="text-sm font-medium text-muted-foreground">From daily operations to business growth</p>
+        <h2 className="section-title mt-3 max-w-2xl">A clearer way to move your business forward.</h2>
+        <ol className="mt-9 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          {homeJourney.map((step, index) => (
+            <li key={step.title} className="border-t border-navy/20 pt-5">
+              <span className="text-xs font-semibold tracking-widest text-primary">0{index + 1}</span>
+              <h3 className="mt-4 text-base font-semibold text-navy">{step.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      <Section className="py-14 lg:py-16">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.65fr)_minmax(0,1.35fr)] lg:gap-14">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Frequently asked questions</p>
+            <h2 className="section-title mt-3">A few things you might be wondering.</h2>
+            <Link href="/help" className="mt-6 inline-flex min-h-11 items-center gap-3 text-xs font-semibold text-navy hover:text-primary">
+              Visit the help center<ArrowUpRight aria-hidden="true" className="size-4" />
+            </Link>
+          </div>
+          <HomeFaq />
         </div>
       </Section>
-      <CtaBand title="See Pettroz in action." text="Get a walkthrough of the product that fits your business." primary={{ href: "/book-demo", label: "Book a free demo" }} secondary={{ href: "/features", label: "View features" }} />
+      <CtaBand
+        title="Ready to manage your petrol pump smarter?"
+        text="Bring fuel station operations, accounting, inventory, employees, payments and customer management together. Your petrol pump. Your operations. One smarter platform."
+        primary={{ href: "/book-demo", label: "Book a free demo" }}
+        secondary={{ href: "/contact", label: "Talk to our team" }}
+      />
     </>
   );
 }

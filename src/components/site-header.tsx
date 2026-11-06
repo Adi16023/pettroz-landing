@@ -12,6 +12,8 @@ const items: PillNavItem[] = [
   { href: "/solutions", label: "Solutions" },
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function SiteHeader() {
@@ -20,12 +22,12 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-navy/[0.06] bg-background/90 backdrop-blur-xl">
-      <div className="site-container flex min-h-24 items-center justify-between gap-4 py-4 xl:grid xl:grid-cols-[1fr_auto_1fr]">
+      <div className="site-container flex min-h-24 items-center justify-between gap-4 py-4 xl:grid xl:grid-cols-[auto_minmax(0,1fr)_auto]">
         <Link href="/" className="shrink-0 justify-self-start" aria-label="Pettroz home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/pettroz-bl.svg" alt="Pettroz" className="h-8 w-auto" />
         </Link>
-        <div className="flex min-w-0 flex-1 justify-center xl:w-[550px]">
+        <div className="flex min-w-0 flex-1 justify-center">
           <PillNav key={pathname} items={items} activeHref={activeHref} />
         </div>
         <div className="hidden shrink-0 items-center gap-5 justify-self-end sm:flex">

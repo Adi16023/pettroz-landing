@@ -9,10 +9,10 @@ export default function ProductsPage() {
   return (
     <Section className="pt-20">
       <Kicker>Products</Kicker>
-      <H1>Two Products. Endless Possibilities.</H1>
+      <H1>Two Products. Practical Tools for Everyday Operations.</H1>
       <Lead>
-        Explore Pettroz’s purpose-built business solutions. Choose complete petrol pump management
-        or advanced standalone attendance and payroll software.
+        Choose complete petrol pump management for sales, inventory, finances, staff, and station
+        operations—or standalone Attendance & Payroll for businesses managing a workforce.
       </Lead>
       <div className="mt-10 grid gap-8 lg:grid-cols-2">
         {[products.pump, products.attendance].map((p, i) => (
@@ -20,9 +20,12 @@ export default function ProductsPage() {
             {i === 0 ? <PumpPreview /> : <AttendancePreview />}
             <h2 className="mt-6 text-2xl font-semibold text-navy">{p.name}</h2>
             <p className="mt-2 text-sm text-muted-foreground">{p.short}</p>
-            <ul className="mt-4 space-y-1 text-sm">
-              {p.highlights.slice(0, 6).map((h) => (
-                <li key={h}>• {h}</li>
+            <ul className="mt-5 grid gap-x-5 gap-y-3 sm:grid-cols-2">
+              {p.highlights.map((h) => (
+                <li key={h} className="flex gap-2 text-sm leading-6 text-navy">
+                  <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
+                  {h}
+                </li>
               ))}
             </ul>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -51,6 +54,11 @@ export default function ProductsPage() {
           </p>
         </div>
       </Card>
+      <p className="mt-6 max-w-3xl text-xs leading-6 text-muted-foreground">
+        Some integrations, notifications and product workflows depend on supported providers,
+        account permissions and configuration. Confirm availability for your requirements with our
+        team before subscribing.
+      </p>
     </Section>
   );
 }
