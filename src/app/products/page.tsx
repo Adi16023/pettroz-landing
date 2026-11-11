@@ -40,7 +40,7 @@ export default function ProductsPage() {
           </Card>
         ))}
       </div>
-      <Card className="mt-10">
+      {/* <Card className="mt-10">
         <h2 className="text-xl font-semibold text-navy">Which software is right for you?</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2 text-sm">
           <p>
@@ -53,12 +53,12 @@ export default function ProductsPage() {
             required.
           </p>
         </div>
-      </Card>
-      <p className="mt-6 max-w-3xl text-xs leading-6 text-muted-foreground">
+      </Card> */}
+      {/* <p className="mt-6 max-w-3xl text-xs leading-6 text-muted-foreground">
         Some integrations, notifications and product workflows depend on supported providers,
         account permissions and configuration. Confirm availability for your requirements with our
         team before subscribing.
-      </p>
+      </p> */}
     </Section>
   );
 }

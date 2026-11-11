@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import { DeskCard, Donut, HorizontalBars, KpiCard, Stamp, TankGauges } from "@/components/product-ui";
 
-export type DemoScreen = "Sales" | "Dip" | "DSR" | "Attendance" | "Shifts & Rosters" | "Leave" | "Payroll";
+export type DemoScreen = "Sales" | "Dip" | "DSR" | "Credit customers" | "Attendance" | "Shifts & Rosters" | "Leave" | "Payroll";
 
 function Action({ children, target, primary = false }: { children: ReactNode; target?: string; primary?: boolean }) {
   return <span data-preview-target={target} className={`inline-flex h-10 items-center gap-2 rounded-lg border px-4 text-sm font-medium ${primary ? "border-primary bg-primary text-white" : "border-border bg-white"}`}>{children}</span>;
@@ -77,6 +77,28 @@ export function ProductDemoScreen({ screen, actionComplete }: { screen: DemoScre
         <div className="mb-6 grid grid-cols-4 gap-4">{[["Total sales", "₹2,40,850"], ["Fuel sales", "₹2,32,400"], ["Lube / product", "₹8,450"], ["Credit sales", "₹22,450"], ["Cash collection", "₹1,58,200"], ["UPI Collection", "₹45,000"], ["Expenses", "₹3,500"], ["Net collection", "₹2,37,350"]].map(([label, value], i) => <KpiCard key={label} label={label} value={value} hint="03 Nov 2026" wash={i === 0 ? "bg-emerald-200!" : undefined} />)}</div>
         <DeskCard title="Collection summary" previewTarget="closing-summary" className="mb-6"><div className="grid grid-cols-4 gap-6">{[["Cash", "₹1,58,200"], ["UPI", "₹45,000"], ["POS", "₹15,200"], ["Credit", "₹22,450"]].map(([label, value]) => <div key={label}><p className="text-sm text-muted-foreground">{label}</p><p className="mt-2 text-2xl">{value}</p></div>)}</div></DeskCard>
         <DeskCard title="Notes & DSR status"><div className="flex items-center justify-between"><p className="text-sm text-muted-foreground">All collections reconciled for the day.</p><Stamp tone={actionComplete ? "ok" : "warn"}>{actionComplete ? "Locked" : "Open"}</Stamp></div></DeskCard>
+      </div>;
+    case "Credit customers":
+      return <div>
+        <Heading title="Credit customers" hint="Credit limits, outstanding balances and collections.">
+          <div className="flex gap-2"><Action>Export</Action><Action primary target="credit-add">Add customer</Action></div>
+        </Heading>
+        <div className="mb-6 grid grid-cols-4 gap-4">
+          <KpiCard label="Customers" value="128" hint="Active credit accounts" />
+          <KpiCard label="Outstanding" value="₹80,450" hint="All accounts" wash="bg-rose-200!" />
+          <KpiCard label="Collected today" value="₹12,000" hint="3 receipts" wash="bg-emerald-200!" />
+          <KpiCard label="Overdue" value="₹18,600" hint="Past due date" wash="bg-amber-200!" />
+        </div>
+        <DemoTable
+          target="credit-list"
+          columns={["Customer", "Phone", "Limit", "Outstanding", "Last sale", "Status"]}
+          rows={[
+            ["Fleet Corp", "98××××8801", "₹1,00,000", "₹48,200", "Yesterday", <Stamp key="c1">Open</Stamp>],
+            ["City Cabs", "98××××4412", "₹50,000", "₹22,450", "02 Nov", <Stamp key="c2" tone="warn">Due soon</Stamp>],
+            ["Local Workshop", "98××××2145", "₹20,000", "₹9,800", "28 Oct", <Stamp key="c3" tone="warn">Overdue</Stamp>],
+            ["Ramesh Kumar", "98××××1099", "₹15,000", "₹0", "Today", <Stamp key="c4">Clear</Stamp>],
+          ]}
+        />
       </div>;
     case "Attendance":
       return <div>

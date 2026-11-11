@@ -677,6 +677,94 @@ export const allFeatures = [
   ...attendanceModules.map((m) => ({ ...m, product: "attendance" as const })),
 ];
 
+export const featureThemes = {
+  pump: [
+    {
+      id: "station-operations",
+      title: "Station operations",
+      description: "From the first sale to tank stock and shift handovers.",
+      slugs: [
+        "fuel-sales-billing",
+        "dsr-daily-closing",
+        "tank-fuel-stock",
+        "fuel-purchases",
+        "stock-variation",
+        "lubricants-products",
+        "pump-shift-management",
+        "cng-ev-operations",
+      ],
+    },
+    {
+      id: "money-accounts",
+      title: "Money and accounts",
+      description: "Cash, settlements, expenses and financial records in one place.",
+      slugs: [
+        "cash-drawer-management",
+        "capital-profit-loss",
+        "financial-accounting",
+        "banking-payment-management",
+        "pos-settlement",
+        "expense-management",
+        "gst-tax-records",
+        "tally-invoicing",
+      ],
+    },
+    {
+      id: "customers-automation",
+      title: "Customers and automation",
+      description: "Credit accounts, loyalty and supported digital follow-ups.",
+      slugs: [
+        "credit-customers",
+        "loyalty",
+        "ocr-data-capture",
+        "whatsapp-sms-automation",
+        "vehicle-service-reminders",
+      ],
+    },
+    {
+      id: "visibility",
+      title: "Visibility across the business",
+      description: "Reports, multi-outlet control and workforce in the same platform.",
+      slugs: ["reports-analytics", "multi-outlet", "pump-attendance-payroll"],
+    },
+  ],
+  attendance: [
+    {
+      id: "attendance-capture",
+      title: "Attendance capture",
+      description: "Know who’s at work with location and verification workflows.",
+      slugs: ["advanced-attendance", "gps-geofencing", "selfie-face", "employee-app"],
+    },
+    {
+      id: "scheduling-leave",
+      title: "Scheduling and leave",
+      description: "Keep every shift covered and leave requests organised.",
+      slugs: ["shifts-rosters", "leave-management", "overtime"],
+    },
+    {
+      id: "people-pay",
+      title: "People and pay",
+      description: "Employee records through to accurate payroll.",
+      slugs: ["employee-management", "payroll"],
+    },
+  ],
+} as const;
+
+export const featureShowcaseHighlights = {
+  pump: [
+    "Sales, billing and daily closing in one desk",
+    "Tank stock, dips and purchases you can reconcile",
+    "Cash, credit and settlement records together",
+    "Reports across shifts, outlets and dates",
+  ],
+  attendance: [
+    "GPS and verification-ready check-ins",
+    "Shifts, leave and overtime in one workflow",
+    "Payroll built from attendance records",
+    "Employee self-service on mobile",
+  ],
+} as const;
+
 export const solutions = [
   {
     slug: "individual-petrol-pumps",
@@ -803,48 +891,158 @@ export const petrolPumpSolutions = [
 
 export const fuelStationBrands = [
   {
+    slug: "indianoil",
     name: "IndianOil",
     label: "IndianOil petrol pump solutions",
-    summary: "Organise IOCL sales, DSR, inventory, accounting and everyday station operations.",
-    areas: ["Daily sales and DSR", "Nozzle readings and shifts", "Tank stock and inventory", "Cash, banking and credit", "Daily financial reports"],
+    image: "/brands/iocl.png",
+    summary: "Smart business management software for IndianOil petrol pump dealers.",
   },
   {
+    slug: "bpcl",
     name: "BPCL",
     label: "BPCL petrol pump solutions",
-    summary: "Bring BPCL station sales, stock, employees and financial records into a clearer view.",
-    areas: ["Fuel sales and reporting", "Inventory and stock", "Shifts and employees", "Cash and payment reconciliation", "Credit, expenses and profit"],
+    image: "/brands/bpcl.png",
+    summary: "Smart business management software for BPCL petrol pump dealers.",
   },
   {
+    slug: "hpcl",
     name: "HPCL",
     label: "HPCL petrol pump solutions",
-    summary: "Keep HPCL operations organised across sales, dip records, staff and business reporting.",
-    areas: ["Daily sales and DSR", "Fuel stock and dip readings", "Employees and shifts", "Cash and banking", "Purchases and performance reports"],
+    image: "/brands/hpcl.png",
+    summary: "Smart business management software for HPCL petrol pump dealers.",
   },
   {
+    slug: "nayara-energy",
     name: "Nayara Energy",
     label: "Nayara Energy petrol pump solutions",
-    summary: "Review Nayara fuel station sales, inventory, collections and customer accounts.",
-    areas: ["Fuel sales and daily reporting", "Tank stock and dip monitoring", "Credit customers", "Cash and reconciliation", "Purchases, expenses and financial performance"],
+    image: "/brands/nayara.jpg",
+    summary: "Smart business management software for Nayara Energy petrol pump dealers.",
   },
   {
+    slug: "jio-bp",
     name: "Jio-bp",
     label: "Jio-bp fuel station solutions",
-    summary: "Connect Jio-bp station records across sales, people, payments and business reporting.",
-    areas: ["Fuel sales and nozzle records", "Shifts and inventory", "Employee operations", "Digital payment tracking", "Reports and analytics"],
+    image: "/brands/jio-bp.webp",
+    summary: "Smart business management software for Jio-bp fuel station dealers.",
   },
   {
+    slug: "shell",
     name: "Shell",
     label: "Shell fuel station solutions",
-    summary: "Organise Shell station transactions, inventory, employee activities and finances.",
-    areas: ["Fuel sales and transactions", "Inventory and stock", "Shift summaries", "Cash and banking", "Customer, supplier and financial records"],
+    image: "/brands/shell.png",
+    summary: "Smart business management software for Shell fuel station dealers.",
   },
   {
-    name: "Independent stations",
-    label: "Independent fuel station solutions",
-    summary: "Manage an independent station’s sales, stock, accounts, employees and customer records.",
-    areas: ["Daily sales management", "Fuel inventory and dip records", "Cash and accounting", "Credit customers and collections", "Employees, shifts and business reports"],
+    slug: "reliance",
+    name: "Reliance",
+    label: "Reliance petrol pump solutions",
+    image: "/brands/reliance.png",
+    summary: "Smart business management software for Reliance petrol pump dealers.",
+  },
+  {
+    slug: "mrpl",
+    name: "MRPL",
+    label: "MRPL petrol pump solutions",
+    image: "/brands/mrpl.jpg",
+    summary: "Smart business management software for MRPL petrol pump dealers.",
   },
 ];
+
+/**
+ * Shared brand article copy. Only the brand name changes in the headline/byline;
+ * the article body is identical for all 8 fuel brands.
+ */
+export const fuelBrandPageContent = {
+  dek: "How dealers are replacing registers and spreadsheets with one connected platform for sales, stock, credit, staff and accounts.",
+  pullQuote:
+    "Operate the way fuel stations actually run—shift by shift, tank by tank, customer by customer.",
+  sections: [
+    {
+      heading: "The daily reality of running a petrol pump",
+      paragraphs: [
+        "Running a petrol pump is not only about selling petrol and diesel. Every day brings nozzle readings, tank dips, cash and UPI collections, credit sales to transporters, staff shifts, expenses, purchases and closing reports that have to line up before the next shift opens.",
+        "When those activities live in handwritten registers, Excel sheets and disconnected tools, owners and managers spend more time chasing numbers than running the business. Small differences in stock, cash or credit can take hours to find—and often surface only after the damage is done.",
+        "Dealers across India face the same pressure: keep the forecourt moving, keep records clean, and keep a clear view of profitability without adding more paperwork.",
+      ],
+    },
+    {
+      heading: "Why manual systems fall short",
+      paragraphs: [
+        "Manual registers are familiar, but they rarely give a complete picture. Sales may be written in one book, dips in another, credit in a third, and payroll somewhere else entirely. By the time figures are consolidated, the shift has already closed and the chance to correct a mistake has passed.",
+        "Spreadsheets help for a while, then become fragile. Formulas break, versions multiply across phones and desktops, and there is no single source of truth for tank stock, outstanding balances or outlet-wise performance. Multi-outlet groups feel this pain even more sharply.",
+        "Generic accounting software can record vouchers, but it does not understand nozzle-wise sales, fuel variance, shift handovers or fleet credit the way a fuel retail business needs. The result is duplicate entry and delayed decisions.",
+      ],
+    },
+    {
+      heading: "A platform built around station work",
+      paragraphs: [
+        "Pettroz is petrol pump management software designed for fuel retail dealers. It brings sales, inventory, cash, credit, employees and reports into connected workflows so the same day’s work is visible in one place.",
+        "Whether you operate a single station or several outlets, the goal is the same: replace scattered records with organised digital information, reduce repetitive entry, and give owners and managers a clearer view of what happened on the forecourt.",
+        "The platform is built for how dealers actually work—opening meters, recording dips, reconciling collections, issuing credit, reviewing DSR and comparing outlets—not for abstract office processes.",
+      ],
+    },
+    {
+      heading: "Sales, billing and daily closing",
+      paragraphs: [
+        "Fuel sales move quickly. Pettroz helps stations organise petrol, diesel and other product sales alongside cash, UPI, card and credit payments so the day’s mix is easier to review.",
+        "Shift closing becomes more structured when nozzle readings, collections and credit sales sit together. Managers can review shortages or excesses against recorded activity instead of reconstructing the shift from memory and paper slips.",
+        "Daily Sales Report (DSR) style summaries draw on configured operational records so owners can see how the day performed without waiting for someone to retype every register into a spreadsheet.",
+      ],
+    },
+    {
+      heading: "Tank stock, dips and variance",
+      paragraphs: [
+        "Fuel inventory is the heart of station control. Pettroz supports tank-wise stock tracking, opening and closing stock, dip readings, deliveries and stock variation so dealers can watch movement across petrol and diesel tanks.",
+        "When purchases, sales and dips are recorded in the same system, variance is easier to investigate. That helps reduce unexplained losses and builds confidence in the stock figure used for ordering and reconciliation.",
+        "Stations that also sell lubricants and shop products can keep those inventories organised alongside fuel, instead of treating the shop as a separate, invisible business.",
+      ],
+    },
+    {
+      heading: "Credit customers, fleets and collections",
+      paragraphs: [
+        "Many stations depend on transporters, fleet owners and local businesses who fuel on credit. Managing limits, outstanding balances, statements and collections on paper creates delayed follow-ups and weak cash flow.",
+        "Pettroz helps dealers maintain credit customer accounts with clearer visibility into balances and payment activity. Vehicle-wise and customer-wise histories support conversations that used to depend on incomplete notebooks.",
+        "Better receivables discipline does not require harsher relationships—it requires accurate records that both the station and the customer can trust.",
+      ],
+    },
+    {
+      heading: "Cash, payments and financial clarity",
+      paragraphs: [
+        "Cash drawer movements, expenses, banking and supported POS settlements all affect the real profit of a station. When these sit in separate places, owners struggle to answer a simple question: how did we do today?",
+        "Pettroz brings financial records into the same operational context as sales and stock. Dealers can review collections, expenses and accounting activity without rebuilding the day from scratch.",
+        "Supported invoice and Tally-compatible workflows help reduce duplicate entry where integration and configuration allow, so bookkeeping stays closer to what actually happened on the forecourt.",
+      ],
+    },
+    {
+      heading: "People, shifts and multi-outlet control",
+      paragraphs: [
+        "Stations run on people. Shift rosters, attendance, leave and payroll affect both service quality and cost. Pettroz Attendance & Payroll capabilities—available as a standalone product or included on eligible pump plans—help organise employee records and working hours.",
+        "For groups running more than one outlet, multi-outlet views make it easier to compare sales, stock and performance without calling every manager for a WhatsApp summary. Role-based access keeps local teams focused while owners retain a central picture.",
+        "Growth should not mean more chaos. A connected platform lets expanding dealers add outlets and staff without multiplying registers and spreadsheets.",
+      ],
+    },
+    {
+      heading: "Who this is for",
+      paragraphs: [
+        "Petrol pump owners who want clearer daily visibility without living inside paperwork. Station managers who need structured shift handovers and cleaner operational records. Multi-outlet operators who want one dashboard across locations.",
+        "It is also useful for dealers serving fleet and credit customers, and for growing fuel businesses that need processes that can scale as volume and complexity increase.",
+        "If your station still depends on registers for dips, credit and closing, this is the kind of system designed to take that load into a single, reviewable digital record.",
+      ],
+    },
+    {
+      heading: "What dealers typically gain",
+      paragraphs: [
+        "Less time spent on repetitive entry and end-of-day reconstruction. Better stock accuracy through tank-wise records and variance review. Faster collections because credit balances are easier to track.",
+        "Stronger business visibility—sales, cash, inventory and people—in one place, with reports that support decisions instead of delaying them. And a clearer path to grow without adding administrative headcount for every new outlet.",
+        "Software does not replace judgment on the forecourt. It gives dealers cleaner information so judgment can be faster and more confident.",
+      ],
+    },
+  ],
+  closing:
+    "If you are evaluating petrol pump management software for your stations, book a demo with Pettroz. We will walk through sales, stock, credit, shifts and reports using the workflows that matter for your outlets.",
+  disclaimer:
+    "Pettroz is independently built for fuel retail businesses and is not affiliated with, endorsed by, or officially partnered with the oil marketing company named on this page. Brand names are referenced only to describe the dealer audience this software serves and do not imply integration with proprietary oil-company systems.",
+};
 
 export const homeIntroduction = [
   "Manage daily fuel sales and DSR.",
@@ -941,11 +1139,7 @@ export const homeSections = [
       { title: "Sales", text: "Daily and monthly, fuel product-wise and nozzle-wise sales." },
       { title: "Inventory", text: "Tank stock, dip readings and fuel stock reports." },
       { title: "Shifts", text: "Shift-wise summaries and operational records." },
-      { title: "Cash and banking", text: "Cash, bank and payment summaries." },
-      { title: "Profit and loss", text: "Daily financial performance and recorded expenses." },
-      { title: "Credit customers", text: "Outstanding balances and collection reports." },
       { title: "Purchases and suppliers", text: "Supplier activity and purchase records." },
-      { title: "Workforce", text: "Employee attendance and shift reports." },
       { title: "Settlements", text: "Supported payment settlement reports." },
       { title: "Comparisons", text: "Date-wise comparisons and business performance summaries." },
     ],
@@ -998,24 +1192,11 @@ export const featureFaqs = [
   { q: "What is petrol pump management software?", a: "It is a digital platform for organising daily sales, nozzle readings, fuel inventory, accounting, cash collections, employees, customers and business reports." },
   { q: "Which petrol pump brands does Pettroz support?", a: "Pettroz is designed for stations across IndianOil, BPCL, HPCL, Nayara Energy, Jio-bp, Shell and independent operators. Brand references do not imply affiliation." },
   { q: "Can Pettroz generate a Daily Sales Report (DSR)?", a: "DSR capabilities are designed to bring together configured nozzle readings, fuel quantities, payment records and shift-wise summaries." },
-  { q: "Can I manage petrol and diesel separately?", a: "Product-wise records can be used to track petrol, diesel and other configured fuel products separately." },
   { q: "Can I manage multiple fuel tanks?", a: "Configured tanks can have separate inventory records, dip readings, stock calculations and reconciliation." },
   { q: "Can Pettroz calculate daily profit and loss?", a: "Daily summaries use recorded sales, purchase costs, margins and expenses; accuracy depends on complete and correctly configured records." },
-  { q: "Does Pettroz have cash drawer management?", a: "Cash management records can include opening and closing balances, collections, withdrawals, expenses, shift handovers and reconciliation." },
-  { q: "Can I track POS settlements through Pettroz?", a: "Settlement reconciliation depends on supported provider integrations, API availability and account permissions." },
-  { q: "Which payment providers can be integrated?", a: "Potential integration targets include Paytm, SBI, ICICI and Pine Labs. Availability depends on each provider’s APIs and account access." },
-  { q: "Does Pettroz support OCR-based nozzle readings?", a: "OCR is designed to extract supported reading information from images. Review extracted values before saving them to operational records." },
   { q: "Can I manage credit customers?", a: "Customer accounts can organise credit sales, outstanding balances, collections, due dates and transaction histories." },
   { q: "Can Pettroz manage employee attendance and payroll?", a: "Attendance & Payroll capabilities are designed to organise employee records, attendance, shifts, salary calculations and payroll summaries." },
-  { q: "Can I manage fuel purchases and suppliers?", a: "Supplier profiles, fuel purchases, invoices and supplier transactions can be maintained as organised records." },
-  { q: "Does Pettroz support GST management?", a: "The platform is designed to maintain applicable tax records. Tax treatment depends on the product and transaction; petrol and diesel motor fuels are currently outside the GST levy in India." },
-  { q: "Can Pettroz integrate with Tally?", a: "Tally-compatible workflows and data exchange depend on the integration method and supported Tally version." },
-  { q: "Can I generate QR codes on invoices?", a: "QR code generation is designed for supported invoices; purpose and format depend on the configured invoicing workflow." },
-  { q: "Can customers receive bills through WhatsApp?", a: "Digital bill sharing and notifications depend on supported WhatsApp or SMS integrations." },
-  { q: "Can Pettroz send lubricant change reminders?", a: "Configured customer and vehicle records can be used to schedule lubricant and service reminders through supported channels." },
   { q: "Can I monitor multiple petrol pump outlets?", a: "Multi-outlet management is designed to provide location-wise operational and financial information in a centralised view." },
-  { q: "Can I access petrol pump reports remotely?", a: "Business reports and operational information are available through the supported platform and user permissions." },
-  { q: "Is Pettroz suitable for independent petrol pumps?", a: "Yes. The petrol pump management product is designed for independent stations as well as stations operating under major oil marketing brands." },
 ];
 
 export const solutionFinancialAreas = [

@@ -1,41 +1,8 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Banknote,
-  BarChart3,
-  Bell,
-  BookOpen,
-  Building2,
-  CalendarDays,
-  CarFront,
-  ChartNoAxesCombined,
-  Clock3,
-  Contact,
-  CreditCard,
-  Droplets,
-  Fuel,
-  GitCompareArrows,
-  HandCoins,
-  Landmark,
-  LayoutDashboard,
-  Map,
-  MapPin,
-  MessageCircle,
-  PieChart,
-  Receipt,
-  ScanLine,
-  ShieldCheck,
-  ShoppingBag,
-  TrendingUp,
-  Truck,
-  Users,
-  Wallet,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { ProductShowcase } from "@/components/product-showcase";
 import { FuelBrandCarousel } from "@/components/fuel-brand-carousel";
+import { HomeFeatureShowcase } from "@/components/home-feature-showcase";
 import { HomeFaq } from "@/components/home-faq";
 import { ButtonLink, CtaBand, Section } from "@/components/ui";
 import {
@@ -43,18 +10,9 @@ import {
   homeJourney,
   homeReasons,
   homeSections,
-  products,
 } from "@/lib/content";
 
-const homeSectionIcons: Record<string, LucideIcon[]> = {
-  automation: [ScanLine, CreditCard, MessageCircle, Bell, ChartNoAxesCombined],
-  "financial-control": [TrendingUp, PieChart, Banknote, CreditCard, HandCoins, Receipt],
-  "staff-management": [MapPin, CalendarDays, ShieldCheck, Users, Wallet, ChartNoAxesCombined],
-  "customer-management": [Contact, CreditCard, CarFront, ShoppingBag, Bell, Wrench, MessageCircle],
-  "reports-analytics": [ChartNoAxesCombined, Fuel, Clock3, Landmark, PieChart, Users, Truck, Users, CreditCard, GitCompareArrows],
-  "multi-outlet-management": [MapPin, Map, LayoutDashboard, Wallet, Users, ChartNoAxesCombined, GitCompareArrows],
-};
-
+/*
 const pumpFeatures = [
   { title: "Sales to daily closing", description: "Bill fuel sales across cash, UPI, card and credit. Reconcile collections and close each shift with a clear DSR.", Icon: Fuel },
   { title: "Stock, from delivery to sale", description: "Track purchases, tank levels, dip readings and stock variation, alongside lubricants and shop inventory.", Icon: Droplets },
@@ -68,6 +26,7 @@ const attendanceFeatures = [
   { title: "Turn hours into accurate pay", description: "Calculate salaries from attendance, leave and overtime. Give employees access to payslips, records and leave requests.", Icon: Wallet },
   { title: "Bring every branch together", description: "Manage teams across locations and review attendance patterns, working hours and payroll reports in one workspace.", Icon: Building2 },
 ];
+*/
 
 export default function HomePage() {
   return (
@@ -81,7 +40,7 @@ export default function HomePage() {
             <p className="mt-7 max-w-lg text-base leading-[1.85] text-muted-foreground">Manage your petrol pump’s sales, stock and accounts, or your team’s attendance and payroll. Choose the Pettroz product that fits your business.</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <ButtonLink href="/book-demo">Book a free demo <ArrowUpRight className="size-4" /></ButtonLink>
-              <ButtonLink href="#products" variant="ghost">Find your product <ArrowRight className="size-4" /></ButtonLink>
+              <ButtonLink href="/products" variant="ghost">Find your product <ArrowRight className="size-4" /></ButtonLink>
             </div>
           </div>
           <ProductShowcase />
@@ -125,6 +84,7 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/*
       <Section id="products">
         <h2 className="section-title">Choose your software</h2>
         <div className="mt-10 border-t border-navy/15 sm:mt-14">
@@ -162,6 +122,7 @@ export default function HomePage() {
           ))}
         </div>
       </Section>
+      */}
 
       {/*
       <Section className="bg-[#f4f3ef]">
@@ -196,36 +157,7 @@ export default function HomePage() {
           id={section.id}
           className={sectionIndex % 2 === 0 ? "bg-[#f4f3ef]" : ""}
         >
-          <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-10">
-            <div className="max-w-3xl">
-              <p className="inline-flex items-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold tracking-wide text-navy">
-                {section.title}
-              </p>
-              <h2 className="section-title mt-4">{section.heading}</h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">{section.description}</p>
-            </div>
-            <Link href={section.href} className="inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-navy transition-colors hover:text-primary">
-              {section.link}<ArrowUpRight aria-hidden="true" className="size-4" />
-            </Link>
-          </div>
-          <ul className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {section.items.map((item, itemIndex) => {
-              const Icon = homeSectionIcons[section.id]?.[itemIndex] ?? Fuel;
-
-              return (
-                <li
-                  key={item.title}
-                  className={`group rounded-2xl border border-navy/10 p-5 transition duration-200 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-navy/5 sm:p-6 ${sectionIndex % 2 === 0 ? "bg-white" : "bg-[#f4f3ef]"}`}
-                >
-                  <span className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.7} />
-                  </span>
-                  <h3 className="text-base font-semibold tracking-tight text-navy">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.text}</p>
-                </li>
-              );
-            })}
-          </ul>
+          <HomeFeatureShowcase section={section} tinted={sectionIndex % 2 === 0} />
         </Section>
       ))}
 

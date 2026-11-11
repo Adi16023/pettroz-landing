@@ -1,18 +1,18 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Banknote, Bell, BookOpen, CalendarCheck, CheckCircle2, ChevronDown, Clock, Coins, ContactRound, Droplets, FileSpreadsheet, FileText, Fuel, Gauge, LayoutDashboard, LifeBuoy, MousePointer2, Package, PanelLeftClose, ReceiptText, Settings, ShoppingBag, Sun, Timer, TreePalm, TrendingUp, UserCheck, Users, Wallet } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { DeskCard, Donut, HorizontalBars, KpiCard, MetricCard, Stamp, TankGauges } from "@/components/product-ui";
 import { ProductDemoScreen, type DemoScreen } from "@/components/product-demo-screens";
 import { cn } from "@/lib/utils";
 
-export function PumpPreview({ animated = false, screen }: { animated?: boolean; screen?: "Sales" | "Dip" | "DSR" }) {
+export function PumpPreview({ animated = false, screen }: { animated?: boolean; screen?: DemoScreen }) {
   return <ProductPreview product="pump" animated={animated} previewScreen={screen} />;
 }
 
-export function AttendancePreview({ animated = false }: { animated?: boolean }) {
-  return <ProductPreview product="attendance" animated={animated} />;
+export function AttendancePreview({ animated = false, screen }: { animated?: boolean; screen?: DemoScreen }) {
+  return <ProductPreview product="attendance" animated={animated} previewScreen={screen} />;
 }
 
 type PreviewStep = { target: string | null; label: string; duration: number; click?: boolean; screen?: DemoScreen; actionComplete?: boolean };
@@ -37,6 +37,31 @@ const pumpSteps: PreviewStep[] = [
   { screen: "DSR", target: "nav-Dashboard", label: "Back to dashboard", duration: 1200, click: true, actionComplete: true },
   { target: null, label: "Daily overview", duration: 1800 },
 ];
+
+const creditSteps: PreviewStep[] = [
+  { screen: "Credit customers", target: null, label: "Review credit customers", duration: 2200 },
+  { screen: "Credit customers", target: "credit-list", label: "Scan outstanding balances", duration: 2800 },
+  { screen: "Credit customers", target: "credit-add", label: "Add a credit customer", duration: 1600, click: true },
+  { screen: "Credit customers", target: "credit-list", label: "Back to customer list", duration: 2200 },
+];
+
+function scopedSteps(product: "pump" | "attendance", screen?: DemoScreen): PreviewStep[] {
+  if (screen === "Credit customers") return creditSteps;
+  const all = product === "pump" ? pumpSteps : attendanceSteps;
+  if (!screen) {
+    // Pump dashboard loop for multi-outlet; full attendance journey for staff sections.
+    return product === "pump"
+      ? all.filter((step) => !step.screen || step.label === "Daily overview")
+      : all;
+  }
+  const matched = all.filter((step) => step.screen === screen);
+  if (!matched.length) return [{ screen, target: null, label: screen, duration: 4000 }];
+  return [
+    { screen, target: null, label: screen, duration: 1600 },
+    ...matched.filter((step) => step.target !== null),
+    { screen, target: null, label: screen, duration: 2000 },
+  ];
+}
 
 const attendanceSteps: PreviewStep[] = [
   { target: null, label: "Team overview", duration: 1200 },
@@ -117,11 +142,18 @@ const attendanceNav = [
 
 function ProductPreview({ product, animated, previewScreen }: { product: "pump" | "attendance"; animated: boolean; previewScreen?: DemoScreen }) {
   const pump = product === "pump";
-  const steps = pump ? pumpSteps : attendanceSteps;
+  const steps = useMemo(
+    () => (animated ? scopedSteps(product, previewScreen) : pump ? pumpSteps : attendanceSteps),
+    [animated, product, previewScreen, pump],
+  );
   const { frame, step, playing, reducedMotion } = usePreviewPlayback(animated, steps);
   const cursor = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState<number | null>(null);
-  const scene: PreviewStep = previewScreen ? { screen: previewScreen, target: null, label: previewScreen, duration: 0 } : steps[step];
+  const scene: PreviewStep = animated
+    ? steps[step] ?? steps[0]!
+    : previewScreen
+      ? { screen: previewScreen, target: null, label: previewScreen, duration: 0 }
+      : steps[0]!;
   const activeScreen = scene.screen ?? (pump ? "Dashboard" : "Overview");
   useLayoutEffect(() => {
     const element = frame.current;
