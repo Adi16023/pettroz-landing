@@ -1296,51 +1296,6 @@ export const pricingFaqs = [
   { q: "Is onboarding support available?", a: "Yes. Onboarding support is part of getting a workspace live." },
 ];
 
-export const blogPosts = [
-  {
-    slug: "manage-petrol-pump-daily-sales",
-    title: "How to Manage Petrol Pump Daily Sales More Efficiently",
-    category: "Petrol Pump Management",
-    excerpt: "Daily sales should close with the shift — not the next morning in a notebook.",
-  },
-  {
-    slug: "fuel-stock-shortage-excess",
-    title: "Understanding Fuel Stock Shortage and Excess",
-    category: "Fuel Inventory & Stock Control",
-    excerpt: "Variation in litres and rupees is the earliest signal that stock is drifting.",
-  },
-  {
-    slug: "digital-inventory-management",
-    title: "Why Petrol Pumps Need Digital Inventory Management",
-    category: "Fuel Inventory & Stock Control",
-    excerpt: "Tanks, dips, receipts, and shop stock belong in one system.",
-  },
-  {
-    slug: "gps-vs-biometric-attendance",
-    title: "GPS Attendance vs Biometric Attendance",
-    category: "Employee Attendance",
-    excerpt: "Both have a place. Pettroz supports GPS, selfie, and biometric paths together.",
-  },
-  {
-    slug: "simplify-monthly-payroll",
-    title: "How to Simplify Monthly Payroll",
-    category: "Payroll & HR Management",
-    excerpt: "Attendance, overtime, leave, and statutory settings should feed salary — not a side spreadsheet.",
-  },
-  {
-    slug: "employee-shift-scheduling",
-    title: "Best Practices for Employee Shift Scheduling",
-    category: "Employee Attendance",
-    excerpt: "Rotating shifts only work when the roster is visible to managers and staff.",
-  },
-  {
-    slug: "multiple-branches-one-dashboard",
-    title: "Managing Multiple Business Branches from One Dashboard",
-    category: "Business Productivity",
-    excerpt: "Outlet-level data with a company view is how multi-location businesses stay in control.",
-  },
-];
-
 export const helpArticles = [
   { slug: "account-setup", title: "Account setup", category: "Getting Started" },
   { slug: "business-setup", title: "Business setup", category: "Getting Started" },

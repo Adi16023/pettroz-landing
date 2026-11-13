@@ -16,11 +16,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { BlogThumbnail } from "@/components/blog-thumbnail";
-import {
-  fallbackBlogPosts,
-  loadBlogPostsClient,
-  type PublicBlogPost,
-} from "@/lib/blog";
+import { loadBlogPostsClient, type PublicBlogPost } from "@/lib/blog";
 
 const categoryIcons: Record<string, LucideIcon> = {
   "Petrol Pump Management": Fuel,
@@ -35,13 +31,18 @@ function categoryIcon(category: string) {
 }
 
 export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
-  const [posts, setPosts] = useState<PublicBlogPost[]>(() => fallbackBlogPosts());
+  const [posts, setPosts] = useState<PublicBlogPost[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let gone = false;
-    loadBlogPostsClient().then((next) => {
-      if (!gone && next.length) setPosts(next);
-    });
+    loadBlogPostsClient()
+      .then((next) => {
+        if (!gone) setPosts(next);
+      })
+      .finally(() => {
+        if (!gone) setLoaded(true);
+      });
     return () => {
       gone = true;
     };
@@ -62,7 +63,27 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
     return list;
   }, [posts]);
 
-  if (!featured) return null;
+  if (!loaded) {
+    return <p className="py-6 text-sm text-muted-foreground">Loading blogs…</p>;
+  }
+
+  if (!featured) {
+    return (
+      <div className="rounded-[1.4rem] border border-navy/10 bg-white p-6">
+        <p className="text-[11px] font-semibold tracking-[0.14em] text-primary uppercase">Pettroz Notes</p>
+        <p className="mt-3 text-base font-semibold text-navy">No blogs found</p>
+        <p className="mt-2 text-sm text-muted-foreground">Published articles will show up here.</p>
+        <Link
+          href="/blog"
+          onClick={onNavigate}
+          className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-navy transition-all hover:gap-2.5 hover:text-primary"
+        >
+          Open blog
+          <ArrowUpRight className="size-3.5" />
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.15fr_0.95fr_0.72fr] lg:gap-7">
@@ -101,39 +122,43 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
           <Newspaper className="size-3.5" aria-hidden="true" />
           Latest notes
         </div>
-        <ul className="mt-4 divide-y divide-navy/10 border-y border-navy/10">
-          {latest.map((post, index) => {
-            const Icon = categoryIcon(post.category);
-            return (
-              <li
-                key={post.slug}
-                style={{ animationDelay: `${120 + index * 45}ms` }}
-                className="pettroz-mega-item"
-              >
-                <Link
-                  href={`/blog/${post.slug}`}
-                  onClick={onNavigate}
-                  className="group flex gap-3 py-3.5 transition-colors"
+        {latest.length === 0 ? (
+          <p className="mt-4 text-sm text-muted-foreground">No more articles yet.</p>
+        ) : (
+          <ul className="mt-4 divide-y divide-navy/10 border-y border-navy/10">
+            {latest.map((post, index) => {
+              const Icon = categoryIcon(post.category);
+              return (
+                <li
+                  key={post.slug}
+                  style={{ animationDelay: `${120 + index * 45}ms` }}
+                  className="pettroz-mega-item"
                 >
-                  <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
-                    <Icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[11px] font-semibold tracking-wide text-primary/80 uppercase">
-                      {post.category}
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    onClick={onNavigate}
+                    className="group flex gap-3 py-3.5 transition-colors"
+                  >
+                    <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
+                      <Icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />
                     </span>
-                    <span className="mt-1 block text-sm leading-5 font-semibold text-navy transition-colors group-hover:text-primary">
-                      {post.title}
+                    <span className="min-w-0">
+                      <span className="block text-[11px] font-semibold tracking-wide text-primary/80 uppercase">
+                        {post.category}
+                      </span>
+                      <span className="mt-1 block text-sm leading-5 font-semibold text-navy transition-colors group-hover:text-primary">
+                        {post.title}
+                      </span>
+                      <span className="mt-1 line-clamp-1 block text-xs leading-5 text-muted-foreground">
+                        {post.excerpt}
+                      </span>
                     </span>
-                    <span className="mt-1 line-clamp-1 block text-xs leading-5 text-muted-foreground">
-                      {post.excerpt}
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
 
       <div className="flex flex-col gap-4">
@@ -142,27 +167,31 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
             <BookOpenText className="size-3.5" aria-hidden="true" />
             Topics
           </div>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {topics.map((topic, index) => {
-              const Icon = categoryIcon(topic);
-              return (
-                <li
-                  key={topic}
-                  style={{ animationDelay: `${160 + index * 35}ms` }}
-                  className="pettroz-mega-item"
-                >
-                  <Link
-                    href="/blog"
-                    onClick={onNavigate}
-                    className="group inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white px-3 py-2 text-xs font-semibold text-navy transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary hover:text-white hover:shadow-[0_12px_24px_-16px_#d9302260]"
+          {topics.length === 0 ? (
+            <p className="mt-4 text-sm text-muted-foreground">No topics yet.</p>
+          ) : (
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {topics.map((topic, index) => {
+                const Icon = categoryIcon(topic);
+                return (
+                  <li
+                    key={topic}
+                    style={{ animationDelay: `${160 + index * 35}ms` }}
+                    className="pettroz-mega-item"
                   >
-                    <Icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />
-                    {topic}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+                    <Link
+                      href="/blog"
+                      onClick={onNavigate}
+                      className="group inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white px-3 py-2 text-xs font-semibold text-navy transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary hover:text-white hover:shadow-[0_12px_24px_-16px_#d9302260]"
+                    >
+                      <Icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />
+                      {topic}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
 
         <Link
@@ -188,17 +217,30 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
 }
 
 export function BlogMobileLinks({ onNavigate }: { onNavigate: () => void }) {
-  const [posts, setPosts] = useState<PublicBlogPost[]>(() => fallbackBlogPosts().slice(0, 6));
+  const [posts, setPosts] = useState<PublicBlogPost[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let gone = false;
-    loadBlogPostsClient().then((next) => {
-      if (!gone && next.length) setPosts(next.slice(0, 6));
-    });
+    loadBlogPostsClient()
+      .then((next) => {
+        if (!gone) setPosts(next.slice(0, 6));
+      })
+      .finally(() => {
+        if (!gone) setLoaded(true);
+      });
     return () => {
       gone = true;
     };
   }, []);
+
+  if (!loaded) {
+    return <p className="px-3 py-2 text-xs text-white/55">Loading blogs…</p>;
+  }
+
+  if (posts.length === 0) {
+    return <p className="px-3 py-2 text-xs text-white/55">No blogs found</p>;
+  }
 
   return (
     <>

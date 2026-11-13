@@ -55,16 +55,20 @@ export default async function BlogArticlePage({ params }: PageProps<"/blog/[slug
           </p>
         </article>
       )}
-      <h2 className="mt-10 font-semibold text-navy">Related articles</h2>
-      <ul className="mt-3 space-y-2 text-sm">
-        {related.map((item) => (
-          <li key={item.slug}>
-            <Link href={`/blog/${item.slug}`} className="cursor-pointer text-primary">
-              {item.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {related.length > 0 ? (
+        <>
+          <h2 className="mt-10 font-semibold text-navy">Related articles</h2>
+          <ul className="mt-3 space-y-2 text-sm">
+            {related.map((item) => (
+              <li key={item.slug}>
+                <Link href={`/blog/${item.slug}`} className="cursor-pointer text-primary">
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
       <div className="mt-8">
         <ButtonLink href="/book-demo">Book Demo</ButtonLink>
       </div>

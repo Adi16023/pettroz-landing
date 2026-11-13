@@ -26,7 +26,7 @@ export default async function BlogPage() {
       </header>
 
       {!featured ? (
-        <p className="py-16 text-sm text-muted-foreground">No published articles yet.</p>
+        <p className="py-16 text-sm text-muted-foreground">No blogs found</p>
       ) : (
         <>
           <section className="py-9" aria-labelledby="featured-article">
