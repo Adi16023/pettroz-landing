@@ -19,12 +19,25 @@ const categoryArtwork: Record<string, { Icon: LucideIcon; tone: string }> = {
 export function BlogThumbnail({
   category,
   title,
+  coverUrl,
   className = "",
 }: {
   category: string;
   title: string;
+  coverUrl?: string | null;
   className?: string;
 }) {
+  if (coverUrl) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={coverUrl}
+        alt={title}
+        className={`aspect-[1.65/1] w-full object-cover ${className}`}
+      />
+    );
+  }
+
   const artwork = categoryArtwork[category] ?? { Icon: Wallet, tone: "from-[#eee8df] to-[#d8cec0]" };
   const { Icon } = artwork;
 

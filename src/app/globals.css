@@ -492,6 +492,62 @@ details[open] .faq-plus {
   animation: fade-up 0.6s ease-out both;
 }
 
+.blog-prose {
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.blog-prose h1,
+.blog-prose h2,
+.blog-prose h3 {
+  color: var(--navy, #1a1c29);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin: 1.4rem 0 0.55rem;
+}
+
+.blog-prose h1 { font-size: 1.7rem; }
+.blog-prose h2 { font-size: 1.35rem; }
+.blog-prose h3 { font-size: 1.15rem; }
+
+.blog-prose p,
+.blog-prose ul,
+.blog-prose ol {
+  margin: 0.7rem 0;
+}
+
+.blog-prose ul,
+.blog-prose ol {
+  padding-left: 1.3rem;
+}
+
+.blog-prose a {
+  color: var(--primary, #e11d48);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.blog-prose blockquote {
+  border-left: 3px solid var(--primary, #e11d48);
+  margin: 1rem 0;
+  padding-left: 1rem;
+}
+
+.blog-prose img,
+.blog-prose iframe {
+  border-radius: 0.75rem;
+  display: block;
+  height: auto;
+  margin: 1rem 0;
+  max-width: 100%;
+}
+
+.blog-prose iframe {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

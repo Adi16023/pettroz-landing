@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
-import { allFeatures, blogPosts, helpArticles, solutions } from "@/lib/content";
+import { allFeatures, helpArticles, solutions } from "@/lib/content";
+import { fetchBlogPosts } from "@/lib/blog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://pettroz.in";
+  const posts = await fetchBlogPosts();
   const paths = [
     "",
     "/products",
@@ -25,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...allFeatures.map((f) => `/features/${f.slug}`),
     ...solutions.map((s) => `/solutions/${s.slug}`),
     ...helpArticles.map((a) => `/help/${a.slug}`),
-    ...blogPosts.map((p) => `/blog/${p.slug}`),
+    ...posts.map((p) => `/blog/${p.slug}`),
   ];
   return paths.map((path) => ({ url: `${base}${path}` }));
 }

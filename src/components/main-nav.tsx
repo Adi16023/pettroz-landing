@@ -16,6 +16,7 @@ import {
   Wallet,
   type LucideIcon,
 } from "lucide-react";
+import { BlogMegaPanel, BlogMobileLinks } from "@/components/blog-mega-menu";
 import {
   allFeatures,
   featureThemes,
@@ -36,10 +37,10 @@ export const mainNavItems: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products", mega: true },
   { href: "/features", label: "Features", mega: true },
+  { href: "/blog", label: "Blog", mega: true },
   { href: "/solutions", label: "Solutions", mega: true },
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -213,6 +214,10 @@ function MegaPanel({
         ))}
       </div>
     );
+  }
+
+  if (openHref === "/blog") {
+    return <BlogMegaPanel onNavigate={onNavigate} />;
   }
 
   if (openHref === "/solutions") {
@@ -589,6 +594,7 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
                                 ]),
                               )
                             : null}
+                          {item.href === "/blog" ? <BlogMobileLinks onNavigate={navigate} /> : null}
                           {item.href === "/solutions" ? (
                             <>
                               {petrolPumpSolutions.slice(0, 4).map((solution) => (
