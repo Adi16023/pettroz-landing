@@ -34,6 +34,7 @@ import {
 import { LaptopMockup } from "@/components/laptop-mockup";
 import type { DemoScreen } from "@/components/product-demo-screens";
 import { AttendancePreview, PumpPreview } from "@/components/product-preview";
+import { SectionTitle } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
 type HomeSectionItem = {
@@ -228,7 +229,7 @@ export function HomeFeatureShowcase({
     <div>
       <div className="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
         <div className="max-w-3xl">
-          <h2 className="section-title mt-0">{section.heading}</h2>
+          <SectionTitle>{section.heading}</SectionTitle>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground sm:mt-4">
             {section.description}
           </p>

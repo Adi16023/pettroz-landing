@@ -1,5 +1,6 @@
 export const BLOG_API_URL =
   process.env.NEXT_PUBLIC_API_URL ??
+  process.env.PETROZZ_API_URL ??
   process.env.PETTROZ_API_URL ??
   "https://petroz-backend.onrender.com";
 

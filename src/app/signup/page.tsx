@@ -12,7 +12,7 @@ export default function SignupPage() {
   return (
     <Section className="max-w-xl pt-20">
       <Kicker>Get Started</Kicker>
-      <H1>Get Started with Pettroz.</H1>
+      <H1>Get Started with Petrozz.</H1>
       <Lead>
         Step {step + 1} of 5 — {steps[step]}. We do not promise a free trial until the business
         decides whether trials are available.

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LeadForm } from "@/components/lead-form";
 import { ArrowRight, BadgeHelp, Layers3, Presentation } from "lucide-react";
 import { H1, Kicker, Lead, Section } from "@/components/ui";
+import { brand } from "@/lib/content";
 
 export const metadata: Metadata = { title: "Contact" };
 
@@ -15,12 +16,12 @@ export default function ContactPage() {
           <div>
             <H1>Let’s find the right fit for your business.</H1>
             <Lead className="mt-4">
-              Explore Pettroz products, compare options, or get ready for a personalised demo.
+              Explore Petrozz products, compare options, or get ready for a personalised demo.
             </Lead>
 
             <div className="mt-9 space-y-3">
               {[
-                { href: "/products", title: "Compare products", text: "See what each Pettroz product helps you manage.", Icon: Layers3 },
+                { href: "/products", title: "Compare products", text: "See what each Petrozz product helps you manage.", Icon: Layers3 },
                 { href: "/pricing", title: "Explore pricing", text: "Review plan options and what to consider.", Icon: BadgeHelp },
                 { href: "/book-demo", title: "See a product demo", text: "Learn what a walkthrough can cover.", Icon: Presentation },
               ].map(({ href, title, text, Icon }) => (
@@ -52,8 +53,8 @@ export default function ContactPage() {
           <div className="mt-4 max-w-4xl border-t border-navy/10">
             {[
               {
-                q: "Can I ask about both Pettroz products?",
-                a: "Yes. Pettroz offers Petrol Pump Management and standalone Attendance & Payroll. You can compare both on the Products page.",
+                q: "Can I ask about both Petrozz products?",
+                a: "Yes. Petrozz offers Petrol Pump Management and standalone Attendance & Payroll. You can compare both on the Products page.",
               },
               {
                 q: "Can I submit an enquiry through this page?",
@@ -61,7 +62,7 @@ export default function ContactPage() {
               },
               {
                 q: "How can an existing customer reach support?",
-                a: "Use the customer support contact details provided with your Pettroz account. No unverified support details are displayed here.",
+                a: `Email us at ${brand.supportEmail} and our team will help you.`,
               },
             ].map((faq) => (
               <details key={faq.q} className="group border-b border-navy/10">

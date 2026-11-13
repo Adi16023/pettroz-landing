@@ -23,11 +23,11 @@ export default async function HelpArticlePage({ params }: PageProps<"/help/[slug
       <Kicker>{article.category}</Kicker>
       <H1>{article.title}</H1>
       <Lead>
-        Step-by-step setup for {article.title.toLowerCase()} in Pettroz. Screenshots and video
+        Step-by-step setup for {article.title.toLowerCase()} in Petrozz. Screenshots and video
         walkthroughs will be added as the help library grows.
       </Lead>
       <ol className="mt-8 list-decimal space-y-3 pl-5 text-sm">
-        <li>Open the matching Pettroz workspace for this product.</li>
+        <li>Open the matching Petrozz workspace for this product.</li>
         <li>Use role-based access so only the right people can change settings.</li>
         <li>Complete the first-time configuration, then verify with a test record.</li>
         <li>Export or print if you need a paper copy for the shift or payroll file.</li>

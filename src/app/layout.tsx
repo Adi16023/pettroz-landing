@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: `%s | ${brand.name}`,
   },
   description:
-    "Pettroz is one brand with two products: petrol pump management, and standalone attendance & payroll for any business.",
+    "Petrozz is one brand with two products: petrol pump management, and standalone attendance & payroll for any business.",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },

@@ -26,12 +26,12 @@ function BrandSlides() {
 export function FuelBrandCarousel() {
   return (
     <Section className="pt-0 pb-12 lg:pb-16">
-      <div className="border-t border-navy/15 pt-8">
+      <div className="border-t border-navy/15 pt-12 lg:pt-20">
         <h2 className="text-center text-3xl font-semibold tracking-tight text-navy sm:text-4xl lg:text-5xl">
           Designed for fuel stations across India
         </h2>
         <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-7 text-muted-foreground sm:text-base">
-          Pettroz supports operational workflows for stations under major fuel brands and
+          Petrozz supports operational workflows for stations under major fuel brands and
           independent operators.
         </p>
 
@@ -55,7 +55,7 @@ export function FuelBrandCarousel() {
         </div>
 
         <p className="mt-8 text-xs leading-6 text-muted-foreground sm:mt-10 lg:whitespace-nowrap">
-          * Pettroz is independent and is not affiliated with or endorsed by the oil marketing companies named above. These references do not imply integration with proprietary systems.
+          * Petrozz is independent and is not affiliated with or endorsed by the oil marketing companies named above. These references do not imply integration with proprietary systems.
         </p>
       </div>
     </Section>

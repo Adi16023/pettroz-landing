@@ -1,0 +1,15 @@
+---
+description: Brand spelling — always use Petrozz, never Pettroz
+alwaysApply: true
+---
+
+# Brand spelling: Petrozz
+
+The product brand is **Petrozz** (two z’s, one t).
+
+- Always write **Petrozz**, never **Pettroz**
+- Apply this in UI copy, headings, CTAs, metadata, docs, comments, and new content
+- Correct casing variants the same way: `Petrozz`, not `Pettroz` / `PETTROZ` → `PETROZZ` when all-caps is required
+- Do not introduce “Pettroz” in code strings, content files, or user-facing text
+
+Exception: do not rename existing repo/path/package/CSS identifiers (for example `pettroz-landing`, `/pettroz-bl.svg`, `.pettroz-mega-item`) or live domains (`pettroz.in`) unless explicitly asked. Env vars may keep legacy `PETTROZ_*` aliases alongside `PETROZZ_*`.

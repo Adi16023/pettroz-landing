@@ -17,9 +17,9 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-navy/10 bg-white">
       <div className="site-container relative flex min-h-24 items-center justify-between gap-4 py-4">
-        <Link href="/" className="relative z-20 shrink-0" aria-label="Pettroz home">
+        <Link href="/" className="relative z-20 shrink-0" aria-label="Petrozz home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/pettroz-bl.svg" alt="Pettroz" className="h-8 w-auto" />
+          <img src="/pettroz-bl.svg" alt="Petrozz" className="h-8 w-auto" />
         </Link>
 
         <DesktopNav activeHref={activeHref} />

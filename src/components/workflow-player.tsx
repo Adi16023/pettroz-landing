@@ -70,14 +70,14 @@ export function WorkflowPlayer({ product }: { product: "pump" | "attendance" }) 
         function reportRenderError() {
           failed = true;
           item.pause();
-          console.error("Pettroz workflow animation could not be rendered", product);
+          console.error("Petrozz workflow animation could not be rendered", product);
           setStatus("error");
         }
         item.addEventListener("data_failed", reportRenderError);
         item.addEventListener("error", reportRenderError);
       } catch (error) {
         if (disposed || controller.signal.aborted) return;
-        console.error("Pettroz workflow animation could not be loaded", error);
+        console.error("Petrozz workflow animation could not be loaded", error);
         setStatus("error");
       }
     }

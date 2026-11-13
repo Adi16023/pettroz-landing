@@ -23,7 +23,7 @@ export default function PrivacyPage() {
       <Kicker>Legal</Kicker>
       <H1>Privacy Policy</H1>
       <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-        Pettroz processes business and, for Attendance & Payroll, sensitive employee data. This
+        Petrozz processes business and, for Attendance & Payroll, sensitive employee data. This
         page explains the categories we handle. Legal wording will be reviewed against applicable
         laws and the live product implementation before it is treated as binding.
       </p>

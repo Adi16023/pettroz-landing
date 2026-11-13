@@ -5,10 +5,10 @@ import { BlogThumbnail } from "@/components/blog-thumbnail";
 import { ButtonLink, H1, Kicker, Lead, Section } from "@/components/ui";
 import { fetchBlogPosts } from "@/lib/blog";
 
-export const metadata: Metadata = { title: "Blog" };
+export const metadata: Metadata = { title: "Resources" };
 export const revalidate = 60;
 
-export default async function BlogPage() {
+export default async function ResourcesPage() {
   const posts = await fetchBlogPosts();
   const [featured, ...articles] = posts;
 
@@ -16,22 +16,22 @@ export default async function BlogPage() {
     <Section className="pt-16 lg:pt-20">
       <header className="flex flex-col gap-7 border-b border-navy/10 pb-9 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <Kicker>Blog</Kicker>
-          <H1>Pettroz Notes</H1>
+          <Kicker>Resources</Kicker>
+          <H1>Petrozz Notes</H1>
           <Lead className="mt-4">Practical ideas for running better fuel stations and teams.</Lead>
         </div>
         <ButtonLink href="/products" variant="ghost" className="self-start sm:mb-1 sm:self-auto">
-          Explore Pettroz <ArrowUpRight aria-hidden="true" className="size-4" />
+          Explore Petrozz <ArrowUpRight aria-hidden="true" className="size-4" />
         </ButtonLink>
       </header>
 
       {!featured ? (
-        <p className="py-16 text-sm text-muted-foreground">No blogs found</p>
+        <p className="py-16 text-sm text-muted-foreground">No resources found</p>
       ) : (
         <>
           <section className="py-9" aria-labelledby="featured-article">
             <Link
-              href={`/blog/${featured.slug}`}
+              href={`/resources/${featured.slug}`}
               className="group grid overflow-hidden rounded-3xl border border-navy/10 bg-white transition-colors hover:border-primary/30 md:grid-cols-2"
             >
               <BlogThumbnail
@@ -64,7 +64,7 @@ export default async function BlogPage() {
                 {articles.map((article) => (
                   <Link
                     key={article.slug}
-                    href={`/blog/${article.slug}`}
+                    href={`/resources/${article.slug}`}
                     className="group grid gap-5 border-b border-navy/10 py-6 transition-colors hover:bg-white/60 sm:grid-cols-[minmax(0,1fr)_180px] sm:items-center sm:gap-8 sm:py-7"
                   >
                     <div>

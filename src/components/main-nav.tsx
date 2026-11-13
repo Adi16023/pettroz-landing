@@ -34,10 +34,9 @@ export type NavItem = {
 };
 
 export const mainNavItems: NavItem[] = [
-  { href: "/", label: "Home" },
   { href: "/products", label: "Products", mega: true },
   { href: "/features", label: "Features", mega: true },
-  { href: "/blog", label: "Blog", mega: true },
+  { href: "/resources", label: "Resources", mega: true },
   { href: "/solutions", label: "Solutions", mega: true },
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
@@ -216,7 +215,7 @@ function MegaPanel({
     );
   }
 
-  if (openHref === "/blog") {
+  if (openHref === "/resources") {
     return <BlogMegaPanel onNavigate={onNavigate} />;
   }
 
@@ -433,7 +432,7 @@ export function DesktopNav({ activeHref }: { activeHref: string }) {
       {megaOpen ? (
         <div
           key={megaOpen}
-          className="pettroz-mega absolute top-full left-1/2 z-30 hidden w-screen -translate-x-1/2 border-b border-navy/10 bg-white shadow-[0_28px_56px_-32px_#1a1c2948] xl:block"
+          className="pettroz-mega absolute top-full right-[max(1.25rem,4vw)] left-[max(1.25rem,4vw)] z-30 mt-2 hidden overflow-hidden rounded-[16px] border border-navy/10 bg-white shadow-[0_28px_56px_-32px_#1a1c2948] xl:block"
           onPointerEnter={clearCloseTimer}
           onPointerLeave={scheduleCloseMega}
         >
@@ -594,7 +593,7 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
                                 ]),
                               )
                             : null}
-                          {item.href === "/blog" ? <BlogMobileLinks onNavigate={navigate} /> : null}
+                          {item.href === "/resources" ? <BlogMobileLinks onNavigate={navigate} /> : null}
                           {item.href === "/solutions" ? (
                             <>
                               {petrolPumpSolutions.slice(0, 4).map((solution) => (

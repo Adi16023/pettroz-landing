@@ -12,13 +12,13 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/resources/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const post = await fetchBlogPost(slug);
   return { title: post?.title ?? "Article" };
 }
 
-export default async function BlogArticlePage({ params }: PageProps<"/blog/[slug]">) {
+export default async function ResourcesArticlePage({ params }: PageProps<"/resources/[slug]">) {
   const { slug } = await params;
   const post = await fetchBlogPost(slug);
   if (!post) notFound();
@@ -45,7 +45,7 @@ export default async function BlogArticlePage({ params }: PageProps<"/blog/[slug
       ) : (
         <article className="mt-8 max-w-2xl space-y-4 text-sm leading-relaxed text-muted-foreground">
           <p>
-            Pettroz is built so this kind of work lives in the product instead of a side register.
+            Petrozz is built so this kind of work lives in the product instead of a side register.
             Fuel stations use Petrol Pump Management for the operational day. Any business can use
             Attendance & Payroll on its own.
           </p>
@@ -61,7 +61,7 @@ export default async function BlogArticlePage({ params }: PageProps<"/blog/[slug
           <ul className="mt-3 space-y-2 text-sm">
             {related.map((item) => (
               <li key={item.slug}>
-                <Link href={`/blog/${item.slug}`} className="cursor-pointer text-primary">
+                <Link href={`/resources/${item.slug}`} className="cursor-pointer text-primary">
                   {item.title}
                 </Link>
               </li>

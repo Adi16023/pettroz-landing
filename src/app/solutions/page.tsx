@@ -49,7 +49,7 @@ export default function SolutionsPage() {
           Petrol bunk brands
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-7 text-muted-foreground">
-          Explore how Pettroz supports stations across major fuel brands in India.
+          Explore how Petrozz supports stations across major fuel brands in India.
         </p>
         <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:mt-10 lg:grid-cols-4">
           {fuelStationBrands.map((brand) => (
@@ -75,7 +75,7 @@ export default function SolutionsPage() {
           ))}
         </ul>
         <p className="mt-6 text-center text-xs leading-6 text-muted-foreground">
-          Pettroz is independent and is not affiliated with or endorsed by the oil marketing
+          Petrozz is independent and is not affiliated with or endorsed by the oil marketing
           companies named above.
         </p>
       </Section>

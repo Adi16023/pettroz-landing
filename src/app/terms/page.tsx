@@ -10,7 +10,7 @@ export default function TermsPage() {
       <H1>Terms of Service</H1>
       <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
         <p>
-          Pettroz provides two independently subscribed products: Petrol Pump Management and
+          Petrozz provides two independently subscribed products: Petrol Pump Management and
           Attendance & Payroll. Access, entitlements, and user permissions are managed per product.
         </p>
         <p>

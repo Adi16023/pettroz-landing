@@ -9,8 +9,8 @@ export default function LoginPage() {
   return (
     <Section className="max-w-lg pt-20">
       <Kicker>Login</Kicker>
-      <H1>Welcome Back to Pettroz.</H1>
-      <Lead>Sign in to access your Pettroz workspace.</Lead>
+      <H1>Welcome Back to Petrozz.</H1>
+      <Lead>Sign in to access your Petrozz workspace.</Lead>
       <form
         className="mt-8 space-y-4"
         onSubmit={(e) => {

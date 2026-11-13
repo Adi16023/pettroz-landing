@@ -45,6 +45,36 @@ export function Section({
   );
 }
 
+/** Breaks a heading onto new lines at sentence endings (after ". "). */
+export function SectionTitle({
+  children,
+  className,
+  as: Tag = "h2",
+  nowrap = false,
+}: {
+  children: string;
+  className?: string;
+  as?: "h1" | "h2" | "h3";
+  /** Keep each sentence on a single line — no mid-sentence wrapping. */
+  nowrap?: boolean;
+}) {
+  const lines = children
+    .trim()
+    .split(/(?<=\.)\s+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  return (
+    <Tag className={cn("section-title mt-0", className)}>
+      {lines.map((line, index) => (
+        <span key={`${line}-${index}`} className={cn("block", nowrap && "whitespace-nowrap")}>
+          {line}
+        </span>
+      ))}
+    </Tag>
+  );
+}
+
 export function Kicker({ children }: { children: React.ReactNode }) {
   return (
     <span className="sr-only">{children}</span>

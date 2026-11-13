@@ -10,7 +10,7 @@ export default function PricingPage() {
       <Kicker>Pricing</Kicker>
       <H1>Simple Pricing. Choose What Your Business Needs.</H1>
       <Lead>
-        Select the Pettroz product that fits your operations and team. Plans are billed in INR, with
+        Select the Petrozz product that fits your operations and team. Plans are billed in INR, with
         monthly and annual options. Final prices and entitlements are confirmed with sales — we do
         not invent subscription prices here.
       </Lead>

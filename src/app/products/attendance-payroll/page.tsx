@@ -28,9 +28,9 @@ export default function AttendanceProductPage() {
         <Card className="bg-navy text-white">
           <h2 className="text-2xl font-semibold">Powerful HR & Payroll Software. No Petrol Pump Software Required.</h2>
           <p className="mt-3 text-white/75">
-            Pettroz Attendance & Payroll is a standalone workforce management platform. Use it for
+            Petrozz Attendance & Payroll is a standalone workforce management platform. Use it for
             your office, retail shop, factory, petrol pump, restaurant, warehouse, or any business
-            that employs people. No Pettroz Petrol Pump Management subscription is required.
+            that employs people. No Petrozz Petrol Pump Management subscription is required.
           </p>
         </Card>
       </Section>
@@ -58,7 +58,7 @@ export default function AttendanceProductPage() {
         </p>
       </Section>
       <Section className="pt-0">
-        <h2 className="text-2xl font-semibold text-navy">Who Can Use Pettroz Attendance & Payroll?</h2>
+        <h2 className="text-2xl font-semibold text-navy">Who Can Use Petrozz Attendance & Payroll?</h2>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {solutions
             .filter((s) => s.product === "attendance" || s.slug.includes("petrol"))
@@ -71,7 +71,7 @@ export default function AttendanceProductPage() {
       </Section>
       <CtaBand
         title="Stop Managing Attendance Manually."
-        text="Make attendance, leave, shifts, and payroll easier with Pettroz."
+        text="Make attendance, leave, shifts, and payroll easier with Petrozz."
         primary={{ href: "/book-demo", label: "Book Attendance Demo" }}
         secondary={{ href: "/contact", label: "Contact Sales" }}
       />

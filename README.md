@@ -1,6 +1,6 @@
-# Pettroz landing
+# Petrozz landing
 
-Marketing site for two Pettroz products: Petrol Pump Management and standalone Attendance & Payroll.
+Marketing site for two Petrozz products: Petrol Pump Management and standalone Attendance & Payroll.
 
 ```bash
 npm install
@@ -21,7 +21,7 @@ records), Dip stock and DSR daily closing before returning to the dashboard.
 Immediately after the hero, an automatically moving fuel-brand carousel uses
 logos from the sibling `Petroz/public/brands` directory.
 The carousel retains the independent-software and non-affiliation disclaimer.
-The homepage follows with an operational overview and reasons to choose Pettroz,
+The homepage follows with an operational overview and reasons to choose Petrozz,
 then open product rows instead of enclosing cards. Each has a
 product introduction beside four non-clickable, icon-led capability groups,
 combining related features into short explanations without repeating screenshots.
@@ -74,7 +74,7 @@ on any page.
 ## Navigation
 
 The header adapts the centered pill-navigation pattern from `viralos-landing` to
-Pettroz's navy and red palette. The highlight follows pointer or keyboard focus,
+Petrozz's navy and red palette. The highlight follows pointer or keyboard focus,
 then returns to the current route. Nested routes retain their parent highlight.
 The menu collapses based on available space rather than a fixed breakpoint.
 The compact panel supports Escape, outside-click dismissal and reduced motion.

@@ -2,15 +2,15 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { ProductShowcase } from "@/components/product-showcase";
 import { FuelBrandCarousel } from "@/components/fuel-brand-carousel";
+import { HomeAdvantage } from "@/components/home-advantage";
 import { HomeFeatureShowcase } from "@/components/home-feature-showcase";
 import { HomeFaq } from "@/components/home-faq";
+import { HomeProducts } from "@/components/home-products";
+import { HomeProfit } from "@/components/home-profit";
+import { HomeRoles } from "@/components/home-roles";
+import { HomeSmartAutomation } from "@/components/home-smart-automation";
 import { ButtonLink, CtaBand, Section } from "@/components/ui";
-import {
-  homeIntroduction,
-  homeJourney,
-  homeReasons,
-  homeSections,
-} from "@/lib/content";
+import { homeJourney, homeSections } from "@/lib/content";
 
 /*
 const pumpFeatures = [
@@ -32,12 +32,12 @@ export default function HomePage() {
   return (
     <>
       <section>
-        <div className="site-container grid items-center gap-12 pt-12 pb-16 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-[4vw] lg:pt-20 lg:pb-24">
+        <div className="site-container grid items-center gap-12 pt-12 pb-0 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-[4vw] lg:pt-20">
           <div className="reveal-in min-w-0">
             <h1 className="max-w-3xl text-[clamp(2.6rem,4.4vw,5.5rem)] leading-[1.08] font-semibold tracking-[-0.05em] text-navy">
               Run your business.<br /><span className="text-primary">Not the paperwork.</span>
             </h1>
-            <p className="mt-7 max-w-lg text-base leading-[1.85] text-muted-foreground">Manage your petrol pump’s sales, stock and accounts, or your team’s attendance and payroll. Choose the Pettroz product that fits your business.</p>
+            <p className="mt-7 max-w-lg text-base leading-[1.85] text-muted-foreground">Manage your petrol pump’s sales, stock and accounts, or your team’s attendance and payroll. Choose the Petrozz product that fits your business.</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <ButtonLink href="/book-demo">Book a free demo <ArrowUpRight className="size-4" /></ButtonLink>
               <ButtonLink href="/products" variant="ghost">Find your product <ArrowRight className="size-4" /></ButtonLink>
@@ -49,6 +49,7 @@ export default function HomePage() {
 
       <FuelBrandCarousel />
 
+      {/*
       <Section>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-[6vw]">
           <div>
@@ -56,7 +57,7 @@ export default function HomePage() {
             <h2 className="section-title mt-3">Everything your petrol pump needs. All in one place.</h2>
             <p className="mt-5 max-w-lg text-sm leading-7 text-muted-foreground">
               Fuel sales, nozzle readings, stock reconciliation, cash collections, credit customers,
-              employee shifts and financial records all need attention. Pettroz brings these
+              employee shifts and financial records all need attention. Petrozz brings these
               activities together to help simplify daily work and improve business visibility.
             </p>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -67,7 +68,7 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-            <ButtonLink href="/solutions" variant="navy" className="mt-7">Discover Pettroz solutions</ButtonLink>
+            <ButtonLink href="/solutions" variant="navy" className="mt-7">Discover Petrozz solutions</ButtonLink>
           </div>
           <div className="rounded-3xl bg-[#f4f3ef] p-6 sm:p-9">
             <p className="text-sm font-semibold text-navy">More control. Less manual work.</p>
@@ -83,6 +84,13 @@ export default function HomePage() {
           </div>
         </div>
       </Section>
+      */}
+
+      <HomeProducts />
+      <HomeAdvantage />
+      <HomeProfit />
+      <HomeSmartAutomation />
+      <HomeRoles />
 
       {/*
       <Section id="products">
