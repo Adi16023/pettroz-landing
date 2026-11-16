@@ -2,34 +2,32 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { scrollPageToTop, scrollToIdWithRetry } from "@/lib/scroll-to-id";
+import { cancelHashScroll, scrollPageToTop, scrollToIdWithRetry } from "@/lib/scroll-to-id";
 
 function currentHashId() {
   return decodeURIComponent(window.location.hash.replace(/^#/, ""));
 }
 
-function applyRouteScroll() {
-  const id = currentHashId();
-  if (id) {
-    scrollToIdWithRetry(id);
-    return;
-  }
-  scrollPageToTop();
-  window.setTimeout(scrollPageToTop, 50);
-  window.setTimeout(scrollPageToTop, 200);
-}
-
 /**
- * Keeps route and hash navigations landing exactly where intended:
- * - new paths scroll to top (fixes mid-page landings from prior scroll)
- * - hash targets align under the sticky header, with retries for late layout
+ * Route/menu landings only:
+ * - new paths without a hash → top of page
+ * - hash links (menu) → section under the header once, then leave scrolling alone
  */
 export function RouteScroll() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Defer one frame so route content (and features tab sync) can commit first.
-    const frame = window.requestAnimationFrame(() => applyRouteScroll());
+    const frame = window.requestAnimationFrame(() => {
+      const id = currentHashId();
+      if (id) {
+        // Cross-route entry with a hash (e.g. /pricing → /features#…).
+        scrollToIdWithRetry(id);
+        return;
+      }
+      cancelHashScroll();
+      scrollPageToTop();
+      window.setTimeout(scrollPageToTop, 50);
+    });
     return () => window.cancelAnimationFrame(frame);
   }, [pathname]);
 
@@ -37,7 +35,10 @@ export function RouteScroll() {
     function onHashChange() {
       const id = currentHashId();
       if (id) scrollToIdWithRetry(id);
-      else scrollPageToTop();
+      else {
+        cancelHashScroll();
+        scrollPageToTop();
+      }
     }
 
     function onClick(event: MouseEvent) {
@@ -57,17 +58,23 @@ export function RouteScroll() {
         return;
       }
       if (url.origin !== window.location.origin) return;
-      if (url.pathname !== window.location.pathname) return;
 
+      const samePath = url.pathname === window.location.pathname;
       const id = decodeURIComponent(url.hash.replace(/^#/, ""));
+
+      // Same-page hash (menu item): land once. Cross-page is handled by pathname effect.
+      if (!samePath) return;
+
       window.setTimeout(() => {
         if (id) scrollToIdWithRetry(id);
-        else scrollPageToTop();
+        else {
+          cancelHashScroll();
+          scrollPageToTop();
+        }
       }, 0);
     }
 
     window.addEventListener("hashchange", onHashChange);
-    // Capture so we read the href before mega/drawer unmount removes the link.
     document.addEventListener("click", onClick, true);
     return () => {
       window.removeEventListener("hashchange", onHashChange);

@@ -1,4 +1,4 @@
-/** Sticky header clearance for in-page anchors. */
+/** Sticky / fixed header clearance for in-page anchors. */
 export function getStickyHeaderOffset() {
   const bar = document.getElementById("pettroz-header-bar");
   if (!bar) return 96;
@@ -34,24 +34,52 @@ export function scrollToId(id: string) {
 
 let activeWatch: (() => void) | null = null;
 
-/**
- * Keep correcting scroll while layout settles (mockups, fonts, tab switches).
- * Replaces any previous hash watch so navigations don't fight each other.
- */
-export function scrollToIdWithRetry(id: string, durationMs = 3200) {
+/** Cancel any in-flight hash landing so normal page scrolling is never fought. */
+export function cancelHashScroll() {
   activeWatch?.();
   activeWatch = null;
+}
+
+/**
+ * Land on a hash target after menu/route navigation.
+ * Retries briefly while layout settles, then stops — and aborts immediately
+ * if the user scrolls, so the page feels normal afterward.
+ */
+export function scrollToIdWithRetry(id: string, durationMs = 900) {
+  cancelHashScroll();
 
   const started = performance.now();
   let frame = 0;
   let timer: number | null = null;
-  let observer: ResizeObserver | null = null;
+  let stopped = false;
 
-  const tick = () => {
-    scrollToId(id);
+  const stop = () => {
+    if (stopped) return;
+    stopped = true;
+    if (timer !== null) window.clearTimeout(timer);
+    window.removeEventListener("wheel", stop, true);
+    window.removeEventListener("touchstart", stop, true);
+    window.removeEventListener("pointerdown", stop, true);
+    window.removeEventListener("keydown", onKeyDown, true);
+    if (activeWatch === stop) activeWatch = null;
   };
 
+  function onKeyDown(event: KeyboardEvent) {
+    if (
+      event.key === "ArrowUp" ||
+      event.key === "ArrowDown" ||
+      event.key === "PageUp" ||
+      event.key === "PageDown" ||
+      event.key === "Home" ||
+      event.key === "End" ||
+      event.key === " "
+    ) {
+      stop();
+    }
+  }
+
   const schedule = () => {
+    if (stopped) return;
     const elapsed = performance.now() - started;
     if (elapsed >= durationMs) {
       stop();
@@ -60,33 +88,21 @@ export function scrollToIdWithRetry(id: string, durationMs = 3200) {
     frame += 1;
     timer = window.setTimeout(
       () => {
-        tick();
+        if (stopped) return;
+        scrollToId(id);
         schedule();
       },
-      frame < 10 ? 32 : 120,
+      frame < 8 ? 40 : 80,
     );
   };
 
-  const stop = () => {
-    if (timer !== null) window.clearTimeout(timer);
-    observer?.disconnect();
-    if (activeWatch === stop) activeWatch = null;
-  };
+  window.addEventListener("wheel", stop, { capture: true, passive: true });
+  window.addEventListener("touchstart", stop, { capture: true, passive: true });
+  window.addEventListener("pointerdown", stop, { capture: true, passive: true });
+  window.addEventListener("keydown", onKeyDown, true);
 
-  tick();
+  scrollToId(id);
   schedule();
-
-  observer = new ResizeObserver(() => {
-    if (decodeURIComponent(window.location.hash.replace(/^#/, "")) !== id) {
-      stop();
-      return;
-    }
-    tick();
-  });
-  observer.observe(document.body);
-  const target = document.getElementById(id);
-  if (target) observer.observe(target);
-
   activeWatch = stop;
   return stop;
 }

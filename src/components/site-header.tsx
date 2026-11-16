@@ -27,14 +27,16 @@ export function SiteHeader() {
     const bar = document.getElementById("pettroz-header-bar");
     const slot = spacer.current;
     if (!bar || !slot) return;
+    const headerBar = bar;
+    const spacerEl = slot;
 
     function sync() {
-      slot.style.height = `${bar.offsetHeight}px`;
+      spacerEl.style.height = `${headerBar.offsetHeight}px`;
     }
 
     sync();
     const observer = new ResizeObserver(sync);
-    observer.observe(bar);
+    observer.observe(headerBar);
     return () => observer.disconnect();
   }, []);
 

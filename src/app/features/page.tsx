@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Plus, type IconComponent } from "@/lib/icons";
 import { LaptopMockup } from "@/components/laptop-mockup";
@@ -66,6 +66,7 @@ function FeatureItem({
 
 export default function FeaturesPage() {
   const [product, setProduct] = useState<ProductTab>("pump");
+  const landedHash = useRef<string | null>(null);
   const catalog = product === "pump" ? pumpBySlug : attendanceBySlug;
   const themes = featureThemes[product];
 
@@ -88,7 +89,10 @@ export default function FeaturesPage() {
     function syncProductFromHash() {
       const hash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
       const next = productForHash(hash);
-      if (next) setProduct(next);
+      if (next) {
+        landedHash.current = null;
+        setProduct(next);
+      }
     }
 
     function onClick(event: MouseEvent) {
@@ -103,8 +107,12 @@ export default function FeaturesPage() {
         return;
       }
       if (url.pathname !== "/features") return;
-      const next = productForHash(decodeURIComponent(url.hash.replace(/^#/, "")));
-      if (next) setProduct(next);
+      const hash = decodeURIComponent(url.hash.replace(/^#/, ""));
+      const next = productForHash(hash);
+      if (next) {
+        landedHash.current = null;
+        setProduct(next);
+      }
     }
 
     window.addEventListener("hashchange", syncProductFromHash);
@@ -120,6 +128,9 @@ export default function FeaturesPage() {
     if (!hash) return;
     const expected = productForHash(hash);
     if (expected && expected !== product) return;
+    const key = `${product}:${hash}`;
+    if (landedHash.current === key) return;
+    landedHash.current = key;
     scrollToIdWithRetry(hash);
   }, [product, themeSections]);
 
