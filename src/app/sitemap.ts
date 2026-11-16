@@ -3,7 +3,7 @@ import { allFeatures, solutions } from "@/lib/content";
 import { fetchBlogPosts } from "@/lib/blog";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = "https://pettroz.in";
+  const base = "https://petrozz.com";
   const [blogs, articles] = await Promise.all([
     fetchBlogPosts("blog"),
     fetchBlogPosts("article"),
