@@ -30,6 +30,26 @@ export function rewriteBlogHtml(html: string) {
     .replaceAll("src='/api/public/blog/media/", `src='${BLOG_API_URL}/api/public/blog/media/`);
 }
 
+/** Plain-text card description: excerpt first, otherwise a short body preview. */
+export function blogCardDescription(post: Pick<PublicBlogPost, "excerpt" | "bodyHtml">) {
+  const excerpt = post.excerpt?.trim();
+  if (excerpt) return excerpt;
+  const html = post.bodyHtml?.trim();
+  if (!html) return "";
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function normalizeBlogPosts(rows: PublicBlogPost[]): PublicBlogPost[] {
   return rows.map((row) => ({
     ...row,

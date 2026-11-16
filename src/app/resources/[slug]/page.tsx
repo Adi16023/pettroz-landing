@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 import { BlogThumbnail } from "@/components/blog-thumbnail";
-import { ButtonLink, Section } from "@/components/ui";
-import { fetchBlogPost, fetchBlogPosts } from "@/lib/blog";
+import { Section } from "@/components/ui";
+import { blogCardDescription, fetchBlogPost, fetchBlogPosts } from "@/lib/blog";
 
 export const revalidate = 60;
 
@@ -53,7 +53,14 @@ export default async function ResourcesArticlePage({ params }: PageProps<"/resou
   const { slug } = await params;
   const post = await fetchBlogPost(slug);
   if (!post) notFound();
-  const related = (await fetchBlogPosts()).filter((item) => item.slug !== post.slug).slice(0, 3);
+  const allPosts = await fetchBlogPosts();
+  const sameCategory = allPosts.filter(
+    (item) => item.slug !== post.slug && item.category && item.category === post.category,
+  );
+  const others = allPosts.filter(
+    (item) => item.slug !== post.slug && !sameCategory.some((related) => related.slug === item.slug),
+  );
+  const related = [...sameCategory, ...others].slice(0, 3);
   const hasHtml = Boolean(post.bodyHtml && post.bodyHtml.replace(/<[^>]+>/g, "").trim());
   const publishedLabel = formatPublishedAt(post.publishedAt);
   const tags = (post.tags ?? []).map((tag) => tag.trim()).filter(Boolean);
@@ -150,22 +157,50 @@ export default async function ResourcesArticlePage({ params }: PageProps<"/resou
             </article>
           )}
           {related.length > 0 ? (
-            <>
-              <h2 className="mt-10 font-semibold text-navy">Related articles</h2>
-              <ul className="mt-3 space-y-2 text-sm">
+            <section className="mt-14 border-t border-navy/10 pt-10" aria-labelledby="related-articles">
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <h2 id="related-articles" className="text-xl font-semibold tracking-tight text-navy">
+                  Related articles
+                </h2>
+                <Link
+                  href="/resources"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-navy transition-colors hover:text-primary"
+                >
+                  View all
+                  <ArrowUpRight aria-hidden="true" className="size-3.5" />
+                </Link>
+              </div>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                 {related.map((item) => (
-                  <li key={item.slug}>
-                    <Link href={`/resources/${item.slug}`} className="cursor-pointer text-primary">
-                      {item.title}
-                    </Link>
-                  </li>
+                  <Link
+                    key={item.slug}
+                    href={`/resources/${item.slug}`}
+                    className="group overflow-hidden rounded-2xl border border-navy/10 bg-white transition-colors hover:border-primary/30"
+                  >
+                    <BlogThumbnail
+                      category={item.category}
+                      title={item.title}
+                      coverUrl={item.coverUrl}
+                      className="aspect-[16/9] rounded-none border-b border-navy/5"
+                    />
+                    <div className="p-3.5 sm:p-4">
+                      <p className="text-[11px] font-semibold tracking-wide text-primary uppercase">
+                        {item.category || item.tags?.[0] || "Article"}
+                      </p>
+                      <h3 className="mt-1.5 line-clamp-2 text-sm leading-snug font-semibold tracking-tight text-navy transition-colors group-hover:text-primary sm:text-base">
+                        {item.title}
+                      </h3>
+                      {blogCardDescription(item) ? (
+                        <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6">
+                          {blogCardDescription(item)}
+                        </p>
+                      ) : null}
+                    </div>
+                  </Link>
                 ))}
-              </ul>
-            </>
+              </div>
+            </section>
           ) : null}
-          <div className="mt-8">
-            <ButtonLink href="/book-demo">Book Demo</ButtonLink>
-          </div>
         </div>
       </Section>
     </>
