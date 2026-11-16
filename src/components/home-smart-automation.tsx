@@ -8,13 +8,13 @@ import {
   Receipt,
   ScanLine,
   Wallet,
-  type LucideIcon,
-} from "lucide-react";
+  type IconComponent,
+} from "@/lib/icons";
 import { ButtonLink, Section, SectionTitle } from "@/components/ui";
 import { homeSmartAutomation } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
-const icons: LucideIcon[] = [
+const icons: IconComponent[] = [
   Bell,
   Megaphone,
   Receipt,

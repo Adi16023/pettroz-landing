@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { Banknote, Bell, BookOpen, CalendarCheck, CheckCircle2, ChevronDown, Clock, Coins, ContactRound, Droplets, FileSpreadsheet, FileText, Fuel, Gauge, LayoutDashboard, LifeBuoy, MousePointer2, Package, PanelLeftClose, ReceiptText, Settings, ShoppingBag, Sun, Timer, TreePalm, TrendingUp, UserCheck, Users, Wallet } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Banknote, Bell, BookOpen, CalendarCheck, CheckCircle2, ChevronDown, Clock, Coins, ContactRound, Droplets, FileSpreadsheet, FileText, Fuel, Gauge, LayoutDashboard, LifeBuoy, MousePointer2, Package, PanelLeftClose, ReceiptText, Settings, ShoppingBag, Sun, Timer, TreePalm, TrendingUp, UserCheck, Users, Wallet } from "@/lib/icons";
+import type { IconComponent } from "@/lib/icons";
 import { DeskCard, Donut, HorizontalBars, KpiCard, MetricCard, Stamp, TankGauges } from "@/components/product-ui";
 import { ProductDemoScreen, type DemoScreen } from "@/components/product-demo-screens";
 import { cn } from "@/lib/utils";
@@ -121,7 +121,7 @@ function usePreviewPlayback(animated: boolean, steps: PreviewStep[]) {
   return { frame, step: animated && !reducedMotion ? step : 0, playing, reducedMotion };
 }
 
-const fuelNav: { label: string; items: { label: string; Icon: LucideIcon }[] }[] = [
+const fuelNav: { label: string; items: { label: string; Icon: IconComponent }[] }[] = [
   { label: "Today", items: [{ label: "Dashboard", Icon: LayoutDashboard }, { label: "DSR", Icon: FileSpreadsheet }, { label: "Shifts", Icon: Timer }] },
   { label: "Fuel", items: [{ label: "Sales", Icon: Fuel }, { label: "Billing", Icon: ReceiptText }, { label: "Dip", Icon: Gauge }, { label: "Stock variation", Icon: Droplets }] },
   { label: "Shop", items: [{ label: "Lube / Products", Icon: Package }] },

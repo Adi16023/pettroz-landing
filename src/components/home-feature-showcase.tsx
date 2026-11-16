@@ -29,8 +29,8 @@ import {
   Users,
   Wallet,
   Wrench,
-  type LucideIcon,
-} from "lucide-react";
+  type IconComponent,
+} from "@/lib/icons";
 import { LaptopMockup } from "@/components/laptop-mockup";
 import type { DemoScreen } from "@/components/product-demo-screens";
 import { AttendancePreview, PumpPreview } from "@/components/product-preview";
@@ -52,7 +52,7 @@ type HomeSection = {
   items: HomeSectionItem[];
 };
 
-const sectionIcons: Record<string, LucideIcon[]> = {
+const sectionIcons: Record<string, IconComponent[]> = {
   automation: [ScanLine, CreditCard, MessageCircle, Bell, ChartNoAxesCombined],
   "financial-control": [TrendingUp, PieChart, Banknote, CreditCard, HandCoins, Receipt],
   "staff-management": [MapPin, CalendarDays, ShieldCheck, Users, Wallet, ChartNoAxesCombined],
@@ -112,7 +112,7 @@ function FeatureCard({
 }: {
   title: string;
   text: string;
-  Icon: LucideIcon;
+  Icon: IconComponent;
   featured?: boolean;
   tinted?: boolean;
 }) {

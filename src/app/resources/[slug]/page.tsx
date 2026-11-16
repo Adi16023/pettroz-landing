@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronRight } from "@/lib/icons";
 import { BlogShare } from "@/components/blog-share";
 import { BlogThumbnail } from "@/components/blog-thumbnail";
 import { Section } from "@/components/ui";

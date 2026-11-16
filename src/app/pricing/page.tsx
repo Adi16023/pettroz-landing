@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@/lib/icons";
 import { HomeFaq } from "@/components/home-faq";
 import { ButtonLink, Card, H1, Kicker, Lead, Section } from "@/components/ui";
 import { pricingFaqs } from "@/lib/content";

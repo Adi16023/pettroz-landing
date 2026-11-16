@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { AnimationItem } from "lottie-web";
-import { ArrowRight, Check, Clock3, FileText, Fuel, Pause, Play, RotateCcw, Wallet } from "lucide-react";
+import { ArrowRight, Check, Clock3, FileText, Fuel, Pause, Play, RotateCcw, Wallet } from "@/lib/icons";
 
 export function WorkflowPlayer({ product }: { product: "pump" | "attendance" }) {
   const container = useRef<HTMLDivElement>(null);

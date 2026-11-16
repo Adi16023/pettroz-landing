@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@/lib/icons";
 import { DesktopNav, MobileNav, mainNavItems } from "@/components/main-nav";
 
 export function SiteHeader() {
@@ -27,12 +27,6 @@ export function SiteHeader() {
 
           <div className="relative z-20 flex shrink-0 items-center gap-3 sm:gap-5">
             <div className="hidden items-center gap-5 sm:flex">
-              <Link
-                href="/login"
-                className="py-3 text-[13px] font-medium transition-colors hover:text-primary"
-              >
-                Log in
-              </Link>
               <Link
                 href="/book-demo"
                 className="inline-flex min-h-11 items-center gap-3 rounded-full bg-primary px-5 text-xs font-semibold whitespace-nowrap text-white shadow-[0_4px_12px_#d9302218] transition-colors hover:bg-primary/90"

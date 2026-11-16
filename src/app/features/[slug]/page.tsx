@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check } from "@/lib/icons";
 import { ButtonLink, Section } from "@/components/ui";
 import { allFeatures } from "@/lib/content";
 import { getFeatureIcon } from "@/lib/feature-icons";

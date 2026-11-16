@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ArrowUpRight, ChevronDown, ChevronRight, Search, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronRight, Search, X } from "@/lib/icons";
 import { BlogThumbnail } from "@/components/blog-thumbnail";
 import { blogCardDescription, type PublicBlogPost } from "@/lib/blog";
 import { cn } from "@/lib/utils";

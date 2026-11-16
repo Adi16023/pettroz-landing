@@ -1,10 +1,16 @@
-import { ArrowUpRight, ChartNoAxesCombined, Fuel, GitCompareArrows, TrendingUp } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChartNoAxesCombined,
+  Fuel,
+  GitCompareArrows,
+  TrendingUp,
+  type IconComponent,
+} from "@/lib/icons";
 import { ButtonLink, Section, SectionTitle } from "@/components/ui";
 import { PumpPreview } from "@/components/product-preview";
 import { homeProfit } from "@/lib/content";
-import type { LucideIcon } from "lucide-react";
 
-const icons: LucideIcon[] = [Fuel, TrendingUp, GitCompareArrows, ChartNoAxesCombined];
+const icons: IconComponent[] = [Fuel, TrendingUp, GitCompareArrows, ChartNoAxesCombined];
 
 export function HomeProfit() {
   return (

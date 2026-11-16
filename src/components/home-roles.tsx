@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Fuel, IdCard, User, UserRound, Users, type LucideIcon } from "lucide-react";
+import { Fuel, IdCard, User, UserRound, Users, type IconComponent } from "@/lib/icons";
 import { Section } from "@/components/ui";
 import { homeRoles } from "@/lib/content";
 
-const roleIcons: Record<(typeof homeRoles.roles)[number]["icon"], LucideIcon> = {
+const roleIcons: Record<(typeof homeRoles.roles)[number]["icon"], IconComponent> = {
   owner: User,
   manager: IdCard,
   cashier: Users,

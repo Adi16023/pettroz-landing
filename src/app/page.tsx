@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "@/lib/icons";
 import { ProductShowcase } from "@/components/product-showcase";
 import { FuelBrandCarousel } from "@/components/fuel-brand-carousel";
 import { HomeAdvantage } from "@/components/home-advantage";

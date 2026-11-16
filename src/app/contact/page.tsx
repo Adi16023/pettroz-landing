@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LeadForm } from "@/components/lead-form";
-import { ArrowRight, BadgeHelp, Layers3, Presentation } from "lucide-react";
+import { ArrowRight, BadgeHelp, Layers3, Presentation } from "@/lib/icons";
 import { H1, Kicker, Lead, Section } from "@/components/ui";
 import { brand } from "@/lib/content";
 

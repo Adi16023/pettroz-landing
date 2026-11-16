@@ -14,14 +14,14 @@ import {
   ShieldCheck,
   Target,
   Users,
-  type LucideIcon,
-} from "lucide-react";
+  type IconComponent,
+} from "@/lib/icons";
 import { ButtonLink, CtaBand, Section } from "@/components/ui";
 import { products } from "@/lib/content";
 
 export const metadata: Metadata = { title: "About Us" };
 
-const storyPoints: { title: string; text: string; Icon: LucideIcon }[] = [
+const storyPoints: { title: string; text: string; Icon: IconComponent }[] = [
   {
     title: "The Need",
     text: "Manual processes, scattered data and disconnected tools made everyday station work harder than it needed to be.",
@@ -39,7 +39,7 @@ const storyPoints: { title: string; text: string; Icon: LucideIcon }[] = [
   },
 ];
 
-const values: { title: string; text: string; Icon: LucideIcon }[] = [
+const values: { title: string; text: string; Icon: IconComponent }[] = [
   {
     title: "Reliability",
     text: "Dependable software for the operations stations cannot afford to get wrong.",
@@ -62,7 +62,7 @@ const values: { title: string; text: string; Icon: LucideIcon }[] = [
   },
 ];
 
-const partnerPoints: { title: string; text: string; Icon: LucideIcon }[] = [
+const partnerPoints: { title: string; text: string; Icon: IconComponent }[] = [
   {
     title: "Guidance & Onboarding",
     text: "Get set up with clear walkthroughs so your team can start with confidence.",

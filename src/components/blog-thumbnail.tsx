@@ -5,11 +5,11 @@ import {
   Fuel,
   MapPin,
   Wallet,
-  type LucideIcon,
-} from "lucide-react";
+  type IconComponent,
+} from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
-const categoryArtwork: Record<string, { Icon: LucideIcon; tone: string }> = {
+const categoryArtwork: Record<string, { Icon: IconComponent; tone: string }> = {
   "Petrol Pump Management": { Icon: Fuel, tone: "from-[#f9e3da] to-[#f2c5b5]" },
   "Fuel Inventory & Stock Control": { Icon: Droplets, tone: "from-[#dcecf2] to-[#b9dbe6]" },
   "Employee Attendance": { Icon: MapPin, tone: "from-[#e2eadf] to-[#c3d6c0]" },

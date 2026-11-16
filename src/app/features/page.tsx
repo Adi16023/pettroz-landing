@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Plus, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Plus, type IconComponent } from "@/lib/icons";
 import { LaptopMockup } from "@/components/laptop-mockup";
 import { AttendancePreview, PumpPreview } from "@/components/product-preview";
 import { ButtonLink, Section } from "@/components/ui";
@@ -31,7 +31,7 @@ function FeatureItem({
   Icon,
 }: {
   module: Module;
-  Icon: LucideIcon;
+  Icon: IconComponent;
 }) {
   return (
     <li>

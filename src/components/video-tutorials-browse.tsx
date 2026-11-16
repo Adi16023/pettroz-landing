@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ChevronRight, Play, Search, X } from "lucide-react";
+import { ChevronRight, Play, Search, X } from "@/lib/icons";
 import {
-  formatVideoDuration,
   formatVideoUploadedAt,
   type PublicVideoTutorial,
 } from "@/lib/video-tutorials";
@@ -107,7 +106,6 @@ export function VideoTutorialsBrowse({ videos }: { videos: PublicVideoTutorial[]
       ) : (
         <div className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {filtered.map((video) => {
-            const duration = formatVideoDuration(video.durationSeconds);
             const uploaded = formatVideoUploadedAt(video.createdAt);
             return (
               <button
@@ -130,11 +128,6 @@ export function VideoTutorialsBrowse({ videos }: { videos: PublicVideoTutorial[]
                       <Play aria-hidden="true" className="size-5 fill-current" />
                     </span>
                   </span>
-                  {duration ? (
-                    <span className="absolute right-2.5 bottom-2.5 rounded-md bg-navy/85 px-2 py-0.5 text-[11px] font-semibold text-white">
-                      {duration}
-                    </span>
-                  ) : null}
                 </div>
                 <div className="flex flex-1 flex-col p-3.5 sm:p-4">
                   <p className="text-[11px] font-semibold tracking-wide text-primary uppercase">

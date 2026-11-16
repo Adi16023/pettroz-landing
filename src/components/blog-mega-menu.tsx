@@ -16,12 +16,12 @@ import {
   PlayCircle,
   Star,
   Wallet,
-  type LucideIcon,
-} from "lucide-react";
+  type IconComponent,
+} from "@/lib/icons";
 import { BlogThumbnail } from "@/components/blog-thumbnail";
 import { loadBlogPostsClient, type PublicBlogPost } from "@/lib/blog";
 
-const categoryIcons: Record<string, LucideIcon> = {
+const categoryIcons: Record<string, IconComponent> = {
   "Petrol Pump Management": Fuel,
   "Fuel Inventory & Stock Control": Droplets,
   "Employee Attendance": MapPin,
@@ -33,7 +33,7 @@ function categoryIcon(category: string) {
   return categoryIcons[category] ?? Wallet;
 }
 
-const helpLinks: { href: string; label: string; Icon: LucideIcon }[] = [
+const helpLinks: { href: string; label: string; Icon: IconComponent }[] = [
   { href: "/help-centre", label: "Help Centre", Icon: LifeBuoy },
   { href: "/faq", label: "FAQs", Icon: CircleHelp },
   { href: "/video-tutorials", label: "Video Tutorials", Icon: PlayCircle },

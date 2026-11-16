@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search } from "@/lib/icons";
 import { DeskCard, Donut, HorizontalBars, KpiCard, Stamp, TankGauges } from "@/components/product-ui";
 
 export type DemoScreen = "Sales" | "Dip" | "DSR" | "Credit customers" | "Attendance" | "Shifts & Rosters" | "Leave" | "Payroll";

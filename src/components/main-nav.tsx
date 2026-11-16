@@ -15,9 +15,8 @@ import {
   Store,
   Users,
   Wallet,
-  type LucideIcon,
-} from "lucide-react";
-import { RiGasStationFill, RiTeamFill } from "@remixicon/react";
+  type IconComponent,
+} from "@/lib/icons";
 import { BlogMegaPanel, BlogMobileLinks } from "@/components/blog-mega-menu";
 import {
   allFeatures,
@@ -50,17 +49,17 @@ const productLinks = [
     href: products.pump.href,
     label: "Petrol Pump Management",
     text: products.pump.short,
-    Icon: RiGasStationFill,
+    Icon: Fuel,
   },
   {
     href: products.attendance.href,
     label: "Attendance & Payroll",
     text: products.attendance.short,
-    Icon: RiTeamFill,
+    Icon: Users,
   },
 ] as const;
 
-const themeIconMap: Record<string, LucideIcon> = {
+const themeIconMap: Record<string, IconComponent> = {
   "station-operations": Fuel,
   "money-accounts": Wallet,
   "customers-automation": Store,
@@ -113,7 +112,7 @@ const featureMegaGroups = [
   },
 ];
 
-const businessIcons: LucideIcon[] = [Store, Users, Building2, LayoutGrid, Fuel];
+const businessIcons: IconComponent[] = [Store, Users, Building2, LayoutGrid, Fuel];
 
 const featureCategoryCardClass =
   "group inline-flex w-full items-center gap-2 rounded-xl border border-navy/10 bg-white px-3.5 py-2.5 text-sm font-medium text-navy transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary hover:shadow-[0_16px_40px_-28px_#1a1c2950]";
@@ -244,7 +243,7 @@ function MegaPanel({
                 onClick={onNavigate}
                 className="inline-flex items-center justify-center gap-2.5 text-center text-lg font-bold tracking-tight text-navy transition-colors hover:text-primary"
               >
-                <RiGasStationFill
+                <Fuel
                   aria-hidden
                   className="size-6 shrink-0 text-primary"
                 />
@@ -273,7 +272,7 @@ function MegaPanel({
                 onClick={onNavigate}
                 className="inline-flex items-center justify-center gap-2.5 text-center text-lg font-bold tracking-tight text-navy transition-colors hover:text-primary"
               >
-                <RiTeamFill
+                <Users
                   aria-hidden
                   className="size-6 shrink-0 text-primary"
                 />
@@ -825,16 +824,9 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
             <div className="mx-3 my-3 border-t border-white/15" />
             <div className="px-1 pb-1 sm:hidden">
               <Link
-                href="/login"
-                onClick={navigate}
-                className="flex min-h-11 items-center rounded-2xl px-3 text-xs text-white/75 hover:bg-white/10"
-              >
-                Log in
-              </Link>
-              <Link
                 href="/book-demo"
                 onClick={navigate}
-                className="mt-2 flex min-h-12 items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
+                className="flex min-h-12 items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
               >
                 Book a free demo
               </Link>

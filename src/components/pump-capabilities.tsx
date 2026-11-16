@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Check, Droplets, FileCheck, Fuel } from "lucide-react";
+import { ArrowUpRight, Check, Droplets, FileCheck, Fuel } from "@/lib/icons";
 import { PumpPreview } from "@/components/product-preview";
 
 const workflows = [

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, Building2, Users, Wallet } from "lucide-react";
+import { ArrowUpRight, BookOpen, Building2, Users, Wallet } from "@/lib/icons";
 import { PumpCapabilities } from "@/components/pump-capabilities";
 import { PumpPreview } from "@/components/product-preview";
 import { ButtonLink, CtaBand, H1, Kicker, Lead, Section } from "@/components/ui";

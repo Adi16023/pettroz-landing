@@ -6,84 +6,76 @@ import {
   Droplets,
   FileText,
   Fuel,
+  Group,
   QrCode,
-  Receipt,
-  Users,
-  type LucideIcon,
-} from "lucide-react";
+  ReceiptText,
+} from "@/lib/icons";
 import { ButtonLink, Section, SectionTitle } from "@/components/ui";
 import { homeAdvantage } from "@/lib/content";
 
-const icons: LucideIcon[] = [
+const icons = [
   Banknote,
   Fuel,
   QrCode,
-  Receipt,
-  Users,
+  ReceiptText,
+  Group,
   Calculator,
   FileText,
   BookOpen,
   Droplets,
-];
-
-const iconTints = [
-  "text-[#a6412b]/20",
-  "text-[#355a8a]/20",
-  "text-[#35604b]/20",
-  "text-[#8a4a38]/20",
-  "text-[#6b5535]/20",
-  "text-[#2f5f66]/20",
-  "text-[#6a5040]/20",
-  "text-[#4a5640]/20",
-  "text-[#3d5f72]/20",
-];
+] as const;
 
 export function HomeAdvantage() {
   return (
-    <Section id="advantage" className="bg-[#f4f3ef]">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
-        <div className="min-w-0">
-          <SectionTitle nowrap>{homeAdvantage.heading}</SectionTitle>
-          {/* <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-[0.95rem]">
+    <Section id="advantage" className="bg-white">
+      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+        <div className="min-w-0 max-w-3xl">
+          <p className="text-xs font-semibold tracking-[0.16em] text-primary uppercase">
+            {homeAdvantage.eyebrow}
+          </p>
+          <SectionTitle className="mt-3">{homeAdvantage.heading}</SectionTitle>
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-[0.95rem]">
             {homeAdvantage.description}
-          </p> */}
+          </p>
         </div>
-        <ButtonLink href={homeAdvantage.cta.href} variant="navy" className="shrink-0 self-start lg:self-auto">
+        <ButtonLink
+          href={homeAdvantage.cta.href}
+          variant="navy"
+          className="shrink-0 self-start lg:self-auto"
+        >
           {homeAdvantage.cta.label}
           <ArrowUpRight className="size-4" />
         </ButtonLink>
       </div>
 
-      <ul className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <ul className="mt-12 grid gap-px bg-navy/10 sm:grid-cols-2 xl:grid-cols-3">
         {homeAdvantage.items.map((item, index) => {
           const Icon = icons[index] ?? Fuel;
-          const tint = iconTints[index % iconTints.length];
 
           return (
             <li
               key={item.number}
-              className="group relative overflow-hidden rounded-[1.35rem] bg-white p-6 transition-transform duration-300 hover:-translate-y-1 sm:p-7"
+              className="group relative flex flex-col bg-white p-6 transition-colors duration-300 hover:bg-[#fafaf9] sm:p-8"
             >
-              <Icon
-                aria-hidden="true"
-                className={`pointer-events-none absolute -top-1 -right-1 size-[7.25rem] stroke-[1.15] select-none ${tint}`}
-              />
-
-              <div className="relative">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold leading-none text-primary-foreground">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-semibold leading-none text-white transition-colors duration-300 group-hover:bg-primary">
                     {index + 1}
                   </span>
-                  <h3 className="text-lg leading-snug font-semibold tracking-tight text-navy">{item.title}</h3>
+                  <h3 className="text-base leading-snug font-semibold tracking-tight text-navy sm:text-[1.05rem]">
+                    {item.title}
+                  </h3>
                 </div>
-                <p className="mt-3 text-sm font-medium text-navy/75">{item.subtitle}</p>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.text}</p>
+                <span className="inline-flex size-10 shrink-0 items-center justify-center border border-navy/10 text-navy transition-colors duration-300 group-hover:border-primary/30 group-hover:text-primary">
+                  <Icon aria-hidden="true" className="size-5" />
+                </span>
               </div>
+              <p className="mt-3 text-sm font-medium text-navy/70">{item.subtitle}</p>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.text}</p>
             </li>
           );
         })}
       </ul>
-
     </Section>
   );
 }

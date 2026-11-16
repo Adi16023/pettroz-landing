@@ -1,4 +1,4 @@
-import { ArrowUpRight, CalendarClock, CircleHelp, Info } from "lucide-react";
+import { ArrowUpRight, CalendarClock, CircleHelp, Info } from "@/lib/icons";
 import { ButtonLink } from "@/components/ui";
 
 type Kind = "demo" | "contact";

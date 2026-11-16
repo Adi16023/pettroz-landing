@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LeadForm } from "@/components/lead-form";
 import { H1, Kicker, Lead, Section } from "@/components/ui";
-import { Check } from "lucide-react";
+import { Check } from "@/lib/icons";
 
 export const metadata: Metadata = { title: "Book Free Demo" };
 

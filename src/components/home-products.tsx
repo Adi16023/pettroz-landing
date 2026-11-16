@@ -1,13 +1,12 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { RiGasStationFill, RiTeamFill } from "@remixicon/react";
+import { ArrowUpRight, Fuel, Users } from "@/lib/icons";
 import { AttendancePreview, PumpPreview } from "@/components/product-preview";
 import { Section, SectionTitle } from "@/components/ui";
 import { homeProductsIntro } from "@/lib/content";
 
 const icons = {
-  pump: RiGasStationFill,
-  attendance: RiTeamFill,
+  pump: Fuel,
+  attendance: Users,
 } as const;
 
 export function HomeProducts() {

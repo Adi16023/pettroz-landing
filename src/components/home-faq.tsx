@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@/lib/icons";
 import { homeFaqs, type FaqItem } from "@/lib/content";
 import { cn } from "@/lib/utils";
 

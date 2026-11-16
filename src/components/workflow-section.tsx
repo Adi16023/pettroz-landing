@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Fuel, Users } from "lucide-react";
+import { ArrowUpRight, Fuel, Users } from "@/lib/icons";
 import Link from "next/link";
 import { WorkflowPlayer } from "@/components/workflow-player";
 import { cn } from "@/lib/utils";

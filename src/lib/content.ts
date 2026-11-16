@@ -1091,7 +1091,7 @@ export const homeAdvantage = {
   eyebrow: "What makes us different",
   heading: "The Petrozz Advantage. Built Beyond Everyday Management.",
   description:
-    "Petrozz goes beyond conventional petrol pump management with powerful capabilities designed around real business requirements. From accurate financial tracking and GST-enabled billing to organised credit documentation and automated service reminders, Petrozz brings smarter ways to manage your entire fuel station business.",
+    "Beyond everyday pump management — financial tracking, GST billing, credit documentation, and automated reminders in one platform.",
   closing:
     "From cash accountability and fuel-wise profitability to credit documentation and customer retention, Petrozz delivers capabilities designed to make everyday petrol pump management smarter.",
   cta: { href: "/features", label: "Explore the Petrozz Advantage" },

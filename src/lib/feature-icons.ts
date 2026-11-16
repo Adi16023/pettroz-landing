@@ -27,10 +27,10 @@ import {
   UserCheck,
   Users,
   Wallet,
-  type LucideIcon,
-} from "lucide-react";
+  type IconComponent,
+} from "@/lib/icons";
 
-export const featureIcons: Record<string, LucideIcon> = {
+export const featureIcons: Record<string, IconComponent> = {
   "fuel-sales-billing": Fuel,
   "dsr-daily-closing": FileSpreadsheet,
   "tank-fuel-stock": Gauge,
@@ -66,6 +66,6 @@ export const featureIcons: Record<string, LucideIcon> = {
   "employee-app": ContactRound,
 };
 
-export function getFeatureIcon(slug: string): LucideIcon {
+export function getFeatureIcon(slug: string): IconComponent {
   return featureIcons[slug] ?? LayoutGrid;
 }

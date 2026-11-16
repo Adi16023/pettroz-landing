@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, type ReactNode } from "react";
-import type { LucideIcon } from "lucide-react";
+import type { IconComponent } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
 // Presentation extracted from Petroz's DeskCard, MetricCard, KpiCard and desk-charts.
@@ -32,7 +32,7 @@ export function DeskCard({ title, hint, aside, className, children, previewTarge
 export function MetricCard({ label, value, icon: Icon, wash, iconWash }: {
   label: string;
   value: string;
-  icon: LucideIcon;
+  icon: IconComponent;
   wash: string;
   iconWash: string;
 }) {
