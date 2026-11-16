@@ -39,7 +39,10 @@ export function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className={cn("site-container py-20 lg:py-24", className)}>
+    <section
+      id={id}
+      className={cn("site-container py-20 lg:py-24", id && "scroll-mt-28", className)}
+    >
       {children}
     </section>
   );

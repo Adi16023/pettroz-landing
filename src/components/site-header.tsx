@@ -42,8 +42,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 isolate">
-      <div className="relative border-b border-navy/10 bg-white">
-        <div className="site-container relative flex min-h-14 items-center justify-between gap-3 py-2.5 sm:min-h-20 sm:gap-4 sm:py-3.5 xl:min-h-24 xl:py-4">
+      <div id="pettroz-header-bar" className="relative border-b border-navy/10 bg-white">
+        <div className="site-container relative flex min-h-16 items-center justify-between gap-3 py-3 sm:min-h-20 sm:gap-4 sm:py-3.5 xl:min-h-24 xl:py-4">
           <Link
             href="/"
             onClick={goHome}
@@ -51,7 +51,7 @@ export function SiteHeader() {
             aria-label="Petrozz home"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/pettroz-wh.svg" alt="Petrozz" className="h-7 w-auto sm:h-8" />
+            <img src="/pettroz-wh.svg" alt="Petrozz" className="h-8 w-auto" />
           </Link>
 
           <DesktopNav activeHref={activeHref} />

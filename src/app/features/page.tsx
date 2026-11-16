@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Plus, type IconComponent } from "@/lib/icons";
 import { LaptopMockup } from "@/components/laptop-mockup";
@@ -14,7 +14,16 @@ import {
   pumpModules,
 } from "@/lib/content";
 import { getFeatureIcon } from "@/lib/feature-icons";
+import { scrollToIdWithRetry } from "@/lib/scroll-to-id";
 import { cn } from "@/lib/utils";
+
+type ProductTab = "pump" | "attendance";
+
+function productForHash(hash: string): ProductTab | null {
+  if (featureThemes.attendance.some((theme) => theme.id === hash)) return "attendance";
+  if (featureThemes.pump.some((theme) => theme.id === hash)) return "pump";
+  return null;
+}
 
 type Module = (typeof pumpModules)[number];
 
@@ -56,7 +65,7 @@ function FeatureItem({
 }
 
 export default function FeaturesPage() {
-  const [product, setProduct] = useState<"pump" | "attendance">("pump");
+  const [product, setProduct] = useState<ProductTab>("pump");
   const catalog = product === "pump" ? pumpBySlug : attendanceBySlug;
   const themes = featureThemes[product];
 
@@ -69,6 +78,51 @@ export default function FeaturesPage() {
     [themes, catalog],
   );
 
+  useLayoutEffect(() => {
+    const hash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    const next = productForHash(hash);
+    if (next) setProduct(next);
+  }, []);
+
+  useEffect(() => {
+    function syncProductFromHash() {
+      const hash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+      const next = productForHash(hash);
+      if (next) setProduct(next);
+    }
+
+    function onClick(event: MouseEvent) {
+      const anchor = (event.target as Element | null)?.closest?.("a[href]") as
+        | HTMLAnchorElement
+        | null;
+      if (!anchor) return;
+      let url: URL;
+      try {
+        url = new URL(anchor.href, window.location.href);
+      } catch {
+        return;
+      }
+      if (url.pathname !== "/features") return;
+      const next = productForHash(decodeURIComponent(url.hash.replace(/^#/, "")));
+      if (next) setProduct(next);
+    }
+
+    window.addEventListener("hashchange", syncProductFromHash);
+    document.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("hashchange", syncProductFromHash);
+      document.removeEventListener("click", onClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    const hash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    if (!hash) return;
+    const expected = productForHash(hash);
+    if (expected && expected !== product) return;
+    scrollToIdWithRetry(hash);
+  }, [product, themeSections]);
+
   return (
     <>
       <Section className="pt-16 text-center lg:pt-20">
@@ -77,7 +131,7 @@ export default function FeaturesPage() {
         </h1>
       </Section>
 
-      <Section id="feature-catalog" className="scroll-mt-24 pt-0 text-center lg:pt-0">
+      <Section id="feature-catalog" className="scroll-mt-28 pt-0 text-center lg:pt-0">
         <div
           role="group"
           aria-label="Choose product features"
@@ -120,7 +174,7 @@ export default function FeaturesPage() {
       <Section className="pt-10 lg:pt-14">
         <div className="space-y-14 lg:space-y-16">
           {themeSections.map((theme) => (
-            <div key={theme.id} id={theme.id}>
+            <div key={theme.id} id={theme.id} className="scroll-mt-28">
               <h2 className="section-title mt-0 text-center text-[clamp(1.75rem,3vw,2.5rem)]">
                 {theme.title}
               </h2>

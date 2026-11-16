@@ -35,8 +35,10 @@
     border-color: var(--border);
   }
   html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 4.5rem;
+    /* Instant anchors — RouteScroll corrects under the sticky header.
+       Smooth CSS scroll was fighting client navigations and overshooting. */
+    scroll-behavior: auto;
+    scroll-padding-top: 5rem;
     overflow-x: clip;
   }
   @media (min-width: 640px) {
@@ -454,41 +456,43 @@
   }
 }
 
-.pettroz-mobile-menu-shell {
+.pettroz-mobile-accordion {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
+  transition: grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.pettroz-mobile-menu-shell[data-open="true"] {
+.pettroz-mobile-accordion[data-open="true"] {
   grid-template-rows: 1fr;
-  pointer-events: auto;
 }
 
-.pettroz-mobile-menu-clip {
+.pettroz-mobile-accordion-clip {
   overflow: hidden;
   min-height: 0;
 }
 
-.pettroz-mobile-menu-shell[data-open="true"] .pettroz-mobile-menu-clip > * {
-  animation: mobile-menu-under-header-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.pettroz-mobile-accordion[data-open="true"] .pettroz-mobile-accordion-clip > * {
+  animation: mobile-accordion-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes mobile-menu-under-header-in {
+@keyframes mobile-accordion-in {
   from {
-    opacity: 0;
+    opacity: 0.35;
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pettroz-mobile-menu-shell {
-    transition: none;
+  .pettroz-mobile-drawer-backdrop,
+  .pettroz-mobile-drawer-panel,
+  .pettroz-mobile-accordion {
+    transition: none !important;
   }
-  .pettroz-mobile-menu-shell[data-open="true"] .pettroz-mobile-menu-clip > * {
+  .pettroz-mobile-accordion[data-open="true"] .pettroz-mobile-accordion-clip > * {
     animation: none;
   }
 }

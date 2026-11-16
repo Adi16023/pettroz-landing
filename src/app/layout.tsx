@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { RouteScroll } from "@/components/route-scroll";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { brand } from "@/lib/content";
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} ${inter.className}`}>
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
+        <RouteScroll />
         <a href="#main-content" className="fixed top-3 left-3 z-50 -translate-y-24 rounded-full bg-navy px-5 py-3 text-sm text-white focus:translate-y-0">
           Skip to content
         </a>
