@@ -5,7 +5,7 @@ import { BlogThumbnail } from "@/components/blog-thumbnail";
 import { ButtonLink, H1, Kicker, Lead, Section } from "@/components/ui";
 import { fetchBlogPosts } from "@/lib/blog";
 
-export const metadata: Metadata = { title: "Resources" };
+export const metadata: Metadata = { title: "Blog" };
 export const revalidate = 60;
 
 export default async function ResourcesPage() {
@@ -17,7 +17,7 @@ export default async function ResourcesPage() {
       <header className="flex flex-col gap-7 border-b border-navy/10 pb-9 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <Kicker>Resources</Kicker>
-          <H1>Petrozz Notes</H1>
+          <H1>Petrozz Blog</H1>
           <Lead className="mt-4">Practical ideas for running better fuel stations and teams.</Lead>
         </div>
         <ButtonLink href="/products" variant="ghost" className="self-start sm:mb-1 sm:self-auto">
@@ -26,7 +26,7 @@ export default async function ResourcesPage() {
       </header>
 
       {!featured ? (
-        <p className="py-16 text-sm text-muted-foreground">No resources found</p>
+        <p className="py-16 text-sm text-muted-foreground">No posts found</p>
       ) : (
         <>
           <section className="py-9" aria-labelledby="featured-article">

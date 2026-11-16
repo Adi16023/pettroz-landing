@@ -15,7 +15,26 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/resources/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const post = await fetchBlogPost(slug);
-  return { title: post?.title ?? "Article" };
+  if (!post) return { title: "Article" };
+  const description = post.excerpt?.trim() || undefined;
+  const keywords = (post.tags ?? []).map((tag) => tag.trim()).filter(Boolean);
+  return {
+    title: post.title,
+    description,
+    keywords: keywords.length ? keywords : undefined,
+    openGraph: {
+      title: post.title,
+      description,
+      type: "article",
+      images: post.coverUrl ? [{ url: post.coverUrl }] : undefined,
+    },
+    twitter: {
+      card: post.coverUrl ? "summary_large_image" : "summary",
+      title: post.title,
+      description,
+      images: post.coverUrl ? [post.coverUrl] : undefined,
+    },
+  };
 }
 
 export default async function ResourcesArticlePage({ params }: PageProps<"/resources/[slug]">) {
@@ -30,7 +49,19 @@ export default async function ResourcesArticlePage({ params }: PageProps<"/resou
       <Kicker>{post.category}</Kicker>
       <H1>{post.title}</H1>
       {post.subtitle ? <p className="mt-3 max-w-2xl text-lg text-navy/70">{post.subtitle}</p> : null}
-      <Lead>{post.excerpt}</Lead>
+      {post.excerpt ? <Lead>{post.excerpt}</Lead> : null}
+      {(post.tags ?? []).length > 0 ? (
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {(post.tags ?? []).map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full border border-navy/10 bg-white px-3 py-1 text-xs font-medium text-navy/80"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      ) : null}
       <BlogThumbnail
         category={post.category}
         title={post.title}

@@ -70,8 +70,8 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
   if (!featured) {
     return (
       <div className="rounded-[1.4rem] border border-navy/10 bg-white p-6">
-        <p className="text-[11px] font-semibold tracking-[0.14em] text-primary uppercase">Petrozz Notes</p>
-        <p className="mt-3 text-base font-semibold text-navy">No resources found</p>
+        <p className="text-[11px] font-semibold tracking-[0.14em] text-primary uppercase">Petrozz Blog</p>
+        <p className="mt-3 text-base font-semibold text-navy">No posts found</p>
         <p className="mt-2 text-sm text-muted-foreground">Published articles will show up here.</p>
         <Link
           href="/resources"
@@ -120,7 +120,7 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
       <div className="pettroz-mega-item" style={{ animationDelay: "90ms" }}>
         <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.14em] text-primary uppercase">
           <Newspaper className="size-3.5" aria-hidden="true" />
-          Latest notes
+          Latest posts
         </div>
         {latest.length === 0 ? (
           <p className="mt-4 text-sm text-muted-foreground">No more articles yet.</p>
@@ -201,7 +201,7 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
           className="pettroz-mega-item group mt-auto overflow-hidden rounded-[1.4rem] border border-navy/10 bg-[radial-gradient(circle_at_top_right,#f8e8e4_0%,#ffffff_55%)] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-[0_18px_40px_-28px_#1a1c2950]"
         >
           <p className="text-[11px] font-semibold tracking-[0.14em] text-primary uppercase">
-            Petrozz Notes
+            Petrozz Blog
           </p>
           <p className="mt-2 text-base leading-snug font-semibold tracking-tight text-navy">
             Practical ideas for fuel stations and teams.
@@ -239,7 +239,7 @@ export function BlogMobileLinks({ onNavigate }: { onNavigate: () => void }) {
   }
 
   if (posts.length === 0) {
-    return <p className="px-3 py-2 text-xs text-white/55">No resources found</p>;
+    return <p className="px-3 py-2 text-xs text-white/55">No posts found</p>;
   }
 
   return (

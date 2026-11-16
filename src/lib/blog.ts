@@ -10,6 +10,7 @@ export type PublicBlogPost = {
   title: string;
   subtitle?: string;
   excerpt: string;
+  tags?: string[];
   category: string;
   coverUrl?: string | null;
   bodyHtml?: string;
@@ -32,6 +33,7 @@ export function rewriteBlogHtml(html: string) {
 export function normalizeBlogPosts(rows: PublicBlogPost[]): PublicBlogPost[] {
   return rows.map((row) => ({
     ...row,
+    tags: Array.isArray(row.tags) ? row.tags.filter(Boolean) : [],
     coverUrl: blogAssetUrl(row.coverUrl),
   }));
 }
@@ -72,6 +74,7 @@ export async function fetchBlogPost(slug: string): Promise<PublicBlogPost | null
     const row = (await response.json()) as PublicBlogPost;
     return {
       ...row,
+      tags: Array.isArray(row.tags) ? row.tags.filter(Boolean) : [],
       coverUrl: blogAssetUrl(row.coverUrl),
       bodyHtml: row.bodyHtml ? rewriteBlogHtml(row.bodyHtml) : "",
     };
