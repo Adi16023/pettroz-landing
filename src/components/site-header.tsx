@@ -1,6 +1,6 @@
 "use client";
 
-import type { MouseEvent } from "react";
+import { useEffect, useRef, type MouseEvent } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowUpRight } from "@/lib/icons";
@@ -15,12 +15,28 @@ function scrollPageToTop() {
 export function SiteHeader() {
   const pathname = usePathname();
   const router = useRouter();
+  const spacer = useRef<HTMLDivElement>(null);
   const activeHref =
     mainNavItems.find((item) =>
       item.href === "/"
         ? pathname === "/"
         : pathname === item.href || pathname.startsWith(`${item.href}/`),
     )?.href ?? "";
+
+  useEffect(() => {
+    const bar = document.getElementById("pettroz-header-bar");
+    const slot = spacer.current;
+    if (!bar || !slot) return;
+
+    function sync() {
+      slot.style.height = `${bar.offsetHeight}px`;
+    }
+
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(bar);
+    return () => observer.disconnect();
+  }, []);
 
   function goHome(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
@@ -41,35 +57,42 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 isolate bg-white">
-      <div id="pettroz-header-bar" className="relative border-b border-navy/10 bg-white">
-        <div className="site-container relative flex min-h-16 items-center justify-between gap-3 py-3 sm:min-h-20 sm:gap-4 sm:py-3.5 xl:min-h-24 xl:py-4">
-          <Link
-            href="/"
-            onClick={goHome}
-            className="relative z-20 shrink-0"
-            aria-label="Petrozz home"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/pettroz-wh.svg" alt="Petrozz" className="h-8 w-auto" />
-          </Link>
+    <>
+      <header className="fixed inset-x-0 top-0 z-[60] isolate bg-white">
+        <div id="pettroz-header-bar" className="relative border-b border-navy/10 bg-white">
+          <div className="site-container relative flex min-h-16 items-center justify-between gap-3 py-3 sm:min-h-20 sm:gap-4 sm:py-3.5 xl:min-h-24 xl:py-4">
+            <Link
+              href="/"
+              onClick={goHome}
+              className="relative z-20 shrink-0"
+              aria-label="Petrozz home"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/pettroz-wh.svg" alt="Petrozz" className="h-8 w-auto" />
+            </Link>
 
-          <DesktopNav activeHref={activeHref} />
+            <DesktopNav activeHref={activeHref} />
 
-          <div className="relative z-20 flex shrink-0 items-center gap-3 sm:gap-5">
-            <div className="hidden items-center gap-5 sm:flex">
-              <Link
-                href="/book-demo"
-                className="inline-flex min-h-11 items-center gap-3 rounded-full bg-primary px-5 text-xs font-semibold whitespace-nowrap text-white shadow-[0_4px_12px_#d9302218] transition-colors hover:bg-primary/90"
-              >
-                Book a free demo <ArrowUpRight className="size-3.5" />
-              </Link>
+            <div className="relative z-20 flex shrink-0 items-center gap-3 sm:gap-5">
+              <div className="hidden items-center gap-5 sm:flex">
+                <Link
+                  href="/book-demo"
+                  className="inline-flex min-h-11 items-center gap-3 rounded-full bg-primary px-5 text-xs font-semibold whitespace-nowrap text-white shadow-[0_4px_12px_#d9302218] transition-colors hover:bg-primary/90"
+                >
+                  Book a free demo <ArrowUpRight className="size-3.5" />
+                </Link>
+              </div>
+              <MobileNav activeHref={activeHref} />
             </div>
-            <MobileNav activeHref={activeHref} />
           </div>
         </div>
-      </div>
-      <div id="pettroz-header-mega" className="absolute inset-x-0 top-full z-50" />
-    </header>
+        <div id="pettroz-header-mega" className="absolute inset-x-0 top-full z-50" />
+      </header>
+      <div
+        ref={spacer}
+        aria-hidden="true"
+        className="min-h-16 sm:min-h-20 xl:min-h-24"
+      />
+    </>
   );
 }

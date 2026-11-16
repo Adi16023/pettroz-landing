@@ -712,20 +712,18 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
     const html = document.documentElement;
     const { body } = document;
     const scrollY = window.scrollY;
+    // Keep header in view: lock scroll without shifting the document
+    // (position:fixed + negative top was dragging the header off-screen).
     const previous = {
       htmlOverflow: html.style.overflow,
       bodyOverflow: body.style.overflow,
-      bodyPosition: body.style.position,
-      bodyTop: body.style.top,
-      bodyWidth: body.style.width,
       bodyOverscroll: body.style.overscrollBehavior,
+      htmlOverscroll: html.style.overscrollBehavior,
     };
 
     html.style.overflow = "hidden";
     body.style.overflow = "hidden";
-    body.style.position = "fixed";
-    body.style.top = `-${scrollY}px`;
-    body.style.width = "100%";
+    html.style.overscrollBehavior = "none";
     body.style.overscrollBehavior = "none";
 
     function escape(event: KeyboardEvent) {
@@ -741,17 +739,23 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
       event.preventDefault();
     }
 
+    function blockWheel(event: WheelEvent) {
+      const target = event.target as Element | null;
+      if (target?.closest?.(`#${CSS.escape(panelId)}`)) return;
+      event.preventDefault();
+    }
+
     document.addEventListener("keydown", escape);
     document.addEventListener("touchmove", blockTouchMove, { passive: false });
+    document.addEventListener("wheel", blockWheel, { passive: false });
     return () => {
       html.style.overflow = previous.htmlOverflow;
       body.style.overflow = previous.bodyOverflow;
-      body.style.position = previous.bodyPosition;
-      body.style.top = previous.bodyTop;
-      body.style.width = previous.bodyWidth;
+      html.style.overscrollBehavior = previous.htmlOverscroll;
       body.style.overscrollBehavior = previous.bodyOverscroll;
       document.removeEventListener("keydown", escape);
       document.removeEventListener("touchmove", blockTouchMove);
+      document.removeEventListener("wheel", blockWheel);
       window.scrollTo(0, scrollY);
     };
   }, [open, panelId]);
