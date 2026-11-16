@@ -183,7 +183,7 @@ export default function HomePage() {
         </ol>
       </Section>
 
-      <Section className="py-14 lg:py-16">
+      <Section id="faq" className="scroll-mt-28 py-14 lg:py-16">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.65fr)_minmax(0,1.35fr)] lg:gap-14">
           <div>
             <p className="text-sm font-medium text-muted-foreground">Frequently asked questions</p>

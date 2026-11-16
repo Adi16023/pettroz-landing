@@ -7,6 +7,7 @@ import {
   Wallet,
   type LucideIcon,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const categoryArtwork: Record<string, { Icon: LucideIcon; tone: string }> = {
   "Petrol Pump Management": { Icon: Fuel, tone: "from-[#f9e3da] to-[#f2c5b5]" },
@@ -33,7 +34,7 @@ export function BlogThumbnail({
       <img
         src={coverUrl}
         alt={title}
-        className={`aspect-[1.65/1] w-full object-cover ${className}`}
+        className={cn("aspect-video w-full rounded-2xl object-cover", className)}
       />
     );
   }
@@ -45,7 +46,11 @@ export function BlogThumbnail({
     <div
       role="img"
       aria-label={`Illustration for ${title}`}
-      className={`relative isolate flex aspect-[1.65/1] items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br ${artwork.tone} ${className}`}
+      className={cn(
+        "relative isolate flex aspect-video items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br",
+        artwork.tone,
+        className,
+      )}
     >
       <span aria-hidden="true" className="absolute -right-8 -top-12 size-48 rounded-full border border-white/50" />
       <span aria-hidden="true" className="absolute -bottom-20 -left-8 size-52 rounded-full border border-white/50" />

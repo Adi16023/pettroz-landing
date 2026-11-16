@@ -495,6 +495,7 @@ details[open] .faq-plus {
   color: var(--muted-foreground);
   font-size: 0.95rem;
   line-height: 1.75;
+  text-align: left;
 }
 
 .blog-prose h1,
@@ -504,6 +505,7 @@ details[open] .faq-plus {
   font-weight: 650;
   letter-spacing: -0.02em;
   margin: 1.4rem 0 0.55rem;
+  text-align: left;
 }
 
 .blog-prose h1 { font-size: 1.7rem; }
@@ -514,6 +516,11 @@ details[open] .faq-plus {
 .blog-prose ul,
 .blog-prose ol {
   margin: 0.7rem 0;
+  text-align: left;
+}
+
+.blog-prose li {
+  text-align: left;
 }
 
 .blog-prose ul,

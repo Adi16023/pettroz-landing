@@ -9,8 +9,9 @@ import {
   Handshake,
   Lightbulb,
   RefreshCw,
+  Eye,
+  Layers,
   ShieldCheck,
-  Sparkles,
   Target,
   Users,
   type LucideIcon,
@@ -29,7 +30,7 @@ const storyPoints: { title: string; text: string; Icon: LucideIcon }[] = [
   {
     title: "The Solution",
     text: "A unified platform that brings sales, stock, staff and finances together for clearer control.",
-    Icon: Sparkles,
+    Icon: Layers,
   },
   {
     title: "The Goal",
@@ -213,7 +214,7 @@ export default function AboutPage() {
           </div>
           <div className="mx-auto flex max-w-lg flex-col items-center">
             <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary/15 text-primary">
-              <Sparkles aria-hidden="true" className="size-6" strokeWidth={1.7} />
+              <Eye aria-hidden="true" className="size-6" strokeWidth={1.7} />
             </span>
             <h2 className="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl">Our Vision</h2>
             <p className="mt-5 text-base leading-8 text-white/65 sm:text-lg sm:leading-8">
