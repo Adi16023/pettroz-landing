@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { Banknote, Bell, BookOpen, CalendarCheck, CheckCircle2, ChevronDown, Clock, Coins, ContactRound, Droplets, FileSpreadsheet, FileText, Fuel, Gauge, LayoutDashboard, LifeBuoy, MousePointer2, Package, PanelLeftClose, ReceiptText, Settings, ShoppingBag, Sun, Timer, TreePalm, TrendingUp, UserCheck, Users, Wallet } from "@/lib/icons";
+import { Banknote, Bell, Bill, BookOpen, CalendarCheck, CalendarDays, Cash, CheckCircle2, ChevronDown, Clock, ContactRound, Droplets, FilePdf, FlightTakeoff, Fuel, LayoutDashboard, LifeBuoy, MousePointer2, Package, PanelLeftClose, Scales, Settings, ShoppingBag, Sun, Timer, TrendingUp, UserCheck, Users, Wallet } from "@/lib/icons";
 import type { IconComponent } from "@/lib/icons";
 import { DeskCard, Donut, HorizontalBars, KpiCard, MetricCard, Stamp, TankGauges } from "@/components/product-ui";
 import { ProductDemoScreen, type DemoScreen } from "@/components/product-demo-screens";
@@ -122,21 +122,21 @@ function usePreviewPlayback(animated: boolean, steps: PreviewStep[]) {
 }
 
 const fuelNav: { label: string; items: { label: string; Icon: IconComponent }[] }[] = [
-  { label: "Today", items: [{ label: "Dashboard", Icon: LayoutDashboard }, { label: "DSR", Icon: FileSpreadsheet }, { label: "Shifts", Icon: Timer }] },
-  { label: "Fuel", items: [{ label: "Sales", Icon: Fuel }, { label: "Billing", Icon: ReceiptText }, { label: "Dip", Icon: Gauge }, { label: "Stock variation", Icon: Droplets }] },
+  { label: "Today", items: [{ label: "Dashboard", Icon: LayoutDashboard }, { label: "DSR", Icon: CalendarDays }, { label: "Shifts", Icon: Timer }] },
+  { label: "Fuel", items: [{ label: "Sales", Icon: Fuel }, { label: "Billing", Icon: Bill }, { label: "Dip", Icon: Scales }, { label: "Stock variation", Icon: Droplets }] },
   { label: "Shop", items: [{ label: "Lube / Products", Icon: Package }] },
   { label: "Credit", items: [{ label: "Credit customers", Icon: BookOpen }] },
   { label: "People", items: [{ label: "Staff", Icon: Users }, { label: "Attendance", Icon: UserCheck }, { label: "Contacts", Icon: ContactRound }] },
-  { label: "Money", items: [{ label: "Cash", Icon: Coins }, { label: "Banking", Icon: Banknote }, { label: "Expenses", Icon: Wallet }] },
+  { label: "Money", items: [{ label: "Cash", Icon: Cash }, { label: "Banking", Icon: Banknote }, { label: "Expenses", Icon: Wallet }] },
 ];
 const attendanceNav = [
   { label: "Overview", Icon: LayoutDashboard },
   { label: "Attendance", Icon: CalendarCheck },
   { label: "Employees", Icon: Users },
   { label: "Shifts & Rosters", Icon: Clock },
-  { label: "Leave", Icon: TreePalm },
+  { label: "Leave", Icon: FlightTakeoff },
   { label: "Payroll", Icon: Wallet },
-  { label: "Reports", Icon: FileText },
+  { label: "Reports", Icon: FilePdf },
   { label: "Settings", Icon: Settings },
 ];
 

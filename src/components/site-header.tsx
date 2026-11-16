@@ -69,7 +69,7 @@ export function SiteHeader() {
           </div>
         </div>
       </div>
-      <div id="pettroz-header-mega" className="relative" />
+      <div id="pettroz-header-mega" className="absolute inset-x-0 top-full z-50" />
     </header>
   );
 }

@@ -708,8 +708,25 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
 
   useEffect(() => {
     if (!open) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+
+    const html = document.documentElement;
+    const { body } = document;
+    const scrollY = window.scrollY;
+    const previous = {
+      htmlOverflow: html.style.overflow,
+      bodyOverflow: body.style.overflow,
+      bodyPosition: body.style.position,
+      bodyTop: body.style.top,
+      bodyWidth: body.style.width,
+      bodyOverscroll: body.style.overscrollBehavior,
+    };
+
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    body.style.overscrollBehavior = "none";
 
     function escape(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
@@ -718,12 +735,26 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
       toggle.current?.focus();
     }
 
+    function blockTouchMove(event: TouchEvent) {
+      const target = event.target as Element | null;
+      if (target?.closest?.(`#${CSS.escape(panelId)}`)) return;
+      event.preventDefault();
+    }
+
     document.addEventListener("keydown", escape);
+    document.addEventListener("touchmove", blockTouchMove, { passive: false });
     return () => {
-      document.body.style.overflow = previous;
+      html.style.overflow = previous.htmlOverflow;
+      body.style.overflow = previous.bodyOverflow;
+      body.style.position = previous.bodyPosition;
+      body.style.top = previous.bodyTop;
+      body.style.width = previous.bodyWidth;
+      body.style.overscrollBehavior = previous.bodyOverscroll;
       document.removeEventListener("keydown", escape);
+      document.removeEventListener("touchmove", blockTouchMove);
+      window.scrollTo(0, scrollY);
     };
-  }, [open]);
+  }, [open, panelId]);
 
   function close() {
     setOpen(false);

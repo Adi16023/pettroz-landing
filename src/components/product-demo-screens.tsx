@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ChevronDown, Search } from "@/lib/icons";
+import { ChevronDown, FileExcel, FilePdf, Search } from "@/lib/icons";
 import { DeskCard, Donut, HorizontalBars, KpiCard, Stamp, TankGauges } from "@/components/product-ui";
 
 export type DemoScreen = "Sales" | "Dip" | "DSR" | "Credit customers" | "Attendance" | "Shifts & Rosters" | "Leave" | "Payroll";
@@ -73,7 +73,7 @@ export function ProductDemoScreen({ screen, actionComplete }: { screen: DemoScre
     case "DSR":
       return <div>
         <Heading title="DSR" hint="Daily sales report for this pump. Lock it when the day is counted." />
-        <Filters labels={["Shift", "Staff"]}><Action primary target="lock-dsr">{actionComplete ? "Unlock DSR" : "Lock DSR"}</Action><Action>Export PDF</Action><Action>Export Excel</Action><Action>Deposit to Bank</Action></Filters>
+        <Filters labels={["Shift", "Staff"]}><Action primary target="lock-dsr">{actionComplete ? "Unlock DSR" : "Lock DSR"}</Action><Action><FilePdf className="size-3.5" aria-hidden="true" />Export PDF</Action><Action><FileExcel className="size-3.5" aria-hidden="true" />Export Excel</Action><Action>Deposit to Bank</Action></Filters>
         <div className="mb-6 grid grid-cols-4 gap-4">{[["Total sales", "₹2,40,850"], ["Fuel sales", "₹2,32,400"], ["Lube / product", "₹8,450"], ["Credit sales", "₹22,450"], ["Cash collection", "₹1,58,200"], ["UPI Collection", "₹45,000"], ["Expenses", "₹3,500"], ["Net collection", "₹2,37,350"]].map(([label, value], i) => <KpiCard key={label} label={label} value={value} hint="03 Nov 2026" wash={i === 0 ? "bg-emerald-200!" : undefined} />)}</div>
         <DeskCard title="Collection summary" previewTarget="closing-summary" className="mb-6"><div className="grid grid-cols-4 gap-6">{[["Cash", "₹1,58,200"], ["UPI", "₹45,000"], ["POS", "₹15,200"], ["Credit", "₹22,450"]].map(([label, value]) => <div key={label}><p className="text-sm text-muted-foreground">{label}</p><p className="mt-2 text-2xl">{value}</p></div>)}</div></DeskCard>
         <DeskCard title="Notes & DSR status"><div className="flex items-center justify-between"><p className="text-sm text-muted-foreground">All collections reconciled for the day.</p><Stamp tone={actionComplete ? "ok" : "warn"}>{actionComplete ? "Locked" : "Open"}</Stamp></div></DeskCard>
@@ -104,7 +104,7 @@ export function ProductDemoScreen({ screen, actionComplete }: { screen: DemoScre
       return <div>
         <Heading title="Attendance" hint="Track, manage and monitor employee attendance." />
         <div className="mb-5 grid grid-cols-3 gap-4"><KpiCard label="Present" value="45" hint="93.8% of staff" wash="bg-emerald-200!" /><KpiCard label="Absent" value="3" hint="6.3% of staff" wash="bg-rose-200!" /><KpiCard label="Late" value="3" hint="After the assigned shift start" wash="bg-blue-200!" /></div>
-        <Filters labels={["Designation", "Shift", "Status"]}><Action>Export Excel</Action><Action>Export PDF</Action><Action primary>Mark attendance</Action></Filters>
+        <Filters labels={["Designation", "Shift", "Status"]}><Action><FileExcel className="size-3.5" aria-hidden="true" />Export Excel</Action><Action><FilePdf className="size-3.5" aria-hidden="true" />Export PDF</Action><Action primary>Mark attendance</Action></Filters>
         <DemoTable target="attendance-list" columns={["Employee", "Designation", "Shift", "Check in", "Check out", "Work hours", "Status", "Location"]} rows={demoPeople.map((name, i) => [name, i < 2 ? "Operations" : "Sales", "Morning", `09:0${i * 2}`, "—", "—", <Stamp key={name}>Present</Stamp>, "Demo outlet"])} />
       </div>;
     case "Shifts & Rosters":
