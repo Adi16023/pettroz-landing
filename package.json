@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:e2e": "playwright test",
+    "test:e2e:mobile": "playwright test e2e/mobile-overflow.spec.ts",
+    "test:e2e:mobile:watch": "node e2e/mobile-visual-tour.mjs"
   },
   "dependencies": {
     "@remixicon/react": "^4.9.0",
@@ -18,6 +21,7 @@
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

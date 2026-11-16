@@ -9,6 +9,7 @@ import {
   Building2,
   CalendarDays,
   ChevronDown,
+  ChevronRight,
   Fuel,
   LayoutGrid,
   MapPin,
@@ -649,31 +650,256 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
   const toggle = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [section, setSection] = useState<string | null>(null);
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalTarget(document.getElementById("pettroz-header-mega"));
+  }, []);
 
   useEffect(() => {
     if (!open) return;
+
     function dismiss(event: PointerEvent) {
-      if (event.target instanceof Node && !root.current?.contains(event.target)) {
-        setOpen(false);
-      }
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (root.current?.contains(target)) return;
+      if (portalTarget?.contains(target)) return;
+      setOpen(false);
+      setSection(null);
     }
+
     function escape(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
       setOpen(false);
+      setSection(null);
       toggle.current?.focus();
     }
+
     document.addEventListener("pointerdown", dismiss);
     document.addEventListener("keydown", escape);
     return () => {
       document.removeEventListener("pointerdown", dismiss);
       document.removeEventListener("keydown", escape);
     };
-  }, [open]);
+  }, [open, portalTarget]);
 
   function navigate() {
     setOpen(false);
     setSection(null);
   }
+
+  const panel =
+    portalTarget &&
+    createPortal(
+      <div
+        className="pettroz-mobile-menu-shell xl:hidden"
+        data-open={open ? "true" : "false"}
+        aria-hidden={!open}
+      >
+        <div className="pettroz-mobile-menu-clip">
+          <div
+            id={panelId}
+            role="navigation"
+            aria-label="Site menu"
+            className="border-b border-navy/10 bg-[#faf9f6] shadow-[0_18px_40px_-28px_#1a1c2940]"
+          >
+            <div className="site-container max-h-[min(70dvh,36rem)] overflow-y-auto overscroll-contain pt-3 pb-4">
+              <p className="px-1 text-[0.68rem] font-semibold tracking-[0.16em] text-primary uppercase">
+                Products
+              </p>
+              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                {productLinks.map((product) => {
+                  const ProductIcon = product.Icon;
+                  return (
+                    <li key={product.href}>
+                      <Link
+                        href={product.href}
+                        onClick={navigate}
+                        className="group flex items-start gap-3 rounded-2xl border border-navy/10 bg-white px-3.5 py-3.5 transition-colors hover:border-primary/30"
+                      >
+                        <span className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                          <ProductIcon className="size-5" aria-hidden="true" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="flex items-center justify-between gap-2">
+                            <span className="text-sm font-semibold text-navy">{product.label}</span>
+                            <ChevronRight
+                              className="size-4 shrink-0 text-navy/30 transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                              aria-hidden="true"
+                            />
+                          </span>
+                          <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                            {product.text}
+                          </span>
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <div className="my-4 h-px bg-navy/10" />
+
+              <ul className="space-y-1">
+                {mainNavItems
+                  .filter((item) => item.href !== "/products")
+                  .map((item) => {
+                    const isActive = activeHref === item.href;
+                    if (!item.mega) {
+                      return (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            onClick={navigate}
+                            aria-current={isActive ? "page" : undefined}
+                            className={cn(
+                              "flex min-h-11 items-center justify-between rounded-2xl px-3.5 text-sm font-semibold transition-colors",
+                              isActive
+                                ? "bg-primary text-white"
+                                : "text-navy hover:bg-navy/[0.04]",
+                            )}
+                          >
+                            {item.label}
+                            <ChevronRight
+                              className={cn("size-4", isActive ? "text-white/80" : "text-navy/25")}
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </li>
+                      );
+                    }
+
+                    const expanded = section === item.href;
+                    return (
+                      <li key={item.href}>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setSection((current) => (current === item.href ? null : item.href))
+                          }
+                          aria-expanded={expanded}
+                          className={cn(
+                            "flex min-h-11 w-full items-center justify-between rounded-2xl px-3.5 text-sm font-semibold transition-colors",
+                            isActive || expanded
+                              ? "bg-navy text-white"
+                              : "text-navy hover:bg-navy/[0.04]",
+                          )}
+                        >
+                          {item.label}
+                          <ChevronDown
+                            className={cn(
+                              "size-4 transition-transform duration-300",
+                              expanded && "rotate-180",
+                              isActive || expanded ? "text-white/80" : "text-navy/25",
+                            )}
+                            aria-hidden="true"
+                          />
+                        </button>
+
+                        {expanded ? (
+                          <div className="mt-1 mb-2 space-y-1 rounded-2xl bg-white px-2 py-2 ring-1 ring-navy/8">
+                            <Link
+                              href={item.href}
+                              onClick={navigate}
+                              className="flex min-h-10 items-center justify-between rounded-xl px-3 text-sm font-semibold text-navy hover:bg-navy/[0.04]"
+                            >
+                              Overview
+                              <ArrowUpRight className="size-3.5 text-primary" aria-hidden="true" />
+                            </Link>
+
+                            {item.href === "/features"
+                              ? featureMegaGroups.map((group) => (
+                                  <div key={group.title} className="pt-1">
+                                    <p className="px-3 pb-1 text-[0.65rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                                      {group.title}
+                                    </p>
+                                    {group.columns.map((column) => {
+                                      const ColumnIcon = column.Icon;
+                                      return (
+                                        <Link
+                                          key={column.id}
+                                          href={column.href}
+                                          onClick={navigate}
+                                          className="flex min-h-10 items-center gap-2.5 rounded-xl px-3 text-sm text-navy/80 hover:bg-navy/[0.04] hover:text-navy"
+                                        >
+                                          <ColumnIcon
+                                            className="size-4 shrink-0 text-primary"
+                                            aria-hidden="true"
+                                          />
+                                          <span className="min-w-0 flex-1">{column.title}</span>
+                                          <span className="text-[0.65rem] font-medium text-muted-foreground">
+                                            {column.features.length}
+                                          </span>
+                                        </Link>
+                                      );
+                                    })}
+                                  </div>
+                                ))
+                              : null}
+
+                            {item.href === "/resources" ? (
+                              <BlogMobileLinks onNavigate={navigate} />
+                            ) : null}
+
+                            {item.href === "/solutions" ? (
+                              <>
+                                <p className="px-3 pt-1 pb-1 text-[0.65rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                                  Business types
+                                </p>
+                                {petrolPumpSolutions.slice(0, 5).map((solution, index) => {
+                                  const Icon = businessIcons[index % businessIcons.length];
+                                  return (
+                                    <Link
+                                      key={solution.name}
+                                      href="/solutions"
+                                      onClick={navigate}
+                                      className="flex min-h-10 items-center gap-2.5 rounded-xl px-3 text-sm text-navy/80 hover:bg-navy/[0.04]"
+                                    >
+                                      <Icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                                      {solution.name}
+                                    </Link>
+                                  );
+                                })}
+                                <p className="px-3 pt-2 pb-1 text-[0.65rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                                  Fuel brands
+                                </p>
+                                <div className="grid grid-cols-2 gap-1 px-1 pb-1">
+                                  {fuelStationBrands.map((brand) => (
+                                    <Link
+                                      key={brand.slug}
+                                      href={`/solutions/${brand.slug}`}
+                                      onClick={navigate}
+                                      className="flex min-h-10 items-center justify-center rounded-xl bg-navy/[0.03] px-2 text-center text-xs font-medium text-navy hover:bg-primary/10 hover:text-primary"
+                                    >
+                                      {brand.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </>
+                            ) : null}
+                          </div>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+              </ul>
+
+              <div className="mt-4 border-t border-navy/10 pt-3 sm:hidden">
+                <Link
+                  href="/book-demo"
+                  onClick={navigate}
+                  className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
+                >
+                  Book a free demo
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>,
+      portalTarget,
+    );
 
   return (
     <div ref={root} className="relative xl:hidden">
@@ -683,157 +909,31 @@ export function MobileNav({ activeHref }: { activeHref: string }) {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => setOpen((value) => !value)}
-        className="pettroz-pill-surface relative z-10 grid size-[52px] shrink-0 place-items-center rounded-full text-white focus-visible:outline-navy"
+        onClick={() =>
+          setOpen((value) => {
+            const next = !value;
+            if (!next) setSection(null);
+            return next;
+          })
+        }
+        className="pettroz-pill-surface relative z-10 grid size-10 shrink-0 place-items-center rounded-full text-white focus-visible:outline-navy sm:size-[52px]"
       >
-        <span className="relative h-3 w-[18px]" aria-hidden="true">
+        <span className="relative h-2.5 w-3.5 sm:h-3 sm:w-[18px]" aria-hidden="true">
           <span
             className={cn(
               "absolute left-0 h-0.5 w-full rounded-full bg-current transition-[top,rotate] duration-300",
-              open ? "top-[5px] rotate-45" : "top-[2px]",
+              open ? "top-[4px] rotate-45 sm:top-[5px]" : "top-[1px] sm:top-[2px]",
             )}
           />
           <span
             className={cn(
               "absolute left-0 h-0.5 w-full rounded-full bg-current transition-[top,rotate] duration-300",
-              open ? "top-[5px] -rotate-45" : "top-[10px]",
+              open ? "top-[4px] -rotate-45 sm:top-[5px]" : "top-[8px] sm:top-[10px]",
             )}
           />
         </span>
       </button>
-
-      {open ? (
-        <div
-          id={panelId}
-          className="pettroz-pill-surface pettroz-nav-panel absolute top-0 right-0 z-20 w-[min(340px,calc(100vw-1.5rem))] overflow-hidden rounded-[26px] px-2 pt-16 pb-2 text-white"
-        >
-          <div className="max-h-[calc(100dvh-8rem)] overflow-y-auto overscroll-contain">
-            <ul className="space-y-0.5">
-              {mainNavItems.map((item) => (
-                <li key={item.href}>
-                  {item.mega ? (
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setSection((current) => (current === item.href ? null : item.href))
-                        }
-                        aria-expanded={section === item.href}
-                        className={cn(
-                          "flex min-h-12 w-full items-center justify-between rounded-[18px] px-4 text-sm font-medium transition-colors",
-                          activeHref === item.href || section === item.href
-                            ? "bg-primary text-white"
-                            : "hover:bg-white/10",
-                        )}
-                      >
-                        {item.label}
-                        <ChevronDown
-                          className={cn(
-                            "size-4 transition-transform",
-                            section === item.href && "rotate-180",
-                          )}
-                        />
-                      </button>
-                      {section === item.href ? (
-                        <div className="mt-1 mb-2 space-y-1 px-2">
-                          <Link
-                            href={item.href}
-                            onClick={navigate}
-                            className="flex min-h-10 items-center rounded-2xl px-3 text-xs font-semibold text-white/90 hover:bg-white/10"
-                          >
-                            Overview
-                          </Link>
-                          {item.href === "/products"
-                            ? productLinks.map((link) => (
-                                <Link
-                                  key={link.href}
-                                  href={link.href}
-                                  onClick={navigate}
-                                  className="flex min-h-10 items-center rounded-2xl px-3 text-xs text-white/75 hover:bg-white/10"
-                                >
-                                  {link.label}
-                                </Link>
-                              ))
-                            : null}
-                          {item.href === "/features"
-                            ? featureMegaGroups.flatMap((group) =>
-                                group.columns.flatMap((column) => [
-                                  <p
-                                    key={`${group.title}-${column.id}-label`}
-                                    className="px-3 pt-2 text-[10px] font-semibold tracking-[0.14em] text-white/45 uppercase"
-                                  >
-                                    {column.title}
-                                  </p>,
-                                  ...column.features.map((feature) => (
-                                    <Link
-                                      key={feature.href}
-                                      href={feature.href}
-                                      onClick={navigate}
-                                      className="flex min-h-10 items-center rounded-2xl px-3 text-xs text-white/75 hover:bg-white/10"
-                                    >
-                                      {feature.label}
-                                    </Link>
-                                  )),
-                                ]),
-                              )
-                            : null}
-                          {item.href === "/resources" ? <BlogMobileLinks onNavigate={navigate} /> : null}
-                          {item.href === "/solutions" ? (
-                            <>
-                              {petrolPumpSolutions.slice(0, 4).map((solution) => (
-                                <Link
-                                  key={solution.name}
-                                  href="/solutions"
-                                  onClick={navigate}
-                                  className="flex min-h-10 items-center rounded-2xl px-3 text-xs text-white/75 hover:bg-white/10"
-                                >
-                                  {solution.name}
-                                </Link>
-                              ))}
-                              {fuelStationBrands.map((brand) => (
-                                <Link
-                                  key={brand.slug}
-                                  href={`/solutions/${brand.slug}`}
-                                  onClick={navigate}
-                                  className="flex min-h-10 items-center rounded-2xl px-3 text-xs text-white/75 hover:bg-white/10"
-                                >
-                                  {brand.name}
-                                </Link>
-                              ))}
-                            </>
-                          ) : null}
-                        </div>
-                      ) : null}
-                    </div>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      onClick={navigate}
-                      aria-current={activeHref === item.href ? "page" : undefined}
-                      className={cn(
-                        "flex min-h-12 items-center rounded-[18px] px-4 text-sm font-medium transition-colors focus-visible:-outline-offset-2 focus-visible:outline-white",
-                        activeHref === item.href ? "bg-primary text-white" : "hover:bg-white/10",
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-            <div className="mx-3 my-3 border-t border-white/15" />
-            <div className="px-1 pb-1 sm:hidden">
-              <Link
-                href="/book-demo"
-                onClick={navigate}
-                className="flex min-h-12 items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
-              >
-                Book a free demo
-              </Link>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      {panel}
     </div>
   );
 }

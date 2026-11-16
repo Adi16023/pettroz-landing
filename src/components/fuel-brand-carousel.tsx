@@ -6,19 +6,21 @@ function BrandSlides() {
   return fuelBrandLogos.map((brand) => (
     <div
       key={brand.name}
-      className="flex w-[min(76vw,17rem)] shrink-0 flex-col items-center px-4 sm:w-64"
+      className="flex w-[5.75rem] shrink-0 flex-col items-center px-0.5 sm:w-64 sm:px-4"
     >
-      <div className="flex h-24 w-full items-center justify-center">
+      <div className="flex h-14 w-full items-center justify-center sm:h-24">
         <Image
           src={brand.image}
           alt={`${brand.name} logo`}
           width={200}
           height={120}
-          sizes="(min-width: 640px) 256px, 76vw"
+          sizes="(min-width: 640px) 256px, 92px"
           className="h-full w-full object-contain"
         />
       </div>
-      <p className="mt-3 text-sm font-medium text-navy">{brand.name}</p>
+      <p className="mt-1.5 text-center text-[0.7rem] leading-4 font-medium text-navy sm:mt-3 sm:text-sm sm:leading-5">
+        {brand.name}
+      </p>
     </div>
   ));
 }
@@ -39,14 +41,14 @@ export function FuelBrandCarousel() {
           role="group"
           aria-roledescription="carousel"
           aria-label="Fuel brand logos"
-          className="fuel-brand-viewport mt-10 overflow-hidden py-1 sm:mt-12"
+          className="fuel-brand-viewport mt-10 overflow-hidden overscroll-x-none touch-pan-y py-1 sm:mt-12"
         >
-          <div className="fuel-brand-track flex w-max gap-4">
-            <div className="fuel-brand-set flex w-max gap-4" aria-label="Fuel brands">
+          <div className="fuel-brand-track flex w-max gap-1 sm:gap-4">
+            <div className="fuel-brand-set flex w-max gap-1 sm:gap-4" aria-label="Fuel brands">
               <BrandSlides />
             </div>
             <div
-              className="fuel-brand-set flex w-max gap-4"
+              className="fuel-brand-set flex w-max gap-1 sm:gap-4"
               aria-hidden="true"
             >
               <BrandSlides />

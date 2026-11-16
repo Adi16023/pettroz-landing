@@ -242,33 +242,34 @@ export function BlogMobileLinks({ onNavigate }: { onNavigate: () => void }) {
 
   return (
     <>
-      <p className="px-3 pt-2 text-[10px] font-semibold tracking-[0.14em] text-white/45 uppercase">
+      <p className="px-3 pt-1 pb-1 text-[0.65rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
         Help & Support
       </p>
-      {helpLinks.map(({ href, label }) => (
+      {helpLinks.map(({ href, label, Icon }) => (
         <Link
           key={label}
           href={href}
           onClick={onNavigate}
-          className="flex min-h-10 items-center rounded-2xl px-3 text-xs text-white/75 hover:bg-white/10"
+          className="flex min-h-11 items-center gap-2.5 rounded-xl px-3 text-sm text-navy/80 hover:bg-navy/[0.04] hover:text-navy"
         >
+          <Icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
           {label}
         </Link>
       ))}
-      <p className="px-3 pt-3 text-[10px] font-semibold tracking-[0.14em] text-white/45 uppercase">
+      <p className="px-3 pt-2 pb-1 text-[0.65rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
         Blogs & Articles
       </p>
       {!loaded ? (
-        <p className="px-3 py-2 text-xs text-white/55">Loading…</p>
+        <p className="px-3 py-2 text-xs text-muted-foreground">Loading…</p>
       ) : topics.length === 0 ? (
-        <p className="px-3 py-2 text-xs text-white/55">No categories yet</p>
+        <p className="px-3 py-2 text-xs text-muted-foreground">No categories yet</p>
       ) : (
         topics.map((topic) => (
           <Link
             key={topic}
             href={`/resources?topic=${encodeURIComponent(topic)}`}
             onClick={onNavigate}
-            className="flex min-h-10 items-center rounded-2xl px-3 text-xs text-white/75 hover:bg-white/10"
+            className="flex min-h-11 items-center rounded-xl px-3 text-sm text-navy/80 hover:bg-navy/[0.04]"
           >
             {topic}
           </Link>
@@ -277,9 +278,10 @@ export function BlogMobileLinks({ onNavigate }: { onNavigate: () => void }) {
       <Link
         href="/resources"
         onClick={onNavigate}
-        className="flex min-h-10 items-center rounded-2xl px-3 text-xs font-semibold text-white hover:bg-white/10"
+        className="flex min-h-11 items-center justify-between rounded-xl px-3 text-sm font-semibold text-navy hover:bg-navy/[0.04]"
       >
         View all articles
+        <ArrowUpRight className="size-3.5 text-primary" aria-hidden="true" />
       </Link>
     </>
   );

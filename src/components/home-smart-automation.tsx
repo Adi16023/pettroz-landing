@@ -75,7 +75,7 @@ export function HomeSmartAutomation() {
         </ButtonLink>
       </div>
 
-      <div className="mt-10 lg:mt-12">
+      <div className="mt-10 space-y-4 lg:mt-12 lg:space-y-0">
         {rows.map((row, rowIndex) => {
           const reversed = rowIndex % 2 === 1;
           const isLastRow = rowIndex === rows.length - 1;
@@ -99,7 +99,7 @@ export function HomeSmartAutomation() {
 
                 <div
                   className={cn(
-                    "relative grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-5",
+                    "relative grid gap-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-5",
                     reversed && count === 3 &&
                       "lg:[&>*:nth-child(1)]:order-3 lg:[&>*:nth-child(2)]:order-2 lg:[&>*:nth-child(3)]:order-1",
                     reversed && count === 2 &&
