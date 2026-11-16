@@ -19,7 +19,7 @@ import {
   Plug,
   Receipt,
   ReceiptText,
-  Scales,
+  Ruler,
   ShieldCheck,
   Ticket,
   Timer,
@@ -34,7 +34,7 @@ import {
 export const featureIcons: Record<string, IconComponent> = {
   "fuel-sales-billing": Bill,
   "dsr-daily-closing": CalendarDays,
-  "tank-fuel-stock": Scales,
+  "tank-fuel-stock": Ruler,
   "fuel-purchases": Truck,
   "stock-variation": Droplets,
   "lubricants-products": Package,

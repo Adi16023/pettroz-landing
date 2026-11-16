@@ -41,7 +41,7 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 isolate">
+    <header className="sticky top-0 z-40 isolate bg-white">
       <div id="pettroz-header-bar" className="relative border-b border-navy/10 bg-white">
         <div className="site-container relative flex min-h-16 items-center justify-between gap-3 py-3 sm:min-h-20 sm:gap-4 sm:py-3.5 xl:min-h-24 xl:py-4">
           <Link

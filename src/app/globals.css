@@ -36,10 +36,11 @@
   }
   html {
     /* Instant anchors — RouteScroll corrects under the sticky header.
-       Smooth CSS scroll was fighting client navigations and overshooting. */
+       Smooth CSS scroll was fighting client navigations and overshooting.
+       Do not set overflow-x on html/body: it forces overflow-y to auto and
+       breaks position:sticky (header scrolls away on mobile). */
     scroll-behavior: auto;
     scroll-padding-top: 5rem;
-    overflow-x: clip;
   }
   @media (min-width: 640px) {
     html {
@@ -56,8 +57,12 @@
     color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    overflow-x: clip;
     overscroll-behavior-x: none;
+  }
+  /* Contain horizontal overflow without breaking the sticky header. */
+  main,
+  footer {
+    overflow-x: clip;
   }
   ::selection {
     background: #f9ccc5;
