@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { HomeFaq } from "@/components/home-faq";
 import { ButtonLink, Card, H1, Kicker, Lead, Section } from "@/components/ui";
 import { pricingFaqs } from "@/lib/content";
 
@@ -58,14 +61,20 @@ export default function PricingPage() {
         Optional add-ons, product-specific comparisons, and upgrades are available. Billing terms
         are confirmed before you subscribe.
       </p>
-      <h2 className="mt-12 text-2xl font-semibold text-navy">Pricing FAQ</h2>
-      <div className="mt-6 space-y-4">
-        {pricingFaqs.map((f) => (
-          <Card key={f.q} className="p-5">
-            <p className="font-medium text-navy">{f.q}</p>
-            <p className="mt-2 text-sm text-muted-foreground">{f.a}</p>
-          </Card>
-        ))}
+
+      <div className="mt-14 grid gap-8 lg:grid-cols-[minmax(0,0.65fr)_minmax(0,1.35fr)] lg:gap-14">
+        <div>
+          <p className="text-sm font-medium text-muted-foreground">Pricing FAQ</p>
+          <h2 className="section-title mt-3">Questions about plans and billing.</h2>
+          <Link
+            href="/faq?topic=Pricing"
+            className="mt-6 inline-flex min-h-11 items-center gap-3 text-xs font-semibold text-navy hover:text-primary"
+          >
+            View all FAQs
+            <ArrowUpRight aria-hidden="true" className="size-4" />
+          </Link>
+        </div>
+        <HomeFaq items={pricingFaqs} name="pricing-faq" />
       </div>
     </Section>
   );

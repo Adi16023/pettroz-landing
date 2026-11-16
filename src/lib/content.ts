@@ -230,7 +230,7 @@ export const pumpModules = [
   },
   {
     slug: "pump-attendance-payroll",
-    name: "Attendance & Payroll (included)",
+    name: "Attendance & Payroll",
     problem: "Staff registers sit apart from the desk.",
     intro: "Manage petrol pump employees without separate manual registers.",
     items: [
@@ -1369,21 +1369,39 @@ export const homeJourney = [
   { title: "Make better decisions", text: "Use organised business information to understand performance and identify areas for improvement." },
 ];
 
-export const homeFaqs = [
-  { q: "What is Petrozz?", label: "About Petrozz", a: "Petrozz is a petrol pump management platform designed to help fuel station owners organise sales, DSR, inventory, accounting, employees, payments, customers and business reports." },
-  { q: "Which petrol pump brands can use Petrozz?", label: "Supported brands", a: "Petrozz is designed for IndianOil, BPCL, HPCL, Nayara Energy, Jio-bp, Shell and independent petrol pumps. Brand references do not imply affiliation or access to proprietary oil-company systems." },
-  { q: "Does Petrozz support daily sales reports?", label: "Daily sales reports", a: "The platform is designed to organise DSR information, including configured nozzle readings, fuel sales, payment records and shift summaries." },
-  { q: "Can I manage multiple fuel tanks and nozzles?", label: "Tanks & nozzles", a: "Configured tank and nozzle records can be used to organise readings, stock and sales information." },
-  { q: "Can Petrozz calculate daily petrol pump profit and loss?", label: "Profit & loss", a: "Daily summaries use recorded sales, fuel costs, margins and expenses. Results depend on complete and correctly configured records." },
-  { q: "Does Petrozz support cash drawer management?", label: "Cash management", a: "Cash records can include opening and closing balances, collections, withdrawals, handovers and reconciliation." },
-  { q: "Can I integrate POS payment systems?", label: "POS payments", a: "Payment and settlement workflows depend on supported provider integrations, API availability and account permissions." },
-  { q: "Does Petrozz support Tally?", label: "Tally", a: "Tally-compatible accounting workflows and data exchange depend on the integration method and supported Tally version." },
-  { q: "Can I manage employee attendance and payroll?", label: "Attendance & payroll", a: "Attendance & Payroll is designed to organise attendance, shifts, leave and salary calculations. Available features depend on the product and plan." },
-  { q: "Can customers receive bills through WhatsApp?", label: "WhatsApp bills", a: "Supported WhatsApp and SMS workflows can be used for digital bills, reminders and notifications, subject to integration availability." },
-  { q: "Can I manage multiple petrol pump outlets?", label: "Multiple outlets", a: "Multi-outlet features are designed to bring configured location-wise business information and reports together." },
-  { q: "Is Petrozz suitable for independent petrol pumps?", label: "Independent pumps", a: "Yes. The petrol pump management product is designed for independent fuel stations as well as stations operating under major oil marketing brands." },
-  { q: "Can I use Attendance & Payroll without petrol pump software?", label: "Standalone workforce", a: "Yes. Attendance & Payroll is a standalone product for businesses managing a workforce." },
-  { q: "How do I find out about pricing?", label: "Pricing", a: "Visit the pricing page or book a demo to discuss the right configuration, employee or outlet limits, integrations and support." },
+export type FaqItem = {
+  q: string;
+  a: string;
+  topic: string;
+};
+
+const homeFaqLibrary: FaqItem[] = [
+  { q: "What is Petrozz?", topic: "About Petrozz", a: "Petrozz is a petrol pump management platform designed to help fuel station owners organise sales, DSR, inventory, accounting, employees, payments, customers and business reports." },
+  { q: "Which petrol pump brands can use Petrozz?", topic: "Supported brands", a: "Petrozz is designed for IndianOil, BPCL, HPCL, Nayara Energy, Jio-bp, Shell and independent petrol pumps. Brand references do not imply affiliation or access to proprietary oil-company systems." },
+  { q: "Does Petrozz support daily sales reports?", topic: "Daily sales reports", a: "The platform is designed to organise DSR information, including configured nozzle readings, fuel sales, payment records and shift summaries." },
+  { q: "Can I manage multiple fuel tanks and nozzles?", topic: "Tanks & nozzles", a: "Configured tank and nozzle records can be used to organise readings, stock and sales information." },
+  { q: "Can Petrozz calculate daily petrol pump profit and loss?", topic: "Profit & loss", a: "Daily summaries use recorded sales, fuel costs, margins and expenses. Results depend on complete and correctly configured records." },
+  { q: "Does Petrozz support cash drawer management?", topic: "Cash management", a: "Cash records can include opening and closing balances, collections, withdrawals, handovers and reconciliation." },
+  { q: "Can I integrate POS payment systems?", topic: "POS payments", a: "Payment and settlement workflows depend on supported provider integrations, API availability and account permissions." },
+  { q: "Does Petrozz support Tally?", topic: "Tally", a: "Tally-compatible accounting workflows and data exchange depend on the integration method and supported Tally version." },
+  { q: "Can I manage employee attendance and payroll?", topic: "Attendance & payroll", a: "Attendance & Payroll is designed to organise attendance, shifts, leave and salary calculations. Available features depend on the product and plan." },
+  { q: "Can customers receive bills through WhatsApp?", topic: "WhatsApp bills", a: "Supported WhatsApp and SMS workflows can be used for digital bills, reminders and notifications, subject to integration availability." },
+  { q: "Can I manage multiple petrol pump outlets?", topic: "Multiple outlets", a: "Multi-outlet features are designed to bring configured location-wise business information and reports together." },
+  { q: "Is Petrozz suitable for independent petrol pumps?", topic: "Independent pumps", a: "Yes. The petrol pump management product is designed for independent fuel stations as well as stations operating under major oil marketing brands." },
+  { q: "Can I use Attendance & Payroll without petrol pump software?", topic: "Standalone workforce", a: "Yes. Attendance & Payroll is a standalone product for businesses managing a workforce." },
+  { q: "How do I find out about pricing?", topic: "Pricing", a: "Visit the pricing page or book a demo to discuss the right configuration, employee or outlet limits, integrations and support." },
+];
+
+const pricingFaqLibrary: FaqItem[] = [
+  { q: "Can I purchase Attendance & Payroll separately?", topic: "Pricing", a: "Yes. Attendance & Payroll is a standalone product. You do not need Petrol Pump Management." },
+  { q: "Is Attendance & Payroll included in Petrol Pump Management?", topic: "Pricing", a: "Complete Attendance & Payroll functionality is available within eligible Petrozz Petrol Pump Management subscriptions." },
+  { q: "Can I upgrade my plan later?", topic: "Pricing", a: "Yes. Plans can be upgraded as outlets, employees, or modules grow. Speak with sales for the right path." },
+  { q: "Is there a limit on employees?", topic: "Pricing", a: "Attendance & Payroll plans are sized by team. Limits are confirmed during demo and onboarding — we do not publish invented caps here." },
+  { q: "Can I add multiple branches?", topic: "Pricing", a: "Yes. Multi-outlet pump plans and multi-branch attendance plans are available." },
+  { q: "Is biometric integration available?", topic: "Pricing", a: "Biometric device integration is supported where enabled on the plan." },
+  { q: "Does GPS/selfie attendance work on mobile?", topic: "Pricing", a: "Yes. Employees can clock in with GPS and selfie verification on the mobile app, subject to company policy and consent." },
+  { q: "Can I request a demo before subscribing?", topic: "Pricing", a: "Yes. Book a free product demo — no subscription required to see the software." },
+  { q: "Is onboarding support available?", topic: "Pricing", a: "Yes. Onboarding support is part of getting a workspace live." },
 ];
 
 export const featureFaqs = [
@@ -1395,6 +1413,19 @@ export const featureFaqs = [
   { q: "Can I manage credit customers?", a: "Customer accounts can organise credit sales, outstanding balances, collections, due dates and transaction histories." },
   { q: "Can Petrozz manage employee attendance and payroll?", a: "Attendance & Payroll capabilities are designed to organise employee records, attendance, shifts, salary calculations and payroll summaries." },
   { q: "Can I monitor multiple petrol pump outlets?", a: "Multi-outlet management is designed to provide location-wise operational and financial information in a centralised view." },
+];
+
+/** Five FAQs shown on the homepage. */
+export const homeFaqs = homeFaqLibrary.slice(0, 5);
+
+/** Five FAQs shown on the pricing page. */
+export const pricingFaqs = pricingFaqLibrary.slice(0, 5);
+
+/** Full FAQ library for /faq (home, pricing, and feature FAQs). */
+export const allFaqs: FaqItem[] = [
+  ...homeFaqLibrary,
+  ...pricingFaqLibrary,
+  ...featureFaqs.map((faq) => ({ ...faq, topic: "Features" })),
 ];
 
 export const solutionFinancialAreas = [
@@ -1480,18 +1511,6 @@ export const why = [
   { title: "Role-Based Access", text: "Give every employee the right permissions." },
   { title: "Reliable Reporting", text: "Make informed decisions using clear business data." },
   { title: "Support When Needed", text: "Get help through the Petrozz support system." },
-];
-
-export const pricingFaqs = [
-  { q: "Can I purchase Attendance & Payroll separately?", a: "Yes. Attendance & Payroll is a standalone product. You do not need Petrol Pump Management." },
-  { q: "Is Attendance & Payroll included in Petrol Pump Management?", a: "Complete Attendance & Payroll functionality is available within eligible Petrozz Petrol Pump Management subscriptions." },
-  { q: "Can I upgrade my plan later?", a: "Yes. Plans can be upgraded as outlets, employees, or modules grow. Speak with sales for the right path." },
-  { q: "Is there a limit on employees?", a: "Attendance & Payroll plans are sized by team. Limits are confirmed during demo and onboarding — we do not publish invented caps here." },
-  { q: "Can I add multiple branches?", a: "Yes. Multi-outlet pump plans and multi-branch attendance plans are available." },
-  { q: "Is biometric integration available?", a: "Biometric device integration is supported where enabled on the plan." },
-  { q: "Does GPS/selfie attendance work on mobile?", a: "Yes. Employees can clock in with GPS and selfie verification on the mobile app, subject to company policy and consent." },
-  { q: "Can I request a demo before subscribing?", a: "Yes. Book a free product demo — no subscription required to see the software." },
-  { q: "Is onboarding support available?", a: "Yes. Onboarding support is part of getting a workspace live." },
 ];
 
 export const helpArticles = [
