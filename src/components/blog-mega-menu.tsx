@@ -34,9 +34,9 @@ function categoryIcon(category: string) {
 }
 
 const helpLinks: { href: string; label: string; Icon: LucideIcon }[] = [
-  { href: "/help", label: "Help centre", Icon: LifeBuoy },
+  { href: "/help-centre", label: "Help Centre", Icon: LifeBuoy },
   { href: "/#faq", label: "FAQs", Icon: CircleHelp },
-  { href: "/help", label: "Video Tutorials", Icon: PlayCircle },
+  { href: "/help-centre", label: "Video Tutorials", Icon: PlayCircle },
 ];
 
 export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {

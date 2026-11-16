@@ -16,10 +16,10 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/help/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/help-centre/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const post = await fetchBlogPost(slug);
-  if (!post || post.type !== "article") return { title: "Help" };
+  if (!post || post.type !== "article") return { title: "Help Centre" };
   const description = post.excerpt?.trim() || undefined;
   const keywords = (post.tags ?? []).map((tag) => tag.trim()).filter(Boolean);
   return {
@@ -52,7 +52,7 @@ function formatPublishedAt(value?: string | null) {
   });
 }
 
-export default async function HelpArticlePage({ params }: PageProps<"/help/[slug]">) {
+export default async function HelpArticlePage({ params }: PageProps<"/help-centre/[slug]">) {
   const { slug } = await params;
   const post = await fetchBlogPost(slug);
   if (!post || post.type !== "article") notFound();
@@ -67,7 +67,7 @@ export default async function HelpArticlePage({ params }: PageProps<"/help/[slug
   const hasHtml = Boolean(post.bodyHtml && post.bodyHtml.replace(/<[^>]+>/g, "").trim());
   const publishedLabel = formatPublishedAt(post.publishedAt);
   const tags = (post.tags ?? []).map((tag) => tag.trim()).filter(Boolean);
-  const shareUrl = `${SITE_URL}/help/${post.slug}`;
+  const shareUrl = `${SITE_URL}/help-centre/${post.slug}`;
 
   return (
     <>
@@ -88,10 +88,10 @@ export default async function HelpArticlePage({ params }: PageProps<"/help/[slug
             <ol className="flex flex-wrap items-center gap-1.5 text-sm text-white/70">
               <li>
                 <Link
-                  href="/help"
+                  href="/help-centre"
                   className="font-medium text-white transition-colors hover:text-white"
                 >
-                  Help
+                  Help Centre
                 </Link>
               </li>
               <li aria-hidden="true" className="text-white/40">
@@ -167,7 +167,7 @@ export default async function HelpArticlePage({ params }: PageProps<"/help/[slug
                   Related articles
                 </h2>
                 <Link
-                  href="/help"
+                  href="/help-centre"
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-navy transition-colors hover:text-primary"
                 >
                   View all
@@ -178,7 +178,7 @@ export default async function HelpArticlePage({ params }: PageProps<"/help/[slug
                 {related.map((item) => (
                   <Link
                     key={item.slug}
-                    href={`/help/${item.slug}`}
+                    href={`/help-centre/${item.slug}`}
                     className="group overflow-hidden rounded-2xl border border-navy/10 bg-white transition-colors hover:border-primary/30"
                   >
                     <BlogThumbnail

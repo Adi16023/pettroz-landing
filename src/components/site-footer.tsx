@@ -58,7 +58,7 @@ const cols = [
   {
     title: "Resources",
     links: [
-      { href: "/help", label: "Help Centre" },
+      { href: "/help-centre", label: "Help Centre" },
       { href: "/resources", label: "User Guides" },
       { href: "/resources", label: "Video Tutorials" },
       { href: "/resources", label: "Release Updates" },

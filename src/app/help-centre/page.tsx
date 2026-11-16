@@ -4,16 +4,16 @@ import { ResourcesBrowse } from "@/components/resources-browse";
 import { Section } from "@/components/ui";
 import { fetchBlogPosts } from "@/lib/blog";
 
-export const metadata: Metadata = { title: "Help" };
+export const metadata: Metadata = { title: "Help Centre" };
 export const revalidate = 60;
 
-export default async function HelpPage() {
+export default async function HelpCentrePage() {
   const posts = await fetchBlogPosts("article");
 
   return (
     <Section className="pt-16 lg:pt-20">
       <Suspense fallback={<p className="text-sm text-muted-foreground">Loading articles…</p>}>
-        <ResourcesBrowse posts={posts} basePath="/help" title="Help" />
+        <ResourcesBrowse posts={posts} basePath="/help-centre" title="Help Centre" />
       </Suspense>
     </Section>
   );

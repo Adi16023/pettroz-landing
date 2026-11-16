@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/about",
     "/book-demo",
     "/contact",
-    "/help",
+    "/help-centre",
     "/resources",
     "/login",
     "/signup",
@@ -29,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/cookie-policy",
     ...allFeatures.map((f) => `/features/${f.slug}`),
     ...solutions.map((s) => `/solutions/${s.slug}`),
-    ...articles.map((a) => `/help/${a.slug}`),
+    ...articles.map((a) => `/help-centre/${a.slug}`),
     ...blogs.map((p) => `/resources/${p.slug}`),
   ];
   return paths.map((path) => ({ url: `${base}${path}` }));

@@ -188,8 +188,8 @@ export default function HomePage() {
           <div>
             <p className="text-sm font-medium text-muted-foreground">Frequently asked questions</p>
             <h2 className="section-title mt-3">A few things you might be wondering.</h2>
-            <Link href="/help" className="mt-6 inline-flex min-h-11 items-center gap-3 text-xs font-semibold text-navy hover:text-primary">
-              Visit the help center<ArrowUpRight aria-hidden="true" className="size-4" />
+            <Link href="/help-centre" className="mt-6 inline-flex min-h-11 items-center gap-3 text-xs font-semibold text-navy hover:text-primary">
+              Visit the Help Centre<ArrowUpRight aria-hidden="true" className="size-4" />
             </Link>
           </div>
           <HomeFaq />
