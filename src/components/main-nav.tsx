@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   ArrowUpRight,
   Building2,
@@ -16,6 +17,7 @@ import {
   Wallet,
   type LucideIcon,
 } from "lucide-react";
+import { RiGasStationFill, RiTeamFill } from "@remixicon/react";
 import { BlogMegaPanel, BlogMobileLinks } from "@/components/blog-mega-menu";
 import {
   allFeatures,
@@ -43,25 +45,20 @@ export const mainNavItems: NavItem[] = [
   { href: "/contact", label: "Contact" },
 ];
 
-const productLinks: {
-  href: string;
-  label: string;
-  text: string;
-  Icon: LucideIcon;
-}[] = [
+const productLinks = [
   {
     href: products.pump.href,
     label: "Petrol Pump Management",
     text: products.pump.short,
-    Icon: Fuel,
+    Icon: RiGasStationFill,
   },
   {
     href: products.attendance.href,
     label: "Attendance & Payroll",
     text: products.attendance.short,
-    Icon: Users,
+    Icon: RiTeamFill,
   },
-];
+] as const;
 
 const themeIconMap: Record<string, LucideIcon> = {
   "station-operations": Fuel,
@@ -118,6 +115,78 @@ const featureMegaGroups = [
 
 const businessIcons: LucideIcon[] = [Store, Users, Building2, LayoutGrid, Fuel];
 
+const featureCategoryCardClass =
+  "group inline-flex w-full items-center gap-2 rounded-xl border border-navy/10 bg-white px-3.5 py-2.5 text-sm font-medium text-navy transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary hover:shadow-[0_16px_40px_-28px_#1a1c2950]";
+
+function FeatureMegaColumn({
+  column,
+  onNavigate,
+  delay,
+  extra = [],
+}: {
+  column: (typeof featureMegaGroups)[number]["columns"][number];
+  onNavigate: () => void;
+  delay: number;
+  extra?: (typeof featureMegaGroups)[number]["columns"];
+}) {
+  return (
+    <div style={{ animationDelay: `${delay}ms` }} className="pettroz-mega-item">
+      <Link href={column.href} onClick={onNavigate} className={featureCategoryCardClass}>
+        <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
+          <column.Icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />
+        </span>
+        {column.title}
+      </Link>
+      <ul className="mt-3 space-y-0.5">
+        {column.features.map((feature) => (
+          <li key={feature.href}>
+            <Link
+              href={feature.href}
+              onClick={onNavigate}
+              className="group flex min-h-9 items-center gap-2 rounded-lg px-1.5 text-[13px] leading-5 text-muted-foreground transition-colors hover:text-primary"
+            >
+              <feature.Icon
+                aria-hidden="true"
+                className="size-3.5 shrink-0 text-navy/35 transition-colors group-hover:text-primary"
+                strokeWidth={1.8}
+              />
+              <span className="line-clamp-2">{feature.label}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      {extra.map((block) => (
+        <div key={block.id} className="mt-5">
+          <Link href={block.href} onClick={onNavigate} className={featureCategoryCardClass}>
+            <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
+              <block.Icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />
+            </span>
+            {block.title}
+          </Link>
+          <ul className="mt-3 space-y-0.5">
+            {block.features.map((feature) => (
+              <li key={feature.href}>
+                <Link
+                  href={feature.href}
+                  onClick={onNavigate}
+                  className="group flex min-h-9 items-center gap-2 rounded-lg px-1.5 text-[13px] leading-5 text-muted-foreground transition-colors hover:text-primary"
+                >
+                  <feature.Icon
+                    aria-hidden="true"
+                    className="size-3.5 shrink-0 text-navy/35 transition-colors group-hover:text-primary"
+                    strokeWidth={1.8}
+                  />
+                  <span className="line-clamp-2">{feature.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function MegaPanel({
   openHref,
   onNavigate,
@@ -136,8 +205,8 @@ function MegaPanel({
             style={{ animationDelay: `${index * 60}ms` }}
             className="pettroz-mega-item group flex gap-4 rounded-2xl border border-navy/10 bg-white p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-[0_16px_40px_-28px_#1a1c2950]"
           >
-            <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
-              <item.Icon aria-hidden="true" className="size-5" strokeWidth={1.7} />
+            <span className="inline-flex size-12 shrink-0 items-center justify-center text-primary transition-transform duration-300 group-hover:scale-110">
+              <item.Icon aria-hidden="true" className="size-5" />
             </span>
             <div className="min-w-0">
               <p className="text-base font-semibold text-navy transition-colors group-hover:text-primary">
@@ -155,62 +224,123 @@ function MegaPanel({
   }
 
   if (openHref === "/features") {
+    const pumpGroup = featureMegaGroups[0];
+    const attendanceGroup = featureMegaGroups[1];
+    const pumpColumns = pumpGroup.columns.filter((column) => column.id !== "visibility");
+    const visibilityColumn = pumpGroup.columns.find((column) => column.id === "visibility");
+    const attendanceMain = attendanceGroup.columns.slice(0, 2);
+    const attendancePeople = attendanceGroup.columns.slice(2);
+
     return (
-      <div className="grid gap-8 lg:grid-cols-[1.35fr_0.9fr] lg:gap-10">
-        {featureMegaGroups.map((group, groupIndex) => (
-          <div
-            key={group.title}
-            style={{ animationDelay: `${groupIndex * 70}ms` }}
-            className="pettroz-mega-item"
+      <div className="space-y-4">
+        <div className="grid gap-4 lg:grid-cols-[1.45fr_1fr]">
+          <section
+            style={{ animationDelay: "40ms" }}
+            className="pettroz-mega-item overflow-hidden rounded-2xl border border-navy/10 bg-white"
           >
-            <Link
-              href={group.href}
-              onClick={onNavigate}
-              className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.14em] text-primary uppercase"
-            >
-              <group.Icon className="size-3.5" aria-hidden="true" />
-              {group.title}
-            </Link>
-            <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {group.columns.map((column, columnIndex) => (
-                <div
+            <div className="flex justify-center border-b border-navy/10 px-5 py-4">
+              <Link
+                href={products.pump.href}
+                onClick={onNavigate}
+                className="inline-flex items-center justify-center gap-2.5 text-center text-lg font-bold tracking-tight text-navy transition-colors hover:text-primary"
+              >
+                <RiGasStationFill
+                  aria-hidden
+                  className="size-6 shrink-0 text-primary"
+                />
+                Petrol Pump Management
+              </Link>
+            </div>
+            <div className="grid gap-5 p-5 sm:grid-cols-2 lg:grid-cols-3">
+              {pumpColumns.map((column, columnIndex) => (
+                <FeatureMegaColumn
                   key={column.id}
-                  style={{ animationDelay: `${90 + groupIndex * 70 + columnIndex * 45}ms` }}
-                  className="pettroz-mega-item"
-                >
-                  <Link
-                    href={column.href}
-                    onClick={onNavigate}
-                    className="group inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-primary"
-                  >
-                    <span className="inline-flex size-7 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
-                      <column.Icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />
-                    </span>
-                    {column.title}
-                  </Link>
-                  <ul className="mt-3 space-y-0.5 border-l border-navy/10 pl-3">
-                    {column.features.map((feature) => (
-                      <li key={feature.href}>
-                        <Link
-                          href={feature.href}
-                          onClick={onNavigate}
-                          className="group flex min-h-9 items-center gap-2 rounded-lg px-2 text-[13px] leading-5 text-muted-foreground transition-colors hover:bg-navy/[0.04] hover:text-primary"
-                        >
-                          <feature.Icon
-                            aria-hidden="true"
-                            className="size-3.5 shrink-0 text-navy/35 transition-colors group-hover:text-primary"
-                            strokeWidth={1.8}
-                          />
-                          <span className="line-clamp-2">{feature.label}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  column={column}
+                  onNavigate={onNavigate}
+                  delay={80 + columnIndex * 40}
+                />
               ))}
             </div>
-          </div>
-        ))}
+          </section>
+
+          <section
+            style={{ animationDelay: "90ms" }}
+            className="pettroz-mega-item overflow-hidden rounded-2xl border border-navy/10 bg-white"
+          >
+            <div className="flex justify-center border-b border-navy/10 px-5 py-4">
+              <Link
+                href={products.attendance.href}
+                onClick={onNavigate}
+                className="inline-flex items-center justify-center gap-2.5 text-center text-lg font-bold tracking-tight text-navy transition-colors hover:text-primary"
+              >
+                <RiTeamFill
+                  aria-hidden
+                  className="size-6 shrink-0 text-primary"
+                />
+                Attendance & Payroll
+              </Link>
+            </div>
+            <div className="grid gap-5 p-5 sm:grid-cols-2">
+              {attendanceMain.map((column, columnIndex) => (
+                <FeatureMegaColumn
+                  key={column.id}
+                  column={column}
+                  onNavigate={onNavigate}
+                  delay={120 + columnIndex * 40}
+                  extra={columnIndex === 1 ? attendancePeople : undefined}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
+
+        {visibilityColumn ? (
+          <section
+            style={{ animationDelay: "160ms" }}
+            className="pettroz-mega-item flex flex-col gap-4 rounded-2xl border border-navy/10 bg-white px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div className="flex min-w-0 flex-1 flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
+              <Link
+                href={visibilityColumn.href}
+                onClick={onNavigate}
+                className="inline-flex shrink-0 items-center gap-2.5 text-sm font-semibold text-navy transition-colors hover:text-primary"
+              >
+                <span className="inline-flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <LayoutGrid aria-hidden="true" className="size-4" strokeWidth={1.8} />
+                </span>
+                {visibilityColumn.title}
+              </Link>
+              <ul className="flex flex-wrap items-center gap-2">
+                {visibilityColumn.features.map((feature) => (
+                  <li key={feature.href}>
+                    <Link
+                      href={feature.href}
+                      onClick={onNavigate}
+                      className="group inline-flex items-center gap-2 rounded-xl border border-navy/10 bg-white px-3.5 py-2.5 text-sm font-medium text-navy transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary hover:shadow-[0_16px_40px_-28px_#1a1c2950]"
+                    >
+                      <span className="inline-flex size-7 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
+                        <feature.Icon
+                          aria-hidden="true"
+                          className="size-3.5"
+                          strokeWidth={1.8}
+                        />
+                      </span>
+                      {feature.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Link
+              href="/features"
+              onClick={onNavigate}
+              className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
+            >
+              Explore All Features
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </section>
+        ) : null}
       </div>
     );
   }
@@ -221,8 +351,8 @@ function MegaPanel({
 
   if (openHref === "/solutions") {
     return (
-      <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="pettroz-mega-item" style={{ animationDelay: "40ms" }}>
+      <div className="grid items-stretch gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="pettroz-mega-item flex h-full flex-col" style={{ animationDelay: "40ms" }}>
           <Link
             href="/solutions"
             onClick={onNavigate}
@@ -231,7 +361,7 @@ function MegaPanel({
             <Building2 className="size-3.5" aria-hidden="true" />
             Petrol pump businesses
           </Link>
-          <ul className="mt-4 space-y-1">
+          <ul className="mt-4 flex flex-1 flex-col justify-between">
             {petrolPumpSolutions.map((item, index) => {
               const Icon = businessIcons[index % businessIcons.length];
               return (
@@ -243,9 +373,9 @@ function MegaPanel({
                   <Link
                     href="/solutions"
                     onClick={onNavigate}
-                    className="group flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-medium text-navy transition-all duration-200 hover:bg-navy/[0.04] hover:text-primary"
+                    className="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-navy transition-all duration-200 hover:bg-navy/[0.04] hover:text-primary"
                   >
-                    <span className="inline-flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
+                    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
                       <Icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />
                     </span>
                     {item.name}
@@ -300,14 +430,23 @@ function MegaPanel({
   return null;
 }
 
+const MEGA_COLLAPSE_MS = 320;
+
 export function DesktopNav({ activeHref }: { activeHref: string }) {
   const track = useRef<HTMLUListElement>(null);
   const highlight = useRef<HTMLSpanElement>(null);
-  const [megaOpen, setMegaOpen] = useState<string | null>(null);
+  const [megaHref, setMegaHref] = useState<string | null>(null);
+  const [megaOpen, setMegaOpen] = useState(false);
+  const [megaHost, setMegaHost] = useState<HTMLElement | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const [focused, setFocused] = useState<string | null>(null);
   const highlightedHref = focused ?? hovered ?? activeHref;
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const collapseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setMegaHost(document.getElementById("pettroz-header-mega"));
+  }, []);
 
   useLayoutEffect(() => {
     const list = track.current;
@@ -331,6 +470,13 @@ export function DesktopNav({ activeHref }: { activeHref: string }) {
     return () => observer.disconnect();
   }, [highlightedHref]);
 
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+      if (collapseTimer.current) clearTimeout(collapseTimer.current);
+    };
+  }, []);
+
   function clearCloseTimer() {
     if (closeTimer.current) {
       clearTimeout(closeTimer.current);
@@ -338,24 +484,82 @@ export function DesktopNav({ activeHref }: { activeHref: string }) {
     }
   }
 
+  function clearCollapseTimer() {
+    if (collapseTimer.current) {
+      clearTimeout(collapseTimer.current);
+      collapseTimer.current = null;
+    }
+  }
+
   function openMega(href: string) {
     clearCloseTimer();
-    setMegaOpen(href);
+    clearCollapseTimer();
+    setMegaHref(href);
+    requestAnimationFrame(() => setMegaOpen(true));
+  }
+
+  function closeMegaNow() {
+    clearCloseTimer();
+    clearCollapseTimer();
+    setMegaOpen(false);
+    collapseTimer.current = setTimeout(() => {
+      setMegaHref(null);
+      collapseTimer.current = null;
+    }, MEGA_COLLAPSE_MS);
   }
 
   function scheduleCloseMega() {
     clearCloseTimer();
-    closeTimer.current = setTimeout(() => setMegaOpen(null), 140);
+    closeTimer.current = setTimeout(() => {
+      closeMegaNow();
+    }, 140);
   }
 
   function navigate() {
-    setMegaOpen(null);
+    closeMegaNow();
     setHovered(null);
     setFocused(null);
   }
 
   const itemClass =
     "inline-flex min-h-11 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-full px-4 text-[13px] font-medium";
+
+  const megaPanel =
+    megaHref && megaHost
+      ? createPortal(
+          <div
+            className="pettroz-mega-shell hidden xl:grid"
+            data-open={megaOpen ? "true" : "false"}
+            onPointerEnter={clearCloseTimer}
+            onPointerLeave={scheduleCloseMega}
+          >
+            <div className="pettroz-mega-clip">
+              <div className="pettroz-mega mx-[max(1.25rem,4vw)] overflow-hidden rounded-b-[16px] border border-navy/10 border-t-0 bg-white shadow-[0_24px_48px_-28px_#1a1c2948]">
+                <div className="site-container py-8">
+                  <MegaPanel openHref={megaHref} onNavigate={navigate} />
+                  {megaHref !== "/features" ? (
+                    <div
+                      className="pettroz-mega-item mt-6 flex justify-end"
+                      style={{ animationDelay: "220ms" }}
+                    >
+                      <Link
+                        href={megaHref}
+                        onClick={navigate}
+                        className="group inline-flex items-center gap-2 text-sm font-semibold text-navy transition-all hover:gap-3 hover:text-primary"
+                      >
+                        View all{" "}
+                        {mainNavItems.find((item) => item.href === megaHref)?.label.toLowerCase()}
+                        <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </Link>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </div>,
+          megaHost,
+        )
+      : null;
 
   return (
     <>
@@ -369,13 +573,19 @@ export function DesktopNav({ activeHref }: { activeHref: string }) {
         onBlur={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget)) {
             setFocused(null);
-            setMegaOpen(null);
+            closeMegaNow();
           }
         }}
       >
         <div
           className="pettroz-pill-surface relative rounded-full p-1"
-          onPointerEnter={clearCloseTimer}
+          onPointerEnter={() => {
+            clearCloseTimer();
+            if (megaHref) {
+              clearCollapseTimer();
+              setMegaOpen(true);
+            }
+          }}
         >
           <div className="relative">
             <span
@@ -391,7 +601,7 @@ export function DesktopNav({ activeHref }: { activeHref: string }) {
                     if (event.pointerType === "touch") return;
                     setHovered(item.href);
                     if (item.mega) openMega(item.href);
-                    else setMegaOpen(null);
+                    else closeMegaNow();
                   }}
                 >
                   <Link
@@ -404,7 +614,7 @@ export function DesktopNav({ activeHref }: { activeHref: string }) {
                     }}
                     onBlur={() => setFocused(null)}
                     aria-current={activeHref === item.href ? "page" : undefined}
-                    aria-expanded={item.mega ? megaOpen === item.href : undefined}
+                    aria-expanded={item.mega ? megaOpen && megaHref === item.href : undefined}
                     className={cn(
                       itemClass,
                       "relative transition-colors duration-200 focus-visible:outline-white",
@@ -416,7 +626,7 @@ export function DesktopNav({ activeHref }: { activeHref: string }) {
                       <ChevronDown
                         className={cn(
                           "size-3.5 opacity-70 transition-transform duration-300",
-                          megaOpen === item.href && "rotate-180",
+                          megaOpen && megaHref === item.href && "rotate-180",
                         )}
                         aria-hidden="true"
                       />
@@ -429,32 +639,7 @@ export function DesktopNav({ activeHref }: { activeHref: string }) {
         </div>
       </nav>
 
-      {megaOpen ? (
-        <div
-          key={megaOpen}
-          className="pettroz-mega absolute top-full right-[max(1.25rem,4vw)] left-[max(1.25rem,4vw)] z-30 mt-2 hidden overflow-hidden rounded-[16px] border border-navy/10 bg-white shadow-[0_28px_56px_-32px_#1a1c2948] xl:block"
-          onPointerEnter={clearCloseTimer}
-          onPointerLeave={scheduleCloseMega}
-        >
-          <div className="site-container py-8">
-            <MegaPanel openHref={megaOpen} onNavigate={navigate} />
-            <div
-              className="pettroz-mega-item mt-6 flex justify-end"
-              style={{ animationDelay: "220ms" }}
-            >
-              <Link
-                href={megaOpen}
-                onClick={navigate}
-                className="group inline-flex items-center gap-2 text-sm font-semibold text-navy transition-all hover:gap-3 hover:text-primary"
-              >
-                View all{" "}
-                {mainNavItems.find((item) => item.href === megaOpen)?.label.toLowerCase()}
-                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      {megaPanel}
     </>
   );
 }

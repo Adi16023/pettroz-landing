@@ -1,17 +1,13 @@
 import Link from "next/link";
-import { ArrowUpRight, Fuel, Users } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { RiGasStationFill, RiTeamFill } from "@remixicon/react";
 import { AttendancePreview, PumpPreview } from "@/components/product-preview";
 import { Section, SectionTitle } from "@/components/ui";
 import { homeProductsIntro } from "@/lib/content";
 
 const icons = {
-  pump: Fuel,
-  attendance: Users,
-} as const;
-
-const washes = {
-  pump: "bg-[#f6e5dc] text-[#a6412b]",
-  attendance: "bg-[#e6ede3] text-[#35604b]",
+  pump: RiGasStationFill,
+  attendance: RiTeamFill,
 } as const;
 
 export function HomeProducts() {
@@ -36,8 +32,8 @@ export function HomeProducts() {
                 </div>
               </div>
               <div className="flex flex-1 flex-col p-6 sm:p-8">
-                <div className={`mb-5 inline-flex size-11 items-center justify-center rounded-xl ${washes[card.product]}`}>
-                  <Icon aria-hidden="true" className="size-5" strokeWidth={1.6} />
+                <div className="mb-5 inline-flex text-primary">
+                  <Icon aria-hidden="true" className="size-6" />
                 </div>
                 <p className="text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">
                   {card.label}

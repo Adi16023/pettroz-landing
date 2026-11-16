@@ -2,21 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { BlogShare } from "@/components/blog-share";
 import { BlogThumbnail } from "@/components/blog-thumbnail";
 import { Section } from "@/components/ui";
 import { blogCardDescription, fetchBlogPost, fetchBlogPosts } from "@/lib/blog";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://petrozz.com";
+
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const posts = await fetchBlogPosts();
+  const posts = await fetchBlogPosts("blog");
   return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/resources/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const post = await fetchBlogPost(slug);
-  if (!post) return { title: "Article" };
+  if (!post || post.type === "article") return { title: "Article" };
   const description = post.excerpt?.trim() || undefined;
   const keywords = (post.tags ?? []).map((tag) => tag.trim()).filter(Boolean);
   return {
@@ -52,8 +55,8 @@ function formatPublishedAt(value?: string | null) {
 export default async function ResourcesArticlePage({ params }: PageProps<"/resources/[slug]">) {
   const { slug } = await params;
   const post = await fetchBlogPost(slug);
-  if (!post) notFound();
-  const allPosts = await fetchBlogPosts();
+  if (!post || post.type === "article") notFound();
+  const allPosts = await fetchBlogPosts("blog");
   const sameCategory = allPosts.filter(
     (item) => item.slug !== post.slug && item.category && item.category === post.category,
   );
@@ -64,6 +67,7 @@ export default async function ResourcesArticlePage({ params }: PageProps<"/resou
   const hasHtml = Boolean(post.bodyHtml && post.bodyHtml.replace(/<[^>]+>/g, "").trim());
   const publishedLabel = formatPublishedAt(post.publishedAt);
   const tags = (post.tags ?? []).map((tag) => tag.trim()).filter(Boolean);
+  const shareUrl = `${SITE_URL}/resources/${post.slug}`;
 
   return (
     <>
@@ -156,6 +160,7 @@ export default async function ResourcesArticlePage({ params }: PageProps<"/resou
               </p>
             </article>
           )}
+          <BlogShare url={shareUrl} title={post.title} className="mt-10 border-t border-navy/10 pt-8" />
           {related.length > 0 ? (
             <section className="mt-14 border-t border-navy/10 pt-10" aria-labelledby="related-articles">
               <div className="flex flex-wrap items-end justify-between gap-3">

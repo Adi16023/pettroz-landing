@@ -4,6 +4,8 @@ export const BLOG_API_URL =
   process.env.PETTROZ_API_URL ??
   "https://petroz-backend.onrender.com";
 
+export type PublicBlogPostType = "blog" | "article";
+
 export type PublicBlogPost = {
   id?: string;
   slug: string;
@@ -12,6 +14,7 @@ export type PublicBlogPost = {
   excerpt: string;
   tags?: string[];
   category: string;
+  type?: PublicBlogPostType;
   coverUrl?: string | null;
   bodyHtml?: string;
   publishedAt?: string | null;
@@ -50,17 +53,23 @@ export function blogCardDescription(post: Pick<PublicBlogPost, "excerpt" | "body
     .trim();
 }
 
+export function normalizePostType(value: string | null | undefined): PublicBlogPostType {
+  return value === "article" ? "article" : "blog";
+}
+
 export function normalizeBlogPosts(rows: PublicBlogPost[]): PublicBlogPost[] {
   return rows.map((row) => ({
     ...row,
+    type: normalizePostType(row.type),
     tags: Array.isArray(row.tags) ? row.tags.filter(Boolean) : [],
     coverUrl: blogAssetUrl(row.coverUrl),
   }));
 }
 
-export async function fetchBlogPosts(): Promise<PublicBlogPost[]> {
+export async function fetchBlogPosts(type?: PublicBlogPostType): Promise<PublicBlogPost[]> {
   try {
-    const response = await fetch(`${BLOG_API_URL}/api/public/blog`, {
+    const query = type ? `?type=${encodeURIComponent(type)}` : "";
+    const response = await fetch(`${BLOG_API_URL}/api/public/blog${query}`, {
       next: { revalidate: 60 },
     });
     if (!response.ok) return [];
@@ -73,9 +82,10 @@ export async function fetchBlogPosts(): Promise<PublicBlogPost[]> {
 }
 
 /** Client-safe load for nav mega menus (no Next fetch cache options). */
-export async function loadBlogPostsClient(): Promise<PublicBlogPost[]> {
+export async function loadBlogPostsClient(type?: PublicBlogPostType): Promise<PublicBlogPost[]> {
   try {
-    const response = await fetch(`${BLOG_API_URL}/api/public/blog`, { cache: "no-store" });
+    const query = type ? `?type=${encodeURIComponent(type)}` : "";
+    const response = await fetch(`${BLOG_API_URL}/api/public/blog${query}`, { cache: "no-store" });
     if (!response.ok) return [];
     const rows = (await response.json()) as PublicBlogPost[];
     if (!Array.isArray(rows) || rows.length === 0) return [];
@@ -94,6 +104,7 @@ export async function fetchBlogPost(slug: string): Promise<PublicBlogPost | null
     const row = (await response.json()) as PublicBlogPost;
     return {
       ...row,
+      type: normalizePostType(row.type),
       tags: Array.isArray(row.tags) ? row.tags.filter(Boolean) : [],
       coverUrl: blogAssetUrl(row.coverUrl),
       bodyHtml: row.bodyHtml ? rewriteBlogHtml(row.bodyHtml) : "",

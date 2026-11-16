@@ -45,7 +45,7 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
 
   useEffect(() => {
     let gone = false;
-    loadBlogPostsClient()
+    loadBlogPostsClient("blog")
       .then((next) => {
         if (!gone) setPosts(next);
       })
@@ -219,7 +219,7 @@ export function BlogMobileLinks({ onNavigate }: { onNavigate: () => void }) {
 
   useEffect(() => {
     let gone = false;
-    loadBlogPostsClient()
+    loadBlogPostsClient("blog")
       .then((next) => {
         if (gone) return;
         const seen = new Set<string>();

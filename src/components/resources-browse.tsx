@@ -20,7 +20,15 @@ function encodeList(values: string[]) {
   return values.join(",");
 }
 
-export function ResourcesBrowse({ posts }: { posts: PublicBlogPost[] }) {
+export function ResourcesBrowse({
+  posts,
+  basePath = "/resources",
+  title = "Resources",
+}: {
+  posts: PublicBlogPost[];
+  basePath?: string;
+  title?: string;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -136,14 +144,14 @@ export function ResourcesBrowse({ posts }: { posts: PublicBlogPost[] }) {
             <ChevronRight className="size-3.5" />
           </li>
           <li className="font-medium text-navy/60" aria-current="page">
-            Resources
+            {title}
           </li>
         </ol>
       </nav>
 
       <header className="border-b border-navy/10 pb-8">
         <h1 className="text-4xl leading-[1.08] font-semibold tracking-[-0.05em] text-navy sm:text-5xl">
-          Resources
+          {title}
         </h1>
 
         <div className="mt-7 flex flex-col gap-3 lg:flex-row lg:items-center">
@@ -201,7 +209,7 @@ export function ResourcesBrowse({ posts }: { posts: PublicBlogPost[] }) {
             return (
             <Link
               key={article.slug}
-              href={`/resources/${article.slug}`}
+              href={`${basePath}/${article.slug}`}
               className="group flex h-full flex-col overflow-hidden rounded-2xl border border-navy/10 bg-white transition-colors hover:border-primary/30"
             >
               <BlogThumbnail
