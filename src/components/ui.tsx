@@ -67,7 +67,10 @@ export function SectionTitle({
   return (
     <Tag className={cn("section-title mt-0", className)}>
       {lines.map((line, index) => (
-        <span key={`${line}-${index}`} className={cn("block", nowrap && "whitespace-nowrap")}>
+        <span
+          key={`${line}-${index}`}
+          className={cn("block text-pretty break-words", nowrap && "lg:whitespace-nowrap")}
+        >
           {line}
         </span>
       ))}

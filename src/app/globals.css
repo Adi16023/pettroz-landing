@@ -93,6 +93,14 @@
   padding-inline: max(1.25rem, 4vw);
 }
 
+/* Prevent the wide marquee from becoming the browser scroll-anchor
+   (which can land logo→home navigation mid-page on this section). */
+.fuel-brand-section,
+.fuel-brand-viewport,
+.fuel-brand-track {
+  overflow-anchor: none;
+}
+
 .fuel-brand-track {
   animation: fuel-brand-marquee-mobile 36s linear infinite;
 }
@@ -638,7 +646,7 @@ details[open] .faq-plus {
   .fuel-brand-track {
     animation: none;
   }
-  .fuel-brand-track > .fuel-brand-set[aria-hidden="true"] {
+  .fuel-brand-track > .fuel-brand-set:not(:first-child) {
     display: none;
   }
   .fuel-brand-track > .fuel-brand-set:first-child {

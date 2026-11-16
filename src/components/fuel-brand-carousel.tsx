@@ -27,7 +27,7 @@ function BrandSlides() {
 
 export function FuelBrandCarousel() {
   return (
-    <Section className="pt-0 pb-12 lg:pb-16">
+    <Section className="fuel-brand-section pt-0 pb-12 lg:pb-16">
       <div className="border-t border-navy/15 pt-12 lg:pt-20">
         <h2 className="text-center text-3xl font-semibold tracking-tight text-navy sm:text-4xl lg:text-5xl">
           Designed for fuel stations across India
@@ -43,14 +43,11 @@ export function FuelBrandCarousel() {
           aria-label="Fuel brand logos"
           className="fuel-brand-viewport mt-10 overflow-hidden overscroll-x-none touch-pan-y py-1 sm:mt-12"
         >
-          <div className="fuel-brand-track flex w-max gap-1 sm:gap-4">
-            <div className="fuel-brand-set flex w-max gap-1 sm:gap-4" aria-label="Fuel brands">
+          <div className="fuel-brand-track flex w-max gap-1 sm:gap-4" aria-hidden="true">
+            <div className="fuel-brand-set flex w-max gap-1 sm:gap-4">
               <BrandSlides />
             </div>
-            <div
-              className="fuel-brand-set flex w-max gap-1 sm:gap-4"
-              aria-hidden="true"
-            >
+            <div className="fuel-brand-set flex w-max gap-1 sm:gap-4">
               <BrandSlides />
             </div>
           </div>

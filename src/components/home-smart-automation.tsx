@@ -43,12 +43,14 @@ function AutomationCard({ item, index }: { item: AutomationItem; index: number }
   const accent = accents[index % accents.length];
 
   return (
-    <article className="group relative z-[1] h-full rounded-[1.2rem] bg-white p-5 transition-transform duration-300 hover:-translate-y-1 sm:p-5 lg:p-6">
+    <article className="group relative z-[1] h-full min-w-0 rounded-[1.2rem] bg-white p-5 transition-transform duration-300 hover:-translate-y-1 sm:p-5 lg:p-6">
       <span className={`inline-flex size-9 items-center justify-center rounded-xl ${accent}`}>
         <Icon aria-hidden="true" className="size-4" strokeWidth={1.7} />
       </span>
-      <h3 className="mt-4 text-base font-semibold tracking-tight text-navy">{item.title}</h3>
-      <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.text}</p>
+      <h3 className="mt-4 text-base font-semibold tracking-tight break-words text-navy">
+        {item.title}
+      </h3>
+      <p className="mt-2 text-sm leading-6 break-words text-muted-foreground">{item.text}</p>
     </article>
   );
 }
@@ -61,9 +63,9 @@ export function HomeSmartAutomation() {
   }
 
   return (
-    <Section id="smart-automation" className="overflow-hidden bg-[#f4f3ef]">
+    <Section id="smart-automation" className="overflow-x-clip bg-[#f4f3ef]">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
-        <div className="min-w-0">
+        <div className="min-w-0 max-w-full">
           <SectionTitle nowrap>{homeSmartAutomation.heading}</SectionTitle>
           {/* <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground">
             {homeSmartAutomation.description}
