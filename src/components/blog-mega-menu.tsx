@@ -160,9 +160,6 @@ export function BlogMegaPanel({ onNavigate }: { onNavigate: () => void }) {
                       <span className="block text-sm font-semibold text-navy transition-colors group-hover:text-primary">
                         {topic}
                       </span>
-                      <span className="mt-0.5 block text-xs text-muted-foreground">
-                        View articles
-                      </span>
                     </span>
                   </Link>
                 </li>
