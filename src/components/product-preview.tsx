@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { Banknote, Bell, Bill, BookOpen, CalendarCheck, CalendarDays, Cash, CheckCircle2, ChevronDown, Clock, ContactRound, Droplets, FilePdf, FlightTakeoff, Fuel, LayoutDashboard, LifeBuoy, MousePointer2, Package, PanelLeftClose, Ruler, Settings, ShoppingBag, Sun, Timer, TrendingUp, UserCheck, Users, Wallet } from "@/lib/icons";
+import { Banknote, Bell, Bill, BookOpen, CalendarCheck, CalendarDays, Cash, CheckCircle2, ChevronDown, Clock, ContactRound, Droplets, FilePdf, FlightTakeoff, Fuel, LayoutDashboard, LifeBuoy, MousePointer2, OilLine, PanelLeftClose, Ruler, Settings, ShoppingBag, Sun, Timer, TrendingUp, UserCheck, Users, Wallet } from "@/lib/icons";
 import type { IconComponent } from "@/lib/icons";
 import { DeskCard, Donut, HorizontalBars, KpiCard, MetricCard, Stamp, TankGauges } from "@/components/product-ui";
 import { ProductDemoScreen, type DemoScreen } from "@/components/product-demo-screens";
@@ -124,7 +124,7 @@ function usePreviewPlayback(animated: boolean, steps: PreviewStep[]) {
 const fuelNav: { label: string; items: { label: string; Icon: IconComponent }[] }[] = [
   { label: "Today", items: [{ label: "Dashboard", Icon: LayoutDashboard }, { label: "DSR", Icon: CalendarDays }, { label: "Shifts", Icon: Timer }] },
   { label: "Fuel", items: [{ label: "Sales", Icon: Fuel }, { label: "Billing", Icon: Bill }, { label: "Dip", Icon: Ruler }, { label: "Stock variation", Icon: Droplets }] },
-  { label: "Shop", items: [{ label: "Lube / Products", Icon: Package }] },
+  { label: "Shop", items: [{ label: "Lube / Products", Icon: OilLine }] },
   { label: "Credit", items: [{ label: "Credit customers", Icon: BookOpen }] },
   { label: "People", items: [{ label: "Staff", Icon: Users }, { label: "Attendance", Icon: UserCheck }, { label: "Contacts", Icon: ContactRound }] },
   { label: "Money", items: [{ label: "Cash", Icon: Cash }, { label: "Banking", Icon: Banknote }, { label: "Expenses", Icon: Wallet }] },
